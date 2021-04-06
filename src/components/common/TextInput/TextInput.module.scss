@@ -1,0 +1,13 @@
+@import "./../../../common";
+
+.textInput {
+  background-color: transparent;
+
+  width: 100%;
+
+  margin-top: $spacing-03;
+  padding-top: $spacing-02;
+
+  border: none;
+  border-bottom: 1px solid $headline-background;
+}

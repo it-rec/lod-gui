@@ -1,0 +1,47 @@
+@import "./../../common";
+
+.storyPoints {
+  width: $spacing-07;
+  height: $spacing-07;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+  user-select: none;
+}
+
+.storyPointWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.isActive {
+  background-color: #b3a79e;
+}
+
+.topLeft {
+  border-top: 1px solid $headline-background;
+  border-left: 1px solid $headline-background;
+  border-bottom: 1px solid $headline-background;
+  border-right: 1px solid $headline-background;
+}
+
+.topRight {
+  border-top: 1px solid $headline-background;
+  border-right: 1px solid $headline-background;
+  border-bottom: 1px solid $headline-background;
+}
+
+.bottomLeft {
+  border-left: 1px solid $headline-background;
+  border-bottom: 1px solid $headline-background;
+  border-right: 1px solid $headline-background;
+}
+
+.bottomRight {
+  border-bottom: 1px solid $headline-background;
+  border-right: 1px solid $headline-background;
+}

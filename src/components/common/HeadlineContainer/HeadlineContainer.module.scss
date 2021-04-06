@@ -1,0 +1,33 @@
+@import "./../../../common";
+
+.headlineContainer {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+
+  margin-bottom: $spacing-05;
+}
+
+.headline {
+  background-color: $headline-background;
+
+  margin-bottom: $spacing-05;
+  padding: $spacing-03;
+
+  color: white;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.label {
+  @include carbon--type-style('productive-heading-02');
+}
+
+.maximumLabel {
+  @include carbon--type-style('productive-heading-01');
+
+  height: fit-content;
+  align-self: flex-end;
+}

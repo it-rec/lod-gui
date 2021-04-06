@@ -1,0 +1,39 @@
+@import "./../../../common";
+
+.currentMaxContainer {
+  display: flex;
+  justify-content: space-between;
+
+  & input {
+    border: none;
+    background-color: transparent;
+  }
+}
+
+.maxBox {
+  @include carbon--type-style('productive-heading-03');
+
+  border: 2px solid $headline-background;
+  padding: $spacing-03;
+
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-grow: 0;
+  flex-shrink: 1;
+
+  height: max-content;
+
+  overflow: auto;
+}
+
+.valueBox {
+  @include carbon--type-style('productive-heading-05');
+
+  width: 100%;
+  margin-top: $spacing-02;
+
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}

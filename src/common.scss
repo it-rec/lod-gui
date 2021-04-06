@@ -1,0 +1,10 @@
+@import 'node_modules/carbon-components/scss/globals/scss/styles';
+
+@import '~@carbon/type/scss/type';
+@import '~@carbon/type/scss/font-face/mono';
+@import '~@carbon/type/scss/font-face/sans';
+@include carbon--type-reset();
+@include carbon--font-face-mono();
+@include carbon--font-face-sans();
+
+$headline-background: #5A0C0E;

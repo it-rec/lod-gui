@@ -3,20 +3,36 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.11.8",
-    "@testing-library/react": "^11.2.2",
-    "@testing-library/user-event": "^12.6.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-scripts": "4.0.1",
-    "web-vitals": "^0.2.4"
+    "@carbon/type": "^10.25.0",
+    "@testing-library/jest-dom": "^5.11.10",
+    "@testing-library/react": "^11.2.6",
+    "@testing-library/user-event": "^13.1.1",
+    "body-parser": "^1.19.0",
+    "carbon-components": "^10.32.0",
+    "carbon-components-react": "^7.32.0",
+    "carbon-icons": "^7.0.7",
+    "classnames": "^2.3.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "lodash": "^4.17.21",
+    "mongodb": "^3.6.5",
+    "node-sass": "^5.0.0",
+    "nodemon": "^2.0.7",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "^4.0.3",
+    "socket.io": "^4.0.1",
+    "socket.io-client": "^4.0.1",
+    "web-vitals": "^1.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
+    "dev": "nodemon server/app.js localhost 3080 --watch server",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy": "http://localhost:3080",
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -34,5 +50,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "resolutions": {
+    "react-scripts/eslint-webpack-plugin": "2.4.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.20.0",
+    "eslint-plugin-react": "^7.22.0"
   }
 }

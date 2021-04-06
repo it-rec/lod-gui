@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import React from 'react';
+import {Column, Grid, Row} from 'carbon-components-react';
+import Gold from './components/Gold/Gold';
+import Fame from './components/Fame/Fame';
+import Heroes from './components/Heroes/Heroes';
+import StoryPoints from './components/StoryPoints/StoryPoints';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={'root'}>
+      <Grid className={'App'}>
+        <Row>
+          <Column lg={6}>
+            <Heroes />
+          </Column>
+          <Column lg={3}>
+            <Fame />
+          </Column>
+          <Column lg={3}>
+            <Gold />
+          </Column>
+        </Row>
+        <Row>
+          <Column>
+            <StoryPoints />
+          </Column>
+        </Row>
+      </Grid>
     </div>
   );
 }
