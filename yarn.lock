@@ -5966,9 +5966,9 @@ mongodb-connection-string-url@^2.5.2:
     "@types/whatwg-url" "^8.2.1"
     whatwg-url "^11.0.0"
 
-mongodb@^4.8.0:
-  version "4.8.0"
-  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-4.8.0.tgz#8287c85b43781c042c272d00ff3a143b68698671"
+mongodb@^4.8.1:
+  version "4.8.1"
+  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-4.8.1.tgz#596de88ff4519128266d9254dbe5b781c4005796"
   dependencies:
     bson "^4.6.5"
     denque "^2.0.1"
