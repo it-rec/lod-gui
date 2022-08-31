@@ -2714,9 +2714,9 @@ caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001317:
   version "1.0.30001332"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001332.tgz#39476d3aa8d83ea76359c70302eafdd4a1d727dd"
 
-carbon-components-react@^7.57.4:
-  version "7.57.4"
-  resolved "https://registry.yarnpkg.com/carbon-components-react/-/carbon-components-react-7.57.4.tgz#6e005e59f6ab09586e136b08b99dd93f06f4c446"
+carbon-components-react@^7.59.0:
+  version "7.59.0"
+  resolved "https://registry.yarnpkg.com/carbon-components-react/-/carbon-components-react-7.59.0.tgz#f4978d2860ec7a80f96f6ed453fcb24bb3f04240"
   dependencies:
     "@babel/runtime" "^7.16.7"
     "@carbon/feature-flags" "^0.7.0"
@@ -8582,9 +8582,9 @@ wbuf@^1.1.0, wbuf@^1.7.3:
   dependencies:
     minimalistic-assert "^1.0.0"
 
-web-vitals@^2.1.4:
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/web-vitals/-/web-vitals-2.1.4.tgz#76563175a475a5e835264d373704f9dde718290c"
+web-vitals@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/web-vitals/-/web-vitals-3.0.0.tgz#db8a32fd62738a439343309336720ee5685ac71e"
 
 webidl-conversions@^4.0.2:
   version "4.0.2"
