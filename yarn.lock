@@ -955,11 +955,11 @@
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/@carbon/feature-flags/-/feature-flags-0.7.0.tgz#fe8068b482439ae7af519ccdbf627f31373bb646"
 
-"@carbon/grid@^11.5.0":
-  version "11.5.0"
-  resolved "https://registry.yarnpkg.com/@carbon/grid/-/grid-11.5.0.tgz#241769cdbbbf0e0421f83c3c92f4b64fea16014b"
+"@carbon/grid@^11.6.0":
+  version "11.6.0"
+  resolved "https://registry.yarnpkg.com/@carbon/grid/-/grid-11.6.0.tgz#b5ffc2d8ef0b00ca5758d479f1ecb1dc6b88e55b"
   dependencies:
-    "@carbon/layout" "^11.5.0"
+    "@carbon/layout" "^11.6.0"
 
 "@carbon/icon-helpers@^10.28.0":
   version "10.29.0"
@@ -977,19 +977,19 @@
   version "10.37.1"
   resolved "https://registry.yarnpkg.com/@carbon/layout/-/layout-10.37.1.tgz#697ac4ba0500f55163cd84e0dc200d637fd41beb"
 
-"@carbon/layout@^11.5.0":
-  version "11.5.0"
-  resolved "https://registry.yarnpkg.com/@carbon/layout/-/layout-11.5.0.tgz#751b401da3646f5d57dba63a26f1e995d09f53c7"
+"@carbon/layout@^11.6.0":
+  version "11.6.0"
+  resolved "https://registry.yarnpkg.com/@carbon/layout/-/layout-11.6.0.tgz#57bcddfc998d2f9cb746bbdad618ad3dd5f50729"
 
 "@carbon/telemetry@0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@carbon/telemetry/-/telemetry-0.1.0.tgz#57b331cd5a855b4abbf55457456da8211624d879"
 
-"@carbon/type@^11.8.0":
-  version "11.8.0"
-  resolved "https://registry.yarnpkg.com/@carbon/type/-/type-11.8.0.tgz#28f66036a72f0745ee09284ec2847e83e2050272"
+"@carbon/type@^11.9.0":
+  version "11.9.0"
+  resolved "https://registry.yarnpkg.com/@carbon/type/-/type-11.9.0.tgz#6c2600b07b3a47a1c673c81613f35faa845165b7"
   dependencies:
-    "@carbon/grid" "^11.5.0"
+    "@carbon/grid" "^11.6.0"
 
 "@csstools/normalize.css@*":
   version "12.0.0"
