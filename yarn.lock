@@ -985,9 +985,9 @@
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@carbon/telemetry/-/telemetry-0.1.0.tgz#57b331cd5a855b4abbf55457456da8211624d879"
 
-"@carbon/type@^11.10.0":
-  version "11.10.0"
-  resolved "https://registry.yarnpkg.com/@carbon/type/-/type-11.10.0.tgz#aeceeda9a4ad69009974b53c0969bd7a98ae1a33"
+"@carbon/type@^11.11.0":
+  version "11.11.0"
+  resolved "https://registry.yarnpkg.com/@carbon/type/-/type-11.11.0.tgz#b731506b2417baf943abe201fda9a41c79634764"
   dependencies:
     "@carbon/grid" "^11.7.0"
     "@carbon/layout" "^11.7.0"
