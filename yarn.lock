@@ -961,19 +961,19 @@
   dependencies:
     "@carbon/layout" "^11.18.0"
 
-"@carbon/icon-helpers@^10.28.0":
-  version "10.29.0"
-  resolved "https://registry.yarnpkg.com/@carbon/icon-helpers/-/icon-helpers-10.29.0.tgz#686bc5a337bec6d8fb482655f4564f3376452a35"
+"@carbon/icon-helpers@^10.28.1":
+  version "10.44.0"
+  resolved "https://registry.yarnpkg.com/@carbon/icon-helpers/-/icon-helpers-10.44.0.tgz#4308806bf903310d68240325a53ce400ef7dc9af"
 
-"@carbon/icons-react@^10.49.0":
-  version "10.49.0"
-  resolved "https://registry.yarnpkg.com/@carbon/icons-react/-/icons-react-10.49.0.tgz#178f62fe2f5b343fa2d2034fb14203b01d44b894"
+"@carbon/icons-react@^10.49.1":
+  version "10.49.1"
+  resolved "https://registry.yarnpkg.com/@carbon/icons-react/-/icons-react-10.49.1.tgz#b0e720835f7f405a570759ac42aea7ecae85310a"
   dependencies:
-    "@carbon/icon-helpers" "^10.28.0"
+    "@carbon/icon-helpers" "^10.28.1"
     "@carbon/telemetry" "0.1.0"
     prop-types "^15.7.2"
 
-"@carbon/layout@^10.37.0":
+"@carbon/layout@^10.37.1":
   version "10.37.1"
   resolved "https://registry.yarnpkg.com/@carbon/layout/-/layout-10.37.1.tgz#697ac4ba0500f55163cd84e0dc200d637fd41beb"
 
@@ -2739,14 +2739,14 @@ caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001317:
   version "1.0.30001332"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001332.tgz#39476d3aa8d83ea76359c70302eafdd4a1d727dd"
 
-carbon-components-react@^7.59.8:
-  version "7.59.8"
-  resolved "https://registry.yarnpkg.com/carbon-components-react/-/carbon-components-react-7.59.8.tgz#f03cd85c6ed9e31af7f9804ef006cf97ffbfaba4"
+carbon-components-react@^7.59.10:
+  version "7.59.10"
+  resolved "https://registry.yarnpkg.com/carbon-components-react/-/carbon-components-react-7.59.10.tgz#65081b4c0cfac57d627c42f0d191172beadc3889"
   dependencies:
     "@babel/runtime" "^7.16.7"
     "@carbon/feature-flags" "^0.7.0"
-    "@carbon/icons-react" "^10.49.0"
-    "@carbon/layout" "^10.37.0"
+    "@carbon/icons-react" "^10.49.1"
+    "@carbon/layout" "^10.37.1"
     "@carbon/telemetry" "0.1.0"
     classnames "2.3.1"
     copy-to-clipboard "^3.3.1"
