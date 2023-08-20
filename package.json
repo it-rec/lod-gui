@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@carbon/type": "^11.22.0",
-    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/jest-dom": "^6.0.0",
     "@testing-library/react": "^12.1.5",
     "@testing-library/user-event": "^14.4.3",
     "body-parser": "^1.20.2",
