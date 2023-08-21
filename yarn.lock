@@ -961,21 +961,21 @@
   dependencies:
     "@carbon/layout" "^11.18.0"
 
-"@carbon/icon-helpers@^10.28.1":
+"@carbon/icon-helpers@^10.28.2":
   version "10.44.0"
   resolved "https://registry.yarnpkg.com/@carbon/icon-helpers/-/icon-helpers-10.44.0.tgz#4308806bf903310d68240325a53ce400ef7dc9af"
 
-"@carbon/icons-react@^10.49.1":
-  version "10.49.1"
-  resolved "https://registry.yarnpkg.com/@carbon/icons-react/-/icons-react-10.49.1.tgz#b0e720835f7f405a570759ac42aea7ecae85310a"
+"@carbon/icons-react@^10.49.2":
+  version "10.49.2"
+  resolved "https://registry.yarnpkg.com/@carbon/icons-react/-/icons-react-10.49.2.tgz#510757c242e662517f08e6894536439004331870"
   dependencies:
-    "@carbon/icon-helpers" "^10.28.1"
+    "@carbon/icon-helpers" "^10.28.2"
     "@carbon/telemetry" "0.1.0"
     prop-types "^15.7.2"
 
-"@carbon/layout@^10.37.1":
-  version "10.37.1"
-  resolved "https://registry.yarnpkg.com/@carbon/layout/-/layout-10.37.1.tgz#697ac4ba0500f55163cd84e0dc200d637fd41beb"
+"@carbon/layout@^10.37.2":
+  version "10.37.2"
+  resolved "https://registry.yarnpkg.com/@carbon/layout/-/layout-10.37.2.tgz#2d7918220ee449d2e8101d8074e5cb7f6ccaaaa1"
 
 "@carbon/layout@^11.18.0":
   version "11.18.0"
@@ -2721,14 +2721,14 @@ caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001317:
   version "1.0.30001332"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001332.tgz#39476d3aa8d83ea76359c70302eafdd4a1d727dd"
 
-carbon-components-react@^7.59.10:
-  version "7.59.10"
-  resolved "https://registry.yarnpkg.com/carbon-components-react/-/carbon-components-react-7.59.10.tgz#65081b4c0cfac57d627c42f0d191172beadc3889"
+carbon-components-react@^7.59.11:
+  version "7.59.11"
+  resolved "https://registry.yarnpkg.com/carbon-components-react/-/carbon-components-react-7.59.11.tgz#7603768451d99479ee29dddeeaa8d3f9ccac5346"
   dependencies:
     "@babel/runtime" "^7.16.7"
     "@carbon/feature-flags" "^0.7.0"
-    "@carbon/icons-react" "^10.49.1"
-    "@carbon/layout" "^10.37.1"
+    "@carbon/icons-react" "^10.49.2"
+    "@carbon/layout" "^10.37.2"
     "@carbon/telemetry" "0.1.0"
     classnames "2.3.1"
     copy-to-clipboard "^3.3.1"
