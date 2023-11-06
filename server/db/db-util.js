@@ -1,6 +1,5 @@
-const {collections} = require('../../src/shared');
 const LOD_DB = 'lod';
-const getCollection = (dataBase, collection) => dataBase.db(LOD_DB).collection(collection);
+const getCollection = (mongoClient, collection) => mongoClient.db(LOD_DB).collection(collection);
 
 const writeToDatabase = (dataBase, collection, id, object) => {
   return getCollection(dataBase, collection).replaceOne(
@@ -12,10 +11,10 @@ const writeToDatabase = (dataBase, collection, id, object) => {
     { upsert: true });
 };
 
-const readFromDataBase = async (dataBase, collection, id, query = {}) => {
+const readFromDataBase = async (mongoClient, collection, id, query = {}) => {
   const searchQuery = { id, ...query };
 
-  return await getCollection(dataBase, collection).findOne(
+  return await getCollection(mongoClient, collection).findOne(
     searchQuery,
     { projection: { _id: 0 } },
   );

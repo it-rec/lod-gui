@@ -36,7 +36,8 @@ const Fame = () => {
         console.error(error);
       });
       socket.on(collections.FAME, (fameEvent) => {
-        setFame(shapeFameResponse(fameEvent));
+        const fameToSet = shapeFameResponse(fameEvent);
+        setFame(fameToSet);
       });
     }
   }, [socket]);

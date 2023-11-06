@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import socketIOClient from 'socket.io-client';
 
 const SocketIOComponent = ({channel, callback, children}) => {

@@ -1,7 +1,8 @@
 const collections = {
   STORY_POINTS: 'storyPoints',
   FAME: 'fame',
-  GOLD: 'gold'
+  GOLD: 'gold',
+  HEROES: 'heroes',
 };
 
 module.exports = {
