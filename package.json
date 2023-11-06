@@ -9,7 +9,7 @@
     "@testing-library/user-event": "^14.5.1",
     "body-parser": "^1.20.2",
     "carbon-components": "^10.58.10",
-    "carbon-components-react": "^8.39.0",
+    "carbon-components-react": "^7.59.14",
     "carbon-icons": "^7.0.7",
     "classnames": "^2.3.2",
     "cors": "^2.8.5",
@@ -17,6 +17,7 @@
     "lodash": "^4.17.21",
     "log4js": "^6.9.1",
     "mongodb": "^6.1.0",
+    "node-sass": "^9.0.0",
     "nodemon": "^3.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -58,6 +59,6 @@
   },
   "devDependencies": {
     "eslint": "^8.40.0",
-    "eslint-plugin-react": "^7.33.1"
+    "eslint-plugin-react": "^7.33.2"
   }
 }
