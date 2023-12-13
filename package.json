@@ -27,6 +27,10 @@
     "socket.io-client": "^4.7.2",
     "web-vitals": "^3.5.0"
   },
+  "overrides": {
+    "css-select": "^5.1.0",
+    "postcss": "^8.4.31"
+  },
   "scripts": {
     "start": "react-scripts start --verbose",
     "dev": "nodemon server/app.js localhost 3080 --watch server",
