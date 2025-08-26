@@ -62,7 +62,7 @@
     "react-scripts/eslint-webpack-plugin": "2.4.1"
   },
   "devDependencies": {
-    "eslint": "^8.40.0",
+    "eslint": "^9.34.0",
     "eslint-plugin-react": "^7.37.5"
   }
 }
