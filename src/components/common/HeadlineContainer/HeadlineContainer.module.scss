@@ -1,4 +1,4 @@
-@import "./../../../common";
+@use "./../../../common" as *;
 
 .headlineContainer {
   display: flex;
@@ -22,11 +22,11 @@
 }
 
 .label {
-  @include carbon--type-style('productive-heading-02');
+  @include type-style('productive-heading-02');
 }
 
 .maximumLabel {
-  @include carbon--type-style('productive-heading-01');
+  @include type-style('productive-heading-01');
 
   height: fit-content;
   align-self: flex-end;
