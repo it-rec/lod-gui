@@ -43,7 +43,7 @@
     "dev": "nodemon server/app.js localhost 3080 --watch server",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest run"
   },
   "browserslist": {
     "production": [
