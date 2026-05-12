@@ -1,4 +1,4 @@
-@import "./../../../common";
+@use "./../../../common" as *;
 
 .currentMaxContainer {
   display: flex;
@@ -11,7 +11,7 @@
 }
 
 .maxBox {
-  @include carbon--type-style('productive-heading-03');
+  @include type-style('productive-heading-03');
 
   border: 2px solid $headline-background;
   padding: $spacing-03;
@@ -28,7 +28,7 @@
 }
 
 .valueBox {
-  @include carbon--type-style('productive-heading-05');
+  @include type-style('productive-heading-05');
 
   width: 100%;
 

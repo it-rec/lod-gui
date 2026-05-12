@@ -1,4 +1,10 @@
-@import "./common";
+@use '@carbon/react/scss/config' with (
+  $use-flexbox-grid: true,
+);
+@use '@carbon/react/scss/reset';
+@use '@carbon/react/scss/fonts';
+@use '@carbon/react/scss/grid';
+@use './common' as *;
 
 .root {
   height: 100vh;

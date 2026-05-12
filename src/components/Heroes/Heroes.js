@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import HeadlineContainer from '../common/HeadlineContainer/HeadlineContainer';
-import {Column, Grid, Row} from 'carbon-components-react';
+import {Column, FlexGrid, Row} from '@carbon/react';
 import TextInput from '../common/TextInput/TextInput';
 import SocketIOComponent from '../common/SocketIOComponent/SocketIOComponent';
 import {get, post} from '../../utils/netowrkUtils';
@@ -43,7 +43,7 @@ const Heroes = () => {
       channel={collections.HEROES}
     >
       <HeadlineContainer headLine={'Heroes'}>
-        <Grid>
+        <FlexGrid>
           <Row>
             <Column>
               <NameTextInput index={0} heroes={heroes} onHeroNameChange={onHeroNameChange} />
@@ -68,7 +68,7 @@ const Heroes = () => {
               <NameTextInput index={5} heroes={heroes} onHeroNameChange={onHeroNameChange} />
             </Column>
           </Row>
-        </Grid>
+        </FlexGrid>
       </HeadlineContainer>
     </SocketIOComponent>
   );
