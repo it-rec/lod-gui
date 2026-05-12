@@ -4,9 +4,6 @@
   "private": true,
   "dependencies": {
     "@carbon/react": "^1.96.0",
-    "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^16.1.0",
-    "@testing-library/user-event": "^14.5.2",
     "body-parser": "^1.20.3",
     "classnames": "^2.3.2",
     "cors": "^2.8.5",
@@ -17,7 +14,6 @@
     "nodemon": "^3.1.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "^5.0.1",
     "sass": "^1.87.0",
     "socket.io": "^4.7.2",
     "socket.io-client": "^4.7.2",
@@ -36,31 +32,18 @@
     "flatted": "^3.4.2",
     "fast-uri": "^3.1.2",
     "lodash": "^4.17.23",
-    "@babel/plugin-transform-modules-systemjs": "^7.29.4",
     "path-to-regexp": "^0.1.13",
     "follow-redirects": "^1.16.0",
     "jsonpath": "^1.3.0",
-    "rollup": "^2.80.0",
     "serialize-javascript": "^7.0.3",
-    "svgo": "^2.8.1",
-    "glob": "^10.5.0",
-    "@tootallnate/once": "^3.0.1",
-    "webpack": "^5.104.1"
+    "glob": "^10.5.0"
   },
   "scripts": {
-    "start": "react-scripts start --verbose",
+    "start": "vite",
     "dev": "nodemon server/app.js localhost 3080 --watch server",
-    "build": "react-scripts --openssl-legacy-provider build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "analyze": "source-map-explorer 'build/static/js/*.js'"
-  },
-  "proxy": "http://localhost:3080",
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run"
   },
   "browserslist": {
     "production": [
@@ -75,7 +58,6 @@
     ]
   },
   "resolutions": {
-    "react-scripts/eslint-webpack-plugin": "2.4.1",
     "css-select": "^5.1.0",
     "postcss": "^8.5.10",
     "qs": "^6.14.2",
@@ -88,19 +70,21 @@
     "flatted": "^3.4.2",
     "fast-uri": "^3.1.2",
     "lodash": "^4.17.23",
-    "@babel/plugin-transform-modules-systemjs": "^7.29.4",
     "path-to-regexp": "^0.1.13",
     "follow-redirects": "^1.16.0",
     "jsonpath": "^1.3.0",
-    "rollup": "^2.80.0",
     "serialize-javascript": "^7.0.3",
-    "svgo": "^2.8.1",
-    "glob": "^10.5.0",
-    "@tootallnate/once": "^3.0.1",
-    "webpack": "^5.104.1"
+    "glob": "^10.5.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.1.0",
+    "@testing-library/user-event": "^14.5.2",
+    "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^8.40.0",
-    "eslint-plugin-react": "^7.37.5"
+    "eslint-plugin-react": "^7.37.5",
+    "jsdom": "^25.0.1",
+    "vite": "^5.4.10",
+    "vitest": "^2.1.5"
   }
 }

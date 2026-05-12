@@ -6,7 +6,7 @@ import _, {isEmpty} from 'lodash';
 import { post, get } from '../../utils/netowrkUtils';
 import socketIOClient from 'socket.io-client';
 import {isEqual} from 'lodash/lang';
-const { collections } = require('../../shared');
+import { collections } from '../../shared';
 
 const storyPointAPIPath = `/api/game/1/${collections.STORY_POINTS}/`;
 
