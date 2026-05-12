@@ -36,8 +36,6 @@ module.exports = {
       'error',
       'always'
     ],
-    'react/prop-types': [
-      'warn',
-    ]
+    'react/prop-types': 'off'
   }
 };
