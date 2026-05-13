@@ -25,3 +25,5 @@ const character = {
     maximum: 12
   }
 };
+
+export default character;

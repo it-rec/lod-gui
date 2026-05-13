@@ -25,7 +25,7 @@ const generatePostAndGetEndpoint = (app, io, mongoClient, path, collection) => {
   app.post(path, (req, res) => {
     const { gameID } = req.params;
 
-    writeToDatabase(db, collection, parseInt(gameID, 10), req.body);
+    writeToDatabase(mongoClient, collection, parseInt(gameID, 10), req.body);
     io.emit(collection, req.body);
     // console.debug(`[POST - ${collection}]:`);
     // console.debug(req.body);
