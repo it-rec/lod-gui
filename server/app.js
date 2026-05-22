@@ -1,73 +1,52 @@
-const express = require('express');
 const path = require('path');
+const http = require('http');
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 const logger = require('log4js').getLogger('Server');
-const app = express(),
-  bodyParser = require('body-parser'),
-  cors = require('cors'),
-  port = 3080,
-  server = require('http').createServer(app);
 
-const io = require('socket.io')(server, {
-  cors: {
-    origin: 'http://localhost:3080',
-    methods: ['GET', 'POST']
-  }
-});
+const store = require('./db/store');
 const configureEndpoints = require('./api');
 
-const MongoClient = require('mongodb').MongoClient;
-
-const sockets = [];
-
 logger.level = 'debug';
+
+const PORT = process.env.PORT || 3080;
+
+const app = express();
+const server = http.createServer(app);
+const io = require('socket.io')(server, {
+  cors: { origin: true, methods: ['GET', 'POST'] },
+});
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../build')));
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../build/index.html'));
+io.on('connection', (socket) => {
+  logger.debug(`Socket connected: ${socket.id}`);
+  socket.on('disconnect', () => logger.debug(`Socket disconnected: ${socket.id}`));
 });
 
-logger.info('Initializing Database');
+io.on('connect_error', (error) => logger.error('Socket error', error));
 
-MongoClient.connect('mongdodb://localhost:27017?retryWrites=true&retryReads=true&w=majority')
-  .then((mongoClient) => {
-    configureEndpoints(app, io, mongoClient);
+const start = async () => {
+  logger.info('Initializing data store...');
+  await store.connect();
 
-    server.listen(port, () => {
-      logger.info(`Server listening on the port: ${port}`);
-      logger.info('Routes:');
-      console.log(app._router.stack
-        .filter(layer => layer?.route)
-        .map(layer => layer.route)
-        .map(route => ({path: route.path, methods: route.methods}))
-      );
-    });
-  }).catch((err) => {
-    if (err) {
-      logger.fatal('\x1b[31m%s\x1b[0m', 'Database is not reachable, can\'t initialize game state, shutting down.');
-    } else {
-      logger.info('Database loaded, initialized game state successfully.');
-    }
+  configureEndpoints(app, io);
+
+  // SPA fallback: anything not matched by the API or a static asset returns
+  // the built index.html so client-side rendering can take over.
+  app.use((req, res) => {
+    res.sendFile(path.join(__dirname, '../build/index.html'));
   });
 
-io.on('connection', (socket) => {
-  sockets.push(socket);
-  socket.on('disconnect', () => {
-    logger.info('Removed socket:');
-    console.log(
-      sockets.splice(
-        sockets.findIndex((registeredSocket => registeredSocket === socket)),
-        1)?.client
+  server.listen(PORT, () => {
+    logger.info(`Server listening on port ${PORT}`);
+    logger.info(
+      `Persistence: ${store.isPersistent() ? 'MongoDB' : 'in-memory (no database)'}`
     );
   });
-});
+};
 
-io.on('disconnect', () => {
-  logger.info(io.connected); // false
-});
-io.on('connect_error', (error) => {
-  logger.error('error');
-  logger.error(error);
-});
+start();

@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@carbon/react": "^1.108.0",
     "body-parser": "^2.2.2",
     "classnames": "^2.3.2",
     "cors": "^2.8.5",
@@ -20,23 +19,13 @@
     "web-vitals": "^5.2.0"
   },
   "overrides": {
-    "css-select": "^5.1.0",
     "postcss": "^8.5.10",
     "qs": "^6.14.2",
     "socket.io-parser": "^4.2.6",
     "picomatch": "^2.3.2",
-    "nth-check": "^2.0.1",
-    "node-forge": "^1.3.2",
-    "underscore": "^1.13.8",
     "immutable": "^5.1.5",
     "flatted": "^3.4.2",
-    "fast-uri": "^3.1.2",
-    "lodash": "^4.17.23",
-    "path-to-regexp": "^0.1.13",
-    "follow-redirects": "^1.16.0",
-    "jsonpath": "^1.3.0",
-    "serialize-javascript": "^7.0.3",
-    "glob": "^10.5.0"
+    "lodash": "^4.17.23"
   },
   "scripts": {
     "start": "vite",
@@ -59,25 +48,16 @@
     ]
   },
   "resolutions": {
-    "css-select": "^5.1.0",
     "postcss": "^8.5.10",
     "qs": "^6.14.2",
     "socket.io-parser": "^4.2.6",
     "picomatch": "^2.3.2",
-    "nth-check": "^2.0.1",
-    "node-forge": "^1.3.2",
-    "underscore": "^1.13.8",
     "immutable": "^5.1.5",
     "flatted": "^3.4.2",
-    "fast-uri": "^3.1.2",
-    "lodash": "^4.17.23",
-    "path-to-regexp": "^0.1.13",
-    "follow-redirects": "^1.16.0",
-    "jsonpath": "^1.3.0",
-    "serialize-javascript": "^7.0.3",
-    "glob": "^10.5.0"
+    "lodash": "^4.17.23"
   },
   "devDependencies": {
+    "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
     "@testing-library/user-event": "^14.5.2",

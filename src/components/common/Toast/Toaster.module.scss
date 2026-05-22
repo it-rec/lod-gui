@@ -1,0 +1,105 @@
+@use '../../../common' as *;
+
+.viewport {
+  position: fixed;
+  top: $spacing-05;
+  right: $spacing-05;
+  z-index: 9000;
+
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-03;
+
+  width: min(22rem, calc(100vw - #{$spacing-07}));
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-03;
+
+  padding: $spacing-04;
+
+  background: var(--lod-parchment-hi);
+  color: var(--lod-ink);
+  border: 1px solid var(--lod-edge-strong);
+  border-left: 4px solid var(--lod-gold);
+  border-radius: var(--lod-radius);
+  box-shadow: 0 8px 22px var(--lod-shadow);
+
+  animation: toast-in 0.22s ease-out;
+}
+
+.success {
+  border-left-color: var(--lod-good);
+}
+
+.error {
+  border-left-color: var(--lod-bad);
+}
+
+.info {
+  border-left-color: var(--lod-crimson);
+}
+
+.glyph {
+  font-size: 1rem;
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+
+.success .glyph {
+  color: var(--lod-good);
+}
+
+.error .glyph {
+  color: var(--lod-bad);
+}
+
+.info .glyph {
+  color: var(--lod-crimson);
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+}
+
+.message {
+  margin-top: 2px;
+  font-size: 0.9rem;
+  color: var(--lod-ink-soft);
+}
+
+.close {
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  color: var(--lod-ink-faint);
+  cursor: pointer;
+  font-size: 0.8rem;
+  padding: 2px 4px;
+  line-height: 1;
+}
+
+.close:hover {
+  color: var(--lod-crimson);
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

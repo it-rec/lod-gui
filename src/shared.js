@@ -3,4 +3,6 @@ export const collections = {
   FAME: 'fame',
   GOLD: 'gold',
   HEROES: 'heroes',
+  CALENDAR: 'calendar',
+  KEYWORDS: 'keywords',
 };

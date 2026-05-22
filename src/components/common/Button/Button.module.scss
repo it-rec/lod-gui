@@ -1,0 +1,114 @@
+@use '../../../common' as *;
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-03;
+
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+
+  border: 1px solid transparent;
+  border-radius: var(--lod-radius);
+  cursor: pointer;
+
+  transition:
+    transform 0.08s ease,
+    background-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--lod-gold-bright);
+  outline-offset: 2px;
+}
+
+.button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.button:disabled:active {
+  transform: none;
+}
+
+/* sizes */
+.md {
+  font-size: 0.78rem;
+  padding: $spacing-03 $spacing-05;
+}
+
+.sm {
+  font-size: 0.68rem;
+  padding: $spacing-02 $spacing-03;
+}
+
+.iconOnly.md {
+  padding: 0;
+  width: 2.2rem;
+  height: 2.2rem;
+  font-size: 1.1rem;
+}
+
+.iconOnly.sm {
+  padding: 0;
+  width: 1.7rem;
+  height: 1.7rem;
+  font-size: 0.95rem;
+}
+
+/* kinds */
+.primary {
+  background: linear-gradient(180deg, var(--lod-crimson-bright), var(--lod-crimson));
+  color: var(--lod-gold-hi);
+  border-color: var(--lod-crimson-ink);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.primary:hover:not(:disabled) {
+  background: linear-gradient(180deg, #8f2123, var(--lod-crimson-bright));
+  color: #fff;
+}
+
+.gold {
+  background: linear-gradient(180deg, var(--lod-gold-hi), var(--lod-gold-bright));
+  color: var(--lod-crimson-ink);
+  border-color: var(--lod-gold);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.gold:hover:not(:disabled) {
+  background: linear-gradient(180deg, #f3dea0, var(--lod-gold-hi));
+}
+
+.ghost {
+  background: rgba(60, 40, 20, 0.04);
+  color: var(--lod-ink);
+  border-color: var(--lod-edge);
+}
+
+.ghost:hover:not(:disabled) {
+  background: rgba(90, 12, 14, 0.1);
+  border-color: var(--lod-gold);
+  color: var(--lod-crimson);
+}
+
+.danger {
+  background: transparent;
+  color: var(--lod-bad);
+  border-color: rgba(154, 47, 28, 0.45);
+}
+
+.danger:hover:not(:disabled) {
+  background: rgba(154, 47, 28, 0.12);
+  border-color: var(--lod-bad);
+}

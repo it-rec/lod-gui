@@ -1,0 +1,29 @@
+.skeleton {
+  display: block;
+  width: 100%;
+  height: 1rem;
+  border-radius: var(--lod-radius);
+  background: linear-gradient(
+    100deg,
+    rgba(120, 92, 48, 0.12) 30%,
+    rgba(120, 92, 48, 0.26) 50%,
+    rgba(120, 92, 48, 0.12) 70%
+  );
+  background-size: 240% 100%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes skeleton-shimmer {
+  from {
+    background-position: 140% 0;
+  }
+  to {
+    background-position: -140% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+}

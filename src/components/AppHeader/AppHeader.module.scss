@@ -1,0 +1,80 @@
+@use '../../common' as *;
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  background: linear-gradient(
+    180deg,
+    rgba(30, 14, 6, 0.96),
+    rgba(48, 22, 10, 0.9)
+  );
+  border-bottom: 2px solid var(--lod-gold);
+  box-shadow: 0 6px 18px rgba(20, 10, 4, 0.5);
+  backdrop-filter: blur(3px);
+}
+
+.inner {
+  max-width: 84rem;
+  margin: 0 auto;
+  padding: $spacing-04 $spacing-06;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-05;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: $spacing-05;
+  min-width: 0;
+}
+
+.crest {
+  width: 3.4rem;
+  height: auto;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.55));
+}
+
+.titles {
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  line-height: 1;
+  color: var(--lod-gold-hi);
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.6);
+}
+
+.subtitle {
+  margin: 4px 0 0;
+  font-size: 0.82rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: rgba(233, 208, 138, 0.72);
+}
+
+@media (max-width: 640px) {
+  .inner {
+    padding: $spacing-04 $spacing-05;
+    flex-wrap: wrap;
+    gap: $spacing-04;
+  }
+
+  .title {
+    font-size: 1.6rem;
+  }
+
+  .crest {
+    width: 2.8rem;
+  }
+}

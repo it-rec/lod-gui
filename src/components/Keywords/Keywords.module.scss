@@ -1,0 +1,58 @@
+@use '../../common' as *;
+
+.keywords {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-05;
+}
+
+.add {
+  display: flex;
+  gap: $spacing-03;
+}
+
+.add > :first-child {
+  flex: 1;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-03;
+}
+
+.entry {
+  display: flex;
+  align-items: center;
+  gap: $spacing-03;
+
+  padding: $spacing-03 $spacing-04;
+  background: rgba(255, 252, 240, 0.6);
+  border: 1px solid var(--lod-edge);
+  border-left: 3px solid var(--lod-gold);
+  border-radius: var(--lod-radius);
+}
+
+.bullet {
+  flex-shrink: 0;
+  color: var(--lod-crimson);
+  font-size: 1.05rem;
+}
+
+.text {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.98rem;
+  color: var(--lod-ink);
+  overflow-wrap: anywhere;
+}
+
+.empty {
+  text-align: center;
+  padding: $spacing-05 0;
+  font-style: italic;
+  color: var(--lod-ink-soft);
+}
