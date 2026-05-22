@@ -1,13 +1,124 @@
+/* Design tokens — the "Tome of Legends" parchment theme. */
+:root {
+  /* ink — text on parchment */
+  --lod-ink: #2c1c10;
+  --lod-ink-soft: #5f4a32;
+  --lod-ink-faint: #8a7355;
+
+  /* parchment surfaces */
+  --lod-parchment: #f2e4c2;
+  --lod-parchment-deep: #e7d4a6;
+  --lod-parchment-hi: #fbf3da;
+
+  /* crimson — primary accent */
+  --lod-crimson: #5a0c0e;
+  --lod-crimson-bright: #7c1a1c;
+  --lod-crimson-ink: #3a0709;
+
+  /* gold — metallic accent */
+  --lod-gold: #9c7a2d;
+  --lod-gold-bright: #c4a04a;
+  --lod-gold-hi: #e9d08a;
+
+  /* utility */
+  --lod-edge: rgba(60, 40, 20, 0.3);
+  --lod-edge-strong: rgba(60, 40, 20, 0.55);
+  --lod-shadow: rgba(28, 16, 6, 0.4);
+  --lod-good: #3f6b2e;
+  --lod-bad: #9a2f1c;
+
+  --font-display: 'Cinzel', 'Trajan Pro', Georgia, serif;
+  --font-body: 'EB Garamond', Georgia, 'Times New Roman', serif;
+
+  --lod-radius: 3px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: var(--font-body);
+  font-size: 17px;
+  color: var(--lod-ink);
+  background-color: #ddc999;
+  background-image: url('./assets/background.jpg');
+  background-size: cover;
+  background-position: center top;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Subtle vignette so the framed panels lift off the page. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+    ellipse at 50% 38%,
+    rgba(0, 0, 0, 0) 42%,
+    rgba(40, 22, 8, 0.34) 100%
+  );
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+  min-height: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+button {
+  font-family: inherit;
+}
+
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+::selection {
+  background: var(--lod-crimson);
+  color: var(--lod-parchment-hi);
+}
+
+/* Themed scrollbars. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--lod-gold) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--lod-gold);
+  border-radius: 6px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--lod-crimson);
+  background-clip: padding-box;
 }

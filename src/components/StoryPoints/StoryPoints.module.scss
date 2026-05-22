@@ -1,47 +1,292 @@
-@use "./../../common" as *;
+@use '../../common' as *;
 
-.storyPoints {
-  width: $spacing-07;
-  height: $spacing-07;
-
+.loading {
   display: flex;
-  justify-content: center;
-  align-items: center;
-
-  cursor: pointer;
-  user-select: none;
+  flex-direction: column;
+  gap: $spacing-05;
 }
 
-.storyPointWrapper {
+.chronicle {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-05;
+}
+
+/* progress */
+.progress {
+  display: flex;
+  align-items: center;
+  gap: $spacing-04;
+}
+
+.progressBar {
+  flex: 1;
+  height: 14px;
+  border-radius: 999px;
+  background: rgba(60, 36, 16, 0.22);
+  border: 1px solid var(--lod-edge);
+  box-shadow: inset 0 1px 3px rgba(40, 22, 8, 0.4);
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    var(--lod-gold),
+    var(--lod-gold-hi)
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  transition: width 0.35s ease;
+}
+
+.progressLabel {
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--lod-crimson);
+}
+
+/* controls */
+.controls {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-04;
 }
 
-.isActive {
-  background-color: #b3a79e;
+.filters {
+  display: inline-flex;
+  border: 1px solid var(--lod-edge-strong);
+  border-radius: var(--lod-radius);
+  overflow: hidden;
 }
 
-.topLeft {
-  border-top: 1px solid $headline-background;
-  border-left: 1px solid $headline-background;
-  border-bottom: 1px solid $headline-background;
-  border-right: 1px solid $headline-background;
+.filter {
+  border: none;
+  background: rgba(60, 40, 20, 0.04);
+  color: var(--lod-ink-soft);
+  cursor: pointer;
+
+  padding: $spacing-03 $spacing-04;
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
 
-.topRight {
-  border-top: 1px solid $headline-background;
-  border-right: 1px solid $headline-background;
-  border-bottom: 1px solid $headline-background;
+.filter + .filter {
+  border-left: 1px solid var(--lod-edge);
 }
 
-.bottomLeft {
-  border-left: 1px solid $headline-background;
-  border-bottom: 1px solid $headline-background;
-  border-right: 1px solid $headline-background;
+.filter:hover {
+  color: var(--lod-crimson);
 }
 
-.bottomRight {
-  border-bottom: 1px solid $headline-background;
-  border-right: 1px solid $headline-background;
+.filterActive,
+.filterActive:hover {
+  background: linear-gradient(180deg, var(--lod-crimson-bright), var(--lod-crimson));
+  color: var(--lod-gold-hi);
+}
+
+/* chapter navigation */
+.chapterNav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.navLetter {
+  width: 1.75rem;
+  height: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--lod-edge);
+  border-radius: var(--lod-radius);
+  background: transparent;
+  cursor: pointer;
+
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--lod-ink-faint);
+  transition:
+    color 0.12s ease,
+    border-color 0.12s ease,
+    background-color 0.12s ease;
+}
+
+.navLetter:hover {
+  border-color: var(--lod-gold);
+  color: var(--lod-crimson);
+}
+
+.navStarted {
+  color: var(--lod-crimson);
+  border-color: var(--lod-gold);
+}
+
+.navComplete {
+  background: linear-gradient(180deg, var(--lod-gold-hi), var(--lod-gold-bright));
+  border-color: var(--lod-gold);
+  color: var(--lod-crimson-ink);
+}
+
+/* chapters */
+.chapters {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-05;
+}
+
+.chapter {
+  scroll-margin-top: 5rem;
+}
+
+.chapterHead {
+  display: flex;
+  align-items: center;
+  gap: $spacing-04;
+  margin-bottom: $spacing-03;
+  padding-bottom: $spacing-02;
+  border-bottom: 1px solid var(--lod-edge);
+}
+
+.chapterLetter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  flex-shrink: 0;
+
+  background: linear-gradient(
+    160deg,
+    var(--lod-crimson-bright),
+    var(--lod-crimson-ink)
+  );
+  border: 2px solid var(--lod-gold);
+  border-radius: var(--lod-radius);
+
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--lod-gold-hi);
+}
+
+.chapterMeta {
+  flex: 1;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--lod-ink-soft);
+}
+
+.chapterCount {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--lod-ink-soft);
+  padding: 2px $spacing-03;
+  border: 1px solid var(--lod-edge);
+  border-radius: 999px;
+}
+
+.chapterDone {
+  color: var(--lod-crimson-ink);
+  background: linear-gradient(180deg, var(--lod-gold-hi), var(--lod-gold-bright));
+  border-color: var(--lod-gold);
+}
+
+/* entries */
+.entries {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-03;
+}
+
+.entry {
+  position: relative;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255, 252, 240, 0.6);
+  border: 1px solid var(--lod-edge-strong);
+  border-radius: var(--lod-radius);
+  cursor: pointer;
+  transition:
+    transform 0.08s ease,
+    border-color 0.12s ease,
+    background-color 0.12s ease;
+}
+
+.entry:hover {
+  border-color: var(--lod-gold);
+  transform: translateY(-1px);
+}
+
+.entry:active {
+  transform: translateY(0);
+}
+
+.entry:focus-visible {
+  outline: 2px solid var(--lod-gold-bright);
+  outline-offset: 2px;
+}
+
+.entryLabel {
+  font-family: var(--font-display);
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--lod-ink-soft);
+}
+
+.entryDone {
+  background: radial-gradient(
+    circle at 50% 38%,
+    var(--lod-crimson-bright),
+    var(--lod-crimson-ink)
+  );
+  border-color: var(--lod-gold);
+  box-shadow: 0 2px 6px rgba(40, 22, 8, 0.3);
+}
+
+.entryDone .entryLabel {
+  color: var(--lod-gold-hi);
+}
+
+.entryCheck {
+  position: absolute;
+  top: 2px;
+  right: 3px;
+  font-size: 0.62rem;
+  color: var(--lod-gold-hi);
+}
+
+.empty {
+  text-align: center;
+  padding: $spacing-06 0;
+  font-style: italic;
+  color: var(--lod-ink-soft);
+}
+
+@media (max-width: 520px) {
+  .entry {
+    width: 2.6rem;
+    height: 2.6rem;
+  }
 }

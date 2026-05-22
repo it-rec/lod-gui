@@ -1,131 +1,227 @@
-import React, { useState, useEffect } from 'react';
-import HeadlineContainer from '../common/HeadlineContainer/HeadlineContainer';
-import classNames from 'classnames';
-import styles from './StoryPoints.module.scss';
-import _, {isEmpty} from 'lodash';
-import { post, get } from '../../utils/netowrkUtils';
-import socketIOClient from 'socket.io-client';
-import {isEqual} from 'lodash/lang';
+import { useMemo, useRef, useState } from 'react';
+import cx from 'classnames';
+import Panel from '../common/Panel/Panel';
+import Skeleton from '../common/Skeleton/Skeleton';
+import { IconScroll, IconCheck } from '../common/icons';
+import { useGameChannel } from '../../hooks/useGameChannel';
 import { collections } from '../../shared';
+import styles from './StoryPoints.module.scss';
 
-const storyPointAPIPath = `/api/game/1/${collections.STORY_POINTS}/`;
+const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+const ENTRIES_PER_CHAPTER = 8;
+const TOTAL = LETTERS.length * ENTRIES_PER_CHAPTER;
 
-const StoryPoint = ({label, className, isActive, onActivate}) => {
-  return (
-    <div 
-      className={classNames({
-        [styles.isActive]: isActive,
-        [styles.storyPoints]: true,
-        [className]: true
-      })}
-      onClick={() => onActivate(label)}
-    >
-      {label}
-    </div>
-  );
-};
-
-const StoryPoints = () => {
-  const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-
-  const [storyPoints, setStoryPoints] = useState([]);
-  const [storyParts, setStoryParts] = useState([]);
-  const [socket, setSocket] = useState();
-
-  const generateInitialStoryPoints = () => {
-    const generatedStoryPoints = [];
-    letters.forEach((letter) => {
-      for (let n = 1; n < 9; n++) {
-        generatedStoryPoints.push({
-          label: `${letter}${n}`,
-          isDone: false
-        });
+// Builds the canonical A1–Z8 chronicle and overlays the saved done-state by
+// label. Doing it this way migrates any older/partial saved data (the legacy
+// generator skipped the letter "T") onto a complete, well-formed grid.
+const buildChronicle = (saved) => {
+  const doneByLabel = new Map();
+  if (Array.isArray(saved)) {
+    saved.forEach((entry) => {
+      if (entry && typeof entry.label === 'string') {
+        doneByLabel.set(entry.label, Boolean(entry.isDone));
       }
     });
-    return generatedStoryPoints;
-  };
-
-  useEffect(() => {
-    get(storyPointAPIPath)
-      .then(loadedStoryPoints => {
-        if (!isEmpty(loadedStoryPoints)) {
-          setStoryPoints(loadedStoryPoints);
-        }
-        else {
-          if (isEmpty(storyPoints)) setStoryPoints(generateInitialStoryPoints());
-        }
-      });
-    setSocket(socketIOClient());
-
-    return () => {
-      socket?.disconnect();
-    };
-  }, []);
-
-  useEffect(() => {
-    if (socket) {
-      socket.on('connect_error', (error) => {
-        console.error('error');
-        console.error(error);
-      });
-      socket.on(collections.STORY_POINTS, (storyPointsEvent) => {
-        setStoryPoints(storyPointsEvent);
-      });
+  }
+  const chronicle = [];
+  LETTERS.forEach((letter) => {
+    for (let n = 1; n <= ENTRIES_PER_CHAPTER; n += 1) {
+      const label = `${letter}${n}`;
+      chronicle.push({ label, isDone: doneByLabel.get(label) || false });
     }
-  }, [socket]);
+  });
+  return chronicle;
+};
 
-  useEffect(() => {
-    const currentStoryParts = [];
+const EMPTY_CHRONICLE = buildChronicle();
 
-    let index = -1;
-    for (let i = 0; i < storyPoints.length; i++) {
-      if (i % 8 === 0) {
-        index++;
-        currentStoryParts[index] = [];
-      }
-      currentStoryParts[index].push(storyPoints[i]);
-    }
+const FILTERS = [
+  { id: 'all', label: 'All' },
+  { id: 'open', label: 'Unfinished' },
+  { id: 'done', label: 'Completed' },
+];
 
-    if (!isEqual(storyParts, currentStoryParts) && !isEqual(storyPoints, generateInitialStoryPoints())) {
-      post(storyPointAPIPath, storyPoints);
-    }
+const StoryPoints = () => {
+  const {
+    value: entries,
+    save,
+    loading,
+    error,
+    reload,
+  } = useGameChannel({
+    channel: collections.STORY_POINTS,
+    path: '/api/game/1/storyPoints/',
+    initial: EMPTY_CHRONICLE,
+    fromServer: buildChronicle,
+    toServer: (list) => list,
+  });
 
-    setStoryParts(currentStoryParts);
-  }, [storyPoints]);
+  const [filter, setFilter] = useState('all');
+  const chapterRefs = useRef({});
 
-  const onActivate = (label) => {
-    const storyPoint = storyPoints.filter((storyPoint) => _.isEqual(storyPoint.label, label)).shift();
+  const doneCount = useMemo(
+    () => entries.filter((entry) => entry.isDone).length,
+    [entries]
+  );
+  const percent = Math.round((doneCount / TOTAL) * 100);
 
-    const storyPointsCopy = [...storyPoints];
-    const storyPointCopy = {...storyPoint};
-    storyPointCopy.isDone = !storyPoint.isDone;
+  const chapters = useMemo(
+    () =>
+      LETTERS.map((letter) => {
+        const chapterEntries = entries.filter((entry) => entry.label[0] === letter);
+        return {
+          letter,
+          entries: chapterEntries,
+          done: chapterEntries.filter((entry) => entry.isDone).length,
+        };
+      }),
+    [entries]
+  );
 
-    storyPointsCopy.splice(storyPoints.indexOf(storyPoint), 1, storyPointCopy);
-    setStoryPoints(storyPointsCopy);
-  };
+  const toggle = (label) =>
+    save(
+      entries.map((entry) =>
+        entry.label === label ? { ...entry, isDone: !entry.isDone } : entry
+      )
+    );
+
+  const matches = (entry) =>
+    filter === 'all' || (filter === 'open' ? !entry.isDone : entry.isDone);
+
+  const scrollToChapter = (letter) =>
+    chapterRefs.current[letter]?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    });
+
+  const visibleChapters = chapters.filter((chapter) =>
+    chapter.entries.some(matches)
+  );
 
   return (
-    <HeadlineContainer headLine={'Story Points'}>
-      <div className={styles.storyPointWrapper}>
-        {storyParts.map((storyPart, index) => {
-          return (
-            <div key={index}>
-              {storyPart.map((storyPoint) => {
-                return (
-                  <StoryPoint
-                    label={storyPoint.label}
-                    className={styles.topLeft}
-                    isActive={storyPoint.isDone}
-                    onActivate={onActivate}
-                    key={storyPoint.label}
-                  />
-                );
-              })}
+    <Panel
+      icon={<IconScroll />}
+      title="The Chronicle"
+      subtitle={
+        loading
+          ? 'Unrolling the scroll…'
+          : `${doneCount} of ${TOTAL} entries recorded`
+      }
+      error={error}
+      onRetry={reload}
+    >
+      {loading ? (
+        <div className={styles.loading}>
+          <Skeleton height="2.5rem" />
+          <Skeleton height="14rem" />
+        </div>
+      ) : (
+        <div className={styles.chronicle}>
+          <div className={styles.progress}>
+            <div className={styles.progressBar}>
+              <div
+                className={styles.progressFill}
+                style={{ width: `${percent}%` }}
+              />
             </div>
-          );
-        })}
-      </div>
-    </HeadlineContainer>
+            <span className={styles.progressLabel}>
+              {percent}% chronicled
+            </span>
+          </div>
+
+          <div className={styles.controls}>
+            <div className={styles.filters} role="group" aria-label="Filter entries">
+              {FILTERS.map((option) => (
+                <button
+                  key={option.id}
+                  type="button"
+                  className={cx(styles.filter, {
+                    [styles.filterActive]: filter === option.id,
+                  })}
+                  onClick={() => setFilter(option.id)}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+
+            <nav className={styles.chapterNav} aria-label="Jump to chapter">
+              {chapters.map((chapter) => (
+                <button
+                  key={chapter.letter}
+                  type="button"
+                  className={cx(styles.navLetter, {
+                    [styles.navComplete]: chapter.done === ENTRIES_PER_CHAPTER,
+                    [styles.navStarted]:
+                      chapter.done > 0 && chapter.done < ENTRIES_PER_CHAPTER,
+                  })}
+                  onClick={() => scrollToChapter(chapter.letter)}
+                  aria-label={`Chapter ${chapter.letter}, ${chapter.done} of ${ENTRIES_PER_CHAPTER} done`}
+                >
+                  {chapter.letter}
+                </button>
+              ))}
+            </nav>
+          </div>
+
+          {visibleChapters.length === 0 ? (
+            <p className={styles.empty}>
+              {filter === 'done'
+                ? 'No entries have been recorded yet.'
+                : 'Every entry has been chronicled. The tale is complete.'}
+            </p>
+          ) : (
+            <div className={styles.chapters}>
+              {visibleChapters.map((chapter) => (
+                <section
+                  key={chapter.letter}
+                  className={styles.chapter}
+                  ref={(node) => {
+                    chapterRefs.current[chapter.letter] = node;
+                  }}
+                >
+                  <header className={styles.chapterHead}>
+                    <span className={styles.chapterLetter}>{chapter.letter}</span>
+                    <span className={styles.chapterMeta}>
+                      Chapter {chapter.letter}
+                    </span>
+                    <span
+                      className={cx(styles.chapterCount, {
+                        [styles.chapterDone]:
+                          chapter.done === ENTRIES_PER_CHAPTER,
+                      })}
+                    >
+                      {chapter.done}/{ENTRIES_PER_CHAPTER}
+                    </span>
+                  </header>
+                  <div className={styles.entries}>
+                    {chapter.entries.filter(matches).map((entry) => (
+                      <button
+                        key={entry.label}
+                        type="button"
+                        className={cx(styles.entry, {
+                          [styles.entryDone]: entry.isDone,
+                        })}
+                        onClick={() => toggle(entry.label)}
+                        aria-pressed={entry.isDone}
+                        aria-label={`Entry ${entry.label}${
+                          entry.isDone ? ', recorded' : ''
+                        }`}
+                      >
+                        <span className={styles.entryLabel}>{entry.label}</span>
+                        {entry.isDone && (
+                          <IconCheck className={styles.entryCheck} />
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+    </Panel>
   );
 };
 

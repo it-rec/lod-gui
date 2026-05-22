@@ -1,44 +1,55 @@
-const {collections} = require('../src/shared');
-const { readFromDataBase, writeToDatabase } = require('./db/db-util.js');
+const store = require('./db/store');
 
-const API_PATH = '/api';
-const GAME_PATH = `${API_PATH}/game`;
-const GAME_ID_PATH = `${GAME_PATH}/:gameID`;
-const STORY_POINTS_PATH = `${GAME_ID_PATH}/storypoints/`;
-const HEROES_POINTS_PATH = `${GAME_ID_PATH}/heroes/`;
-const FAME_PATH = `${GAME_ID_PATH}/fame/`;
-const GOLD_PATH = `${GAME_ID_PATH}/gold/`;
-
-const generatePostAndGetEndpoint = (app, io, mongoClient, path, collection) => {
-  app.get(path, (req, res) => {
-    const { gameID } = req.params;
-
-    readFromDataBase(mongoClient, collection, parseInt(gameID, 10)).then(
-      result => {
-        // console.debug(`[GET - ${collection}]:`);
-        // console.debug(result.payload);
-        res.json(result?.payload);
-      }
-    );
-  });
-
-  app.post(path, (req, res) => {
-    const { gameID } = req.params;
-
-    writeToDatabase(mongoClient, collection, parseInt(gameID, 10), req.body);
-    io.emit(collection, req.body);
-    // console.debug(`[POST - ${collection}]:`);
-    // console.debug(req.body);
-    res.json(req.body);
-  });
+// Channel / collection names. These must stay in sync with `src/shared.js`
+// on the client. They are duplicated here on purpose: the client file is an
+// ES module and this server file is CommonJS.
+const COLLECTIONS = {
+  STORY_POINTS: 'storyPoints',
+  FAME: 'fame',
+  GOLD: 'gold',
+  HEROES: 'heroes',
 };
 
+const API_PATH = '/api';
+const GAME_ID_PATH = `${API_PATH}/game/:gameID`;
 
-const configureEndpoints = (app, io, mongoClient) => {
-  generatePostAndGetEndpoint(app, io, mongoClient, STORY_POINTS_PATH, collections.STORY_POINTS);
-  generatePostAndGetEndpoint(app, io, mongoClient, HEROES_POINTS_PATH, collections.HEROES);
-  generatePostAndGetEndpoint(app, io ,mongoClient, FAME_PATH, collections.FAME);
-  generatePostAndGetEndpoint(app, io, mongoClient, GOLD_PATH, collections.GOLD);
+const endpoints = [
+  { path: `${GAME_ID_PATH}/storyPoints/`, collection: COLLECTIONS.STORY_POINTS },
+  { path: `${GAME_ID_PATH}/heroes/`, collection: COLLECTIONS.HEROES },
+  { path: `${GAME_ID_PATH}/fame/`, collection: COLLECTIONS.FAME },
+  { path: `${GAME_ID_PATH}/gold/`, collection: COLLECTIONS.GOLD },
+];
+
+const configureEndpoints = (app, io) => {
+  endpoints.forEach(({ path, collection }) => {
+    app.get(path, async (req, res, next) => {
+      try {
+        const gameID = parseInt(req.params.gameID, 10);
+        const payload = await store.read(collection, gameID);
+        res.json(payload);
+      } catch (err) {
+        next(err);
+      }
+    });
+
+    app.post(path, async (req, res, next) => {
+      try {
+        const gameID = parseInt(req.params.gameID, 10);
+        await store.write(collection, gameID, req.body);
+        // The originating client id lets the browser ignore its own echo and
+        // avoid input flicker while still receiving everyone else's updates.
+        const origin = req.get('X-Client-Id') || null;
+        io.emit(collection, req.body, origin);
+        res.json(req.body);
+      } catch (err) {
+        next(err);
+      }
+    });
+  });
+
+  app.get(`${API_PATH}/status`, (req, res) => {
+    res.json({ persistent: store.isPersistent() });
+  });
 };
 
 module.exports = configureEndpoints;

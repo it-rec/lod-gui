@@ -1,0 +1,281 @@
+@use '../../common' as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-04;
+
+  padding: $spacing-04;
+  background: var(--lod-parchment-hi);
+  border: 1px solid var(--lod-edge);
+  border-radius: var(--lod-radius);
+  box-shadow: 0 2px 7px rgba(40, 22, 8, 0.14);
+  transition:
+    box-shadow 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.card:hover {
+  border-color: var(--lod-gold);
+}
+
+.card.open {
+  box-shadow: 0 8px 20px rgba(40, 22, 8, 0.24);
+  border-color: var(--lod-gold);
+}
+
+.main {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-04;
+}
+
+.avatar {
+  flex-shrink: 0;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  background: linear-gradient(
+    160deg,
+    var(--lod-crimson-bright),
+    var(--lod-crimson-ink)
+  );
+  border: 2px solid var(--lod-gold);
+  box-shadow: 0 2px 5px rgba(40, 22, 8, 0.3);
+
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--lod-gold-hi);
+}
+
+.identity {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-03;
+}
+
+.lineage {
+  display: flex;
+  gap: $spacing-03;
+}
+
+.lineage > * {
+  flex: 1;
+  min-width: 0;
+}
+
+.level {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-02 $spacing-03;
+
+  border: 1px solid var(--lod-gold);
+  border-radius: var(--lod-radius);
+  background: rgba(90, 12, 14, 0.06);
+}
+
+.levelWord {
+  font-family: var(--font-display);
+  font-size: 0.54rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--lod-ink-soft);
+}
+
+.levelNum {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.45rem;
+  line-height: 1;
+  color: var(--lod-crimson);
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-03;
+  width: 100%;
+  padding: $spacing-02;
+
+  background: transparent;
+  border: 1px dashed var(--lod-edge);
+  border-radius: var(--lod-radius);
+  cursor: pointer;
+
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lod-ink-soft);
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.toggle:hover {
+  color: var(--lod-crimson);
+  border-color: var(--lod-gold);
+  background: rgba(90, 12, 14, 0.05);
+}
+
+.chevron {
+  font-size: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.chevronUp {
+  transform: rotate(180deg);
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-05;
+  padding-top: $spacing-04;
+  border-top: 1px solid var(--lod-edge);
+}
+
+.statRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-05;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-02;
+}
+
+.statLabel,
+.sectionLabel {
+  font-family: var(--font-display);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lod-ink-soft);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-03;
+}
+
+.notes {
+  width: 100%;
+  resize: vertical;
+  min-height: 3.4rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--lod-ink);
+  background: rgba(255, 252, 240, 0.55);
+  border: 1px solid var(--lod-edge);
+  border-radius: var(--lod-radius);
+  padding: $spacing-03 $spacing-04;
+}
+
+.notes::placeholder {
+  color: var(--lod-ink-faint);
+  font-style: italic;
+}
+
+.notes:focus {
+  outline: none;
+  border-color: var(--lod-gold-bright);
+  background: var(--lod-parchment-hi);
+  box-shadow: 0 0 0 3px rgba(196, 160, 74, 0.22);
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* skills */
+.skills {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-03;
+}
+
+.chips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-03;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-02;
+
+  padding: 2px 2px 2px $spacing-03;
+  background: rgba(90, 12, 14, 0.08);
+  border: 1px solid var(--lod-edge);
+  border-radius: 999px;
+
+  font-size: 0.85rem;
+  color: var(--lod-ink);
+}
+
+.chipRemove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.15rem;
+  height: 1.15rem;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--lod-ink-faint);
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+
+.chipRemove:hover {
+  background: var(--lod-crimson);
+  color: var(--lod-parchment-hi);
+}
+
+.skillAdd {
+  display: flex;
+  gap: $spacing-03;
+}
+
+.skillAdd > :first-child {
+  flex: 1;
+}
+
+/* items */
+.items {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-03;
+}
+
+.itemRow {
+  display: flex;
+  align-items: center;
+  gap: $spacing-03;
+}
+
+.itemRow > :first-child {
+  flex: 1;
+  min-width: 0;
+}

@@ -1,39 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import ValueContainer from '../common/CurrentMaxContainer/ValueContainer';
-import HeadlineContainer from '../common/HeadlineContainer/HeadlineContainer';
-import {get, post} from '../../utils/netowrkUtils';
-import {collections} from '../../shared';
-import SocketIOComponent from '../common/SocketIOComponent/SocketIOComponent';
-
-const goldAPIPath = '/api/game/1/gold/';
+import Panel from '../common/Panel/Panel';
+import StatCounter from '../common/StatCounter/StatCounter';
+import Skeleton from '../common/Skeleton/Skeleton';
+import { IconCoins } from '../common/icons';
+import { useGameChannel } from '../../hooks/useGameChannel';
+import { collections } from '../../shared';
 
 const Gold = () => {
-  const [gold, setGold] = useState(0);
-
-  const shapeGoldResponse = (response) => response?.gold || 0;
-
-  useEffect(() => {
-    get(goldAPIPath).then(response => setGold(shapeGoldResponse(response)));
-  },
-  []);
-
-  const updateGold = (goldToSet) => {
-    setGold(goldToSet);
-    post(goldAPIPath, {gold: goldToSet});
-  };
+  const { value, save, loading, error, reload } = useGameChannel({
+    channel: collections.GOLD,
+    path: '/api/game/1/gold/',
+    initial: 0,
+    fromServer: (raw) => raw?.gold ?? 0,
+    toServer: (gold) => ({ gold }),
+  });
 
   return (
-    <SocketIOComponent
-      callback={(fameEvent) => setGold(shapeGoldResponse(fameEvent))}
-      channel={collections.GOLD}
+    <Panel
+      icon={<IconCoins />}
+      title="Treasury"
+      subtitle="The party's gold"
+      error={error}
+      onRetry={reload}
     >
-      <HeadlineContainer headLine={'Gold'}>
-        <ValueContainer
-          current={gold}
-          setCurrent={updateGold}
-        />
-      </HeadlineContainer>
-    </SocketIOComponent>
+      {loading ? (
+        <Skeleton height="6.5rem" />
+      ) : (
+        <StatCounter value={value} onChange={save} watermark={<IconCoins />} />
+      )}
+    </Panel>
   );
 };
 

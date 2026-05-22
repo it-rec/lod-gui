@@ -1,0 +1,62 @@
+@use '../../../common' as *;
+
+.counter {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-04;
+  padding: $spacing-03 0 $spacing-02;
+}
+
+.watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -62%);
+  font-size: 9rem;
+  line-height: 1;
+  color: var(--lod-crimson);
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+.valueRow {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.value {
+  width: 100%;
+  text-align: center;
+
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 3.4rem;
+  line-height: 1.1;
+  color: var(--lod-crimson);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+
+  background: transparent;
+  border: none;
+  border-bottom: 2px dashed transparent;
+  padding: 0 $spacing-03 $spacing-02;
+}
+
+.value:hover {
+  border-bottom-color: var(--lod-edge);
+}
+
+.value:focus {
+  outline: none;
+  border-bottom-color: var(--lod-gold-bright);
+}
+
+.steppers {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: $spacing-03;
+}

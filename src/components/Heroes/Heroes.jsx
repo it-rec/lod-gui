@@ -1,76 +1,96 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import HeadlineContainer from '../common/HeadlineContainer/HeadlineContainer';
-import {Column, FlexGrid, Row} from '@carbon/react';
-import TextInput from '../common/TextInput/TextInput';
-import SocketIOComponent from '../common/SocketIOComponent/SocketIOComponent';
-import {get, post} from '../../utils/netowrkUtils';
-import {cloneDeep, debounce, isEqual} from 'lodash';
-import {collections} from '../../shared';
+import Panel from '../common/Panel/Panel';
+import Skeleton from '../common/Skeleton/Skeleton';
+import Button from '../common/Button/Button';
+import HeroCard from './HeroCard';
+import { IconParty, IconPlus } from '../common/icons';
+import { useGameChannel } from '../../hooks/useGameChannel';
+import { collections } from '../../shared';
+import { createHero, normalizeHeroes, RACES, CLASSES, MAX_PARTY } from '../character';
+import styles from './Heroes.module.scss';
 
-const heroesAPIPath = '/api/game/1/heroes/';
-
-const initialState = ['','','','','',''];
-
-const NameTextInput = ({index, heroes, onHeroNameChange}) => <TextInput value={heroes[index]} onChange={(changeEvent) => onHeroNameChange(changeEvent?.target?.value, index, heroes)} />;
+// A stable seed party shown before anything has been saved for this game.
+const DEFAULT_PARTY = normalizeHeroes();
 
 const Heroes = () => {
+  const {
+    value: heroes,
+    save,
+    loading,
+    error,
+    reload,
+  } = useGameChannel({
+    channel: collections.HEROES,
+    path: '/api/game/1/heroes/',
+    initial: DEFAULT_PARTY,
+    fromServer: (raw) => normalizeHeroes(raw?.heroes ?? raw),
+    toServer: (list) => ({ heroes: list }),
+  });
 
-  const [heroes, setHeroes] = useState(initialState);
+  const namedCount = heroes.filter((hero) => hero.name.trim()).length;
 
-  const shapeHeroesResponse = (response) => response?.heroes || initialState;
+  const updateHero = (id, updated) =>
+    save(heroes.map((hero) => (hero.id === id ? updated : hero)));
 
-  const debouncePost = useCallback(debounce(post, 250), []);
+  const removeHero = (id) => save(heroes.filter((hero) => hero.id !== id));
 
-  useEffect(() => {
-    get(heroesAPIPath).then(response => setHeroes(shapeHeroesResponse(response)));
-  },
-  []);
-
-  const onHeroNameChange = async (hero, index, heroesList) => {
-    const newHeroesList = cloneDeep(heroesList);
-    newHeroesList[index] = hero;
-    setHeroes(newHeroesList);
-    debouncePost(heroesAPIPath, {heroes: newHeroesList});
-  };
-
-  const onHeroUpdateEventReceived = (heroUpdateEvent) => {
-    if (!isEqual(heroes, heroUpdateEvent)) setHeroes(shapeHeroesResponse(heroUpdateEvent));
-  };
+  const addHero = () => save([...heroes, createHero()]);
 
   return (
-    <SocketIOComponent
-      callback={onHeroUpdateEventReceived}
-      channel={collections.HEROES}
+    <Panel
+      icon={<IconParty />}
+      title="The Party"
+      subtitle={
+        loading
+          ? 'Gathering the company…'
+          : `${namedCount} of ${heroes.length} heroes named`
+      }
+      error={error}
+      onRetry={reload}
+      actions={
+        !loading && (
+          <Button
+            kind="gold"
+            size="sm"
+            onClick={addHero}
+            disabled={heroes.length >= MAX_PARTY}
+          >
+            <IconPlus />
+            Add hero
+          </Button>
+        )
+      }
     >
-      <HeadlineContainer headLine={'Heroes'}>
-        <FlexGrid>
-          <Row>
-            <Column>
-              <NameTextInput index={0} heroes={heroes} onHeroNameChange={onHeroNameChange} />
-            </Column>
-            <Column>
-              <NameTextInput index={1} heroes={heroes} onHeroNameChange={onHeroNameChange} />
-            </Column>
-          </Row>
-          <Row>
-            <Column>
-              <NameTextInput index={2} heroes={heroes} onHeroNameChange={onHeroNameChange} />
-            </Column>
-            <Column>
-              <NameTextInput index={3} heroes={heroes} onHeroNameChange={onHeroNameChange} />
-            </Column>
-          </Row>
-          <Row>
-            <Column>
-              <NameTextInput index={4} heroes={heroes} onHeroNameChange={onHeroNameChange} />
-            </Column>
-            <Column>
-              <NameTextInput index={5} heroes={heroes} onHeroNameChange={onHeroNameChange} />
-            </Column>
-          </Row>
-        </FlexGrid>
-      </HeadlineContainer>
-    </SocketIOComponent>
+      <datalist id="lod-races">
+        {RACES.map((race) => (
+          <option key={race} value={race} />
+        ))}
+      </datalist>
+      <datalist id="lod-classes">
+        {CLASSES.map((heroClass) => (
+          <option key={heroClass} value={heroClass} />
+        ))}
+      </datalist>
+
+      {loading ? (
+        <div className={styles.grid}>
+          {Array.from({ length: 4 }).map((_, index) => (
+            <Skeleton key={index} height="12rem" />
+          ))}
+        </div>
+      ) : (
+        <div className={styles.grid}>
+          {heroes.map((hero) => (
+            <HeroCard
+              key={hero.id}
+              hero={hero}
+              canRemove={heroes.length > 1}
+              onChange={(updated) => updateHero(hero.id, updated)}
+              onRemove={() => removeHero(hero.id)}
+            />
+          ))}
+        </div>
+      )}
+    </Panel>
   );
 };
 

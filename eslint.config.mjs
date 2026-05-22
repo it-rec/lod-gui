@@ -8,6 +8,7 @@ export default [
   },
   js.configs.recommended,
   react.configs.flat.recommended,
+  react.configs.flat['jsx-runtime'],
   {
     settings: {
       react: {
