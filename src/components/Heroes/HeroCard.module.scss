@@ -71,32 +71,26 @@
   min-width: 0;
 }
 
-.level {
-  flex-shrink: 0;
+.conditionTags {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: $spacing-02 $spacing-03;
-
-  border: 1px solid var(--lod-gold);
-  border-radius: var(--lod-radius);
-  background: rgba(90, 12, 14, 0.06);
+  flex-wrap: wrap;
+  gap: $spacing-03;
 }
 
-.levelWord {
+.conditionTag {
+  padding: 2px $spacing-03;
+  font-size: 0.74rem;
   font-family: var(--font-display);
-  font-size: 0.54rem;
-  letter-spacing: 0.13em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--lod-ink-soft);
-}
-
-.levelNum {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.45rem;
-  line-height: 1;
-  color: var(--lod-crimson);
+  color: var(--lod-bad);
+  background: rgba(154, 47, 28, 0.16);
+  border: 1px solid rgba(154, 47, 28, 0.5);
+  border-radius: 999px;
 }
 
 .toggle {
@@ -146,16 +140,11 @@
   border-top: 1px solid var(--lod-edge);
 }
 
-.statRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $spacing-05;
-}
-
 .stat {
   display: flex;
-  flex-direction: column;
-  gap: $spacing-02;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-04;
 }
 
 .statLabel,
@@ -211,46 +200,26 @@
   gap: $spacing-03;
 }
 
-.chips {
+.skillList {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: $spacing-03;
 }
 
-.chip {
-  display: inline-flex;
-  align-items: center;
-  gap: $spacing-02;
-
-  padding: 2px 2px 2px $spacing-03;
-  background: rgba(90, 12, 14, 0.08);
-  border: 1px solid var(--lod-edge);
-  border-radius: 999px;
-
-  font-size: 0.85rem;
-  color: var(--lod-ink);
-}
-
-.chipRemove {
+.skillRow {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 1.15rem;
-  height: 1.15rem;
-  border: none;
-  border-radius: 50%;
-  background: transparent;
-  color: var(--lod-ink-faint);
-  font-size: 0.7rem;
-  cursor: pointer;
+  gap: $spacing-03;
 }
 
-.chipRemove:hover {
-  background: var(--lod-crimson);
-  color: var(--lod-parchment-hi);
+.skillName {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.95rem;
+  color: var(--lod-ink);
 }
 
 .skillAdd {

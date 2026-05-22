@@ -1,12 +1,15 @@
 # LoD — Campaign Companion
 
-A real-time companion app for a tabletop campaign. It keeps the shared state of
-a game in sync across every player's screen:
+A real-time companion app for the storytelling board game **Legacy of
+Dragonholt**. It keeps the shared state of a campaign in sync across every
+player's screen:
 
-- **The Party** — hero cards with race, class, level, a vitality tracker and a
-  full character sheet (skills, inventory, notes).
-- **Treasury** — the party's gold.
-- **Renown** — the party's reputation and deeds.
+- **The Party** — character cards with species, background, a stamina tracker
+  and a full sheet: ranked skills, traits, conditions, inventory and notes.
+- **Gold** — the party's coin.
+- **Fame** — the party's reputation and deeds.
+- **The Calendar** — the current day and time of day, with one-tap advancement.
+- **Keywords** — the log of story keywords and notes recorded along the way.
 - **The Chronicle** — an A1–Z8 grid of story entries, with progress, chapter
   navigation and filtering.
 

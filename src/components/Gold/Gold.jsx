@@ -17,8 +17,8 @@ const Gold = () => {
   return (
     <Panel
       icon={<IconCoins />}
-      title="Treasury"
-      subtitle="The party's gold"
+      title="Gold"
+      subtitle="The party's coin"
       error={error}
       onRetry={reload}
     >

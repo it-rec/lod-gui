@@ -1,0 +1,100 @@
+@use '../../common' as *;
+
+.calendar {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-05;
+}
+
+.dayBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-02;
+}
+
+.dayLabel {
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lod-ink-soft);
+}
+
+.dayControls {
+  display: flex;
+  align-items: center;
+  gap: $spacing-04;
+}
+
+.dayValue {
+  min-width: 3rem;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 2.8rem;
+  line-height: 1;
+  color: var(--lod-crimson);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.phases {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-03;
+}
+
+.phase {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: $spacing-03 $spacing-02;
+
+  background: rgba(255, 252, 240, 0.55);
+  border: 1px solid var(--lod-edge-strong);
+  border-radius: var(--lod-radius);
+  cursor: pointer;
+  transition:
+    background-color 0.14s ease,
+    border-color 0.14s ease,
+    color 0.14s ease;
+}
+
+.phaseIcon {
+  display: flex;
+  font-size: 1.4rem;
+  color: var(--lod-ink-soft);
+}
+
+.phaseLabel {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--lod-ink-soft);
+}
+
+.phase:hover {
+  border-color: var(--lod-gold);
+}
+
+.phaseActive {
+  background: linear-gradient(
+    180deg,
+    var(--lod-crimson-bright),
+    var(--lod-crimson)
+  );
+  border-color: var(--lod-gold);
+}
+
+.phaseActive .phaseIcon,
+.phaseActive .phaseLabel {
+  color: var(--lod-gold-hi);
+}
+
+.advance {
+  width: 100%;
+}

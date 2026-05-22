@@ -14,7 +14,7 @@ const StaminaBar = ({ current, max, onChange }) => {
   return (
     <div className={styles.stamina}>
       <div className={styles.top}>
-        <span className={styles.label}>Vitality</span>
+        <span className={styles.label}>Stamina</span>
         <span className={styles.readout}>
           <strong>{current}</strong>
           <span className={styles.slash}> / {max}</span>
@@ -27,7 +27,7 @@ const StaminaBar = ({ current, max, onChange }) => {
         aria-valuenow={current}
         aria-valuemin={0}
         aria-valuemax={max}
-        aria-label="Vitality"
+        aria-label="Stamina"
       >
         <div
           className={`${styles.fill} ${styles[tier]}`}
@@ -42,7 +42,7 @@ const StaminaBar = ({ current, max, onChange }) => {
           iconOnly
           disabled={current <= 0}
           onClick={() => setCurrent(current - 1)}
-          aria-label="Lose a point of vitality"
+          aria-label="Lose a point of stamina"
         >
           <IconMinus />
         </Button>
@@ -52,7 +52,7 @@ const StaminaBar = ({ current, max, onChange }) => {
           iconOnly
           disabled={current >= max}
           onClick={() => setCurrent(current + 1)}
-          aria-label="Restore a point of vitality"
+          aria-label="Restore a point of stamina"
         >
           <IconPlus />
         </Button>

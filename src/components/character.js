@@ -1,37 +1,41 @@
-// The hero (character) model and helpers for normalising stored party data.
+// The hero (character) model for Legacy of Dragonholt and helpers for
+// normalising stored party data — including migration from the older shape.
 
 export const MAX_PARTY = 6;
 export const DEFAULT_PARTY_SIZE = 4;
 export const DEFAULT_STAMINA = 10;
+export const MAX_SKILL_RANK = 6;
 
-// Suggestions offered through <datalist> on the race/class inputs. They are
-// only hints — any free-text value is allowed for homebrew settings.
-export const RACES = [
-  'Human',
-  'Elf',
-  'Dwarf',
-  'Halfling',
-  'Gnome',
-  'Half-Orc',
-  'Tiefling',
-  'Dragonborn',
-  'Orc',
-  'Aasimar',
+// Suggestions offered through <datalist>. They are only autocomplete hints —
+// any free-text value is accepted.
+export const SPECIES = ['Human', 'Elf', 'Dwarf', 'Orc', 'Catfolk'];
+
+export const BACKGROUNDS = [
+  'Soldier',
+  'Scholar',
+  'Healer',
+  'Outlaw',
+  'Performer',
+  'Noble',
+  'Hunter',
+  'Merchant',
+  'Mystic',
+  'Wanderer',
 ];
 
-export const CLASSES = [
-  'Warrior',
-  'Mage',
-  'Rogue',
-  'Cleric',
-  'Ranger',
-  'Paladin',
-  'Bard',
-  'Druid',
-  'Barbarian',
-  'Sorcerer',
-  'Monk',
-  'Warlock',
+export const SKILLS = [
+  'Athletics',
+  'Bartering',
+  'Coordination',
+  'Healing',
+  'Intimidation',
+  'Intuition',
+  'Logic',
+  'Lore',
+  'Observation',
+  'Performance',
+  'Persuasion',
+  'Stealth',
 ];
 
 const uid = () =>
@@ -42,18 +46,36 @@ const uid = () =>
 export const createHero = (overrides = {}) => ({
   id: uid(),
   name: '',
-  race: '',
-  class: '',
-  level: 1,
+  species: '',
+  background: '',
   stamina: { current: DEFAULT_STAMINA, max: DEFAULT_STAMINA },
   skills: [],
+  traits: [],
+  conditions: [],
   items: [],
   notes: '',
   ...overrides,
 });
 
-// Upgrades a single stored entry — which may be a legacy plain name string or
-// a partial object — into a complete hero.
+const normalizeSkill = (raw) => {
+  if (typeof raw === 'string') {
+    const name = raw.trim();
+    return name ? { name, rank: 1 } : null;
+  }
+  if (raw && typeof raw === 'object' && typeof raw.name === 'string' && raw.name.trim()) {
+    const rank = Number.isFinite(raw.rank) ? Math.round(raw.rank) : 1;
+    return { name: raw.name.trim(), rank: Math.max(1, Math.min(rank, MAX_SKILL_RANK)) };
+  }
+  return null;
+};
+
+const stringList = (value) =>
+  Array.isArray(value)
+    ? value.filter((entry) => typeof entry === 'string' && entry.trim())
+    : [];
+
+// Upgrades a single stored entry — a legacy name string, a legacy object with
+// `race`/`class`/`level`, or a current hero object — into a complete hero.
 export const normalizeHero = (raw) => {
   if (typeof raw === 'string') return createHero({ name: raw });
   if (!raw || typeof raw !== 'object') return createHero();
@@ -71,13 +93,24 @@ export const normalizeHero = (raw) => {
     ...createHero(),
     ...(raw.id ? { id: raw.id } : {}),
     name: typeof raw.name === 'string' ? raw.name : '',
-    race: typeof raw.race === 'string' ? raw.race : '',
-    class: typeof raw.class === 'string' ? raw.class : '',
-    level: Number.isFinite(raw.level) ? Math.max(1, Math.round(raw.level)) : 1,
+    species:
+      typeof raw.species === 'string'
+        ? raw.species
+        : typeof raw.race === 'string'
+          ? raw.race
+          : '',
+    background:
+      typeof raw.background === 'string'
+        ? raw.background
+        : typeof raw.class === 'string'
+          ? raw.class
+          : '',
     stamina: { current: Math.max(0, Math.min(current, max)), max },
     skills: Array.isArray(raw.skills)
-      ? raw.skills.filter((skill) => typeof skill === 'string' && skill.trim())
+      ? raw.skills.map(normalizeSkill).filter(Boolean)
       : [],
+    traits: stringList(raw.traits),
+    conditions: stringList(raw.conditions),
     items: Array.isArray(raw.items)
       ? raw.items
         .filter((item) => item && typeof item === 'object')

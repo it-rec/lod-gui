@@ -5,7 +5,14 @@ import HeroCard from './HeroCard';
 import { IconParty, IconPlus } from '../common/icons';
 import { useGameChannel } from '../../hooks/useGameChannel';
 import { collections } from '../../shared';
-import { createHero, normalizeHeroes, RACES, CLASSES, MAX_PARTY } from '../character';
+import {
+  createHero,
+  normalizeHeroes,
+  SPECIES,
+  BACKGROUNDS,
+  SKILLS,
+  MAX_PARTY,
+} from '../character';
 import styles from './Heroes.module.scss';
 
 // A stable seed party shown before anything has been saved for this game.
@@ -60,14 +67,19 @@ const Heroes = () => {
         )
       }
     >
-      <datalist id="lod-races">
-        {RACES.map((race) => (
-          <option key={race} value={race} />
+      <datalist id="lod-species">
+        {SPECIES.map((species) => (
+          <option key={species} value={species} />
         ))}
       </datalist>
-      <datalist id="lod-classes">
-        {CLASSES.map((heroClass) => (
-          <option key={heroClass} value={heroClass} />
+      <datalist id="lod-backgrounds">
+        {BACKGROUNDS.map((background) => (
+          <option key={background} value={background} />
+        ))}
+      </datalist>
+      <datalist id="lod-skills">
+        {SKILLS.map((skill) => (
+          <option key={skill} value={skill} />
         ))}
       </datalist>
 

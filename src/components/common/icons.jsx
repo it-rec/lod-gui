@@ -125,3 +125,54 @@ export const IconLink = (props) => (
     />
   </Svg>
 );
+
+export const IconCalendar = (props) => (
+  <Svg {...props}>
+    <rect x="4" y="5" width="16" height="15" rx="2" fill="currentColor" opacity="0.16" />
+    <rect x="4" y="5" width="16" height="15" rx="2" {...stroke} />
+    <path {...stroke} d="M4 10h16M8 3v4M16 3v4" />
+    <path {...stroke} d="M8 14h0M12 14h0M16 14h0M8 17h0M12 17h0" />
+  </Svg>
+);
+
+export const IconKey = (props) => (
+  <Svg {...props}>
+    <circle cx="8" cy="8" r="4" fill="currentColor" opacity="0.16" />
+    <circle cx="8" cy="8" r="4" {...stroke} />
+    <path {...stroke} d="M10.9 10.9l7.1 7.1M15 15l2-2M18 18l2-2" />
+  </Svg>
+);
+
+export const IconSun = (props) => (
+  <Svg {...props}>
+    <circle cx="12" cy="12" r="4.3" fill="currentColor" opacity="0.22" />
+    <circle cx="12" cy="12" r="4.3" {...stroke} />
+    <path
+      {...stroke}
+      d="M12 2.5v2.5M12 19v2.5M4.4 4.4l1.8 1.8M17.8 17.8l1.8 1.8M2.5 12H5M19 12h2.5M4.4 19.6l1.8-1.8M17.8 6.2l1.8-1.8"
+    />
+  </Svg>
+);
+
+export const IconSunset = (props) => (
+  <Svg {...props}>
+    <path d="M7 16a5 5 0 0110 0z" fill="currentColor" opacity="0.22" />
+    <path {...stroke} d="M7 16a5 5 0 0110 0" />
+    <path
+      {...stroke}
+      d="M3 16h2M19 16h2M12 3v4M12 20h9M3 20h4M5.6 8.6l1.4 1.4M18.4 8.6L17 10"
+    />
+  </Svg>
+);
+
+export const IconMoon = (props) => (
+  <Svg {...props}>
+    <path
+      d="M20 14.5A8 8 0 019.5 4 8 8 0 1020 14.5z"
+      fill="currentColor"
+      opacity="0.22"
+    />
+    <path {...stroke} d="M20 14.5A8 8 0 019.5 4 8 8 0 1020 14.5z" />
+    <path {...stroke} d="M16 4.5l.7 1.5 1.5.7-1.5.7-.7 1.5-.7-1.5L13.8 6.7l1.5-.7z" />
+  </Svg>
+);

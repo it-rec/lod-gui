@@ -4,6 +4,8 @@ import AppHeader from './components/AppHeader/AppHeader';
 import Heroes from './components/Heroes/Heroes';
 import Gold from './components/Gold/Gold';
 import Fame from './components/Fame/Fame';
+import Calendar from './components/Calendar/Calendar';
+import Keywords from './components/Keywords/Keywords';
 import StoryPoints from './components/StoryPoints/StoryPoints';
 import Toaster from './components/common/Toast/Toaster';
 import { useConnection } from './hooks/useConnection';
@@ -44,8 +46,10 @@ const App = () => {
           <aside className="app__ledger">
             <Gold />
             <Fame />
+            <Calendar />
           </aside>
         </div>
+        <Keywords />
         <StoryPoints />
       </main>
       <footer className="app__footer">

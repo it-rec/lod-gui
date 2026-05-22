@@ -29,8 +29,10 @@ describe('App', () => {
 
     expect(await screen.findByText('LoD')).toBeInTheDocument();
     expect(screen.getByText('The Party')).toBeInTheDocument();
-    expect(screen.getByText('Treasury')).toBeInTheDocument();
-    expect(screen.getByText('Renown')).toBeInTheDocument();
+    expect(screen.getByText('Gold')).toBeInTheDocument();
+    expect(screen.getByText('Fame')).toBeInTheDocument();
+    expect(screen.getByText('The Calendar')).toBeInTheDocument();
+    expect(screen.getByText('Keywords')).toBeInTheDocument();
     expect(screen.getByText('The Chronicle')).toBeInTheDocument();
   });
 

@@ -17,7 +17,7 @@ const Fame = () => {
   return (
     <Panel
       icon={<IconRenown />}
-      title="Renown"
+      title="Fame"
       subtitle="Deeds and reputation"
       error={error}
       onRetry={reload}

@@ -3,34 +3,53 @@ import cx from 'classnames';
 import TextInput from '../common/TextInput/TextInput';
 import Button from '../common/Button/Button';
 import Stepper from '../common/Stepper/Stepper';
+import ChipEditor from '../common/ChipEditor/ChipEditor';
+import RankDots from '../common/RankDots/RankDots';
 import StaminaBar from './StaminaBar';
 import { IconChevron, IconTrash, IconPlus } from '../common/icons';
+import { MAX_SKILL_RANK } from '../character';
 import styles from './HeroCard.module.scss';
 
 const SkillEditor = ({ skills, onChange }) => {
   const [draft, setDraft] = useState('');
 
   const add = () => {
-    const skill = draft.trim();
-    if (skill && !skills.includes(skill)) onChange([...skills, skill]);
+    const name = draft.trim();
+    const exists = skills.some(
+      (skill) => skill.name.toLowerCase() === name.toLowerCase()
+    );
+    if (name && !exists) onChange([...skills, { name, rank: 1 }]);
     setDraft('');
   };
 
   return (
     <div className={styles.skills}>
       {skills.length > 0 && (
-        <ul className={styles.chips}>
-          {skills.map((skill) => (
-            <li key={skill} className={styles.chip}>
-              <span>{skill}</span>
-              <button
-                type="button"
-                className={styles.chipRemove}
-                onClick={() => onChange(skills.filter((entry) => entry !== skill))}
-                aria-label={`Remove ${skill}`}
+        <ul className={styles.skillList}>
+          {skills.map((skill, index) => (
+            <li key={skill.name} className={styles.skillRow}>
+              <span className={styles.skillName}>{skill.name}</span>
+              <RankDots
+                value={skill.rank}
+                max={MAX_SKILL_RANK}
+                label={`${skill.name} rank`}
+                onChange={(rank) =>
+                  onChange(
+                    skills.map((entry, idx) =>
+                      idx === index ? { ...entry, rank } : entry
+                    )
+                  )
+                }
+              />
+              <Button
+                kind="danger"
+                size="sm"
+                iconOnly
+                aria-label={`Remove ${skill.name}`}
+                onClick={() => onChange(skills.filter((_, idx) => idx !== index))}
               >
-                ✕
-              </button>
+                <IconTrash />
+              </Button>
             </li>
           ))}
         </ul>
@@ -38,8 +57,9 @@ const SkillEditor = ({ skills, onChange }) => {
       <div className={styles.skillAdd}>
         <TextInput
           variant="sm"
+          list="lod-skills"
           value={draft}
-          placeholder="Add a skill or proficiency…"
+          placeholder="Add a skill…"
           aria-label="New skill"
           onChange={(event) => setDraft(event.target.value)}
           onKeyDown={(event) => {
@@ -102,8 +122,8 @@ const ItemList = ({ items, onChange }) => {
   );
 };
 
-// A single hero's card: identity and vitality are always visible; the full
-// character sheet (level, skills, inventory, notes) lives in the details.
+// A single character's card: identity, conditions and stamina are always
+// visible; the full sheet (skills, traits, inventory, notes) lives in details.
 const HeroCard = ({ hero, onChange, onRemove, canRemove }) => {
   const [expanded, setExpanded] = useState(false);
   const update = (patch) => onChange({ ...hero, ...patch });
@@ -127,27 +147,33 @@ const HeroCard = ({ hero, onChange, onRemove, canRemove }) => {
           <div className={styles.lineage}>
             <TextInput
               variant="sm"
-              list="lod-races"
-              value={hero.race}
-              placeholder="Race"
-              aria-label="Race"
-              onChange={(event) => update({ race: event.target.value })}
+              list="lod-species"
+              value={hero.species}
+              placeholder="Species"
+              aria-label="Species"
+              onChange={(event) => update({ species: event.target.value })}
             />
             <TextInput
               variant="sm"
-              list="lod-classes"
-              value={hero.class}
-              placeholder="Class"
-              aria-label="Class"
-              onChange={(event) => update({ class: event.target.value })}
+              list="lod-backgrounds"
+              value={hero.background}
+              placeholder="Background"
+              aria-label="Background"
+              onChange={(event) => update({ background: event.target.value })}
             />
           </div>
         </div>
-        <div className={styles.level} title="Level">
-          <span className={styles.levelWord}>Lvl</span>
-          <span className={styles.levelNum}>{hero.level}</span>
-        </div>
       </div>
+
+      {hero.conditions.length > 0 && (
+        <ul className={styles.conditionTags} aria-label="Active conditions">
+          {hero.conditions.map((condition) => (
+            <li key={condition} className={styles.conditionTag}>
+              {condition}
+            </li>
+          ))}
+        </ul>
+      )}
 
       <StaminaBar
         current={hero.stamina.current}
@@ -167,41 +193,50 @@ const HeroCard = ({ hero, onChange, onRemove, canRemove }) => {
 
       {expanded && (
         <div className={styles.details}>
-          <div className={styles.statRow}>
-            <label className={styles.stat}>
-              <span className={styles.statLabel}>Level</span>
-              <Stepper
-                value={hero.level}
-                min={1}
-                max={30}
-                label="level"
-                onChange={(level) => update({ level })}
-              />
-            </label>
-            <label className={styles.stat}>
-              <span className={styles.statLabel}>Max vitality</span>
-              <Stepper
-                value={hero.stamina.max}
-                min={1}
-                max={99}
-                label="max vitality"
-                onChange={(max) =>
-                  update({
-                    stamina: {
-                      max,
-                      current: Math.min(hero.stamina.current, max),
-                    },
-                  })
-                }
-              />
-            </label>
-          </div>
+          <label className={styles.stat}>
+            <span className={styles.statLabel}>Max stamina</span>
+            <Stepper
+              value={hero.stamina.max}
+              min={1}
+              max={99}
+              label="max stamina"
+              onChange={(max) =>
+                update({
+                  stamina: {
+                    max,
+                    current: Math.min(hero.stamina.current, max),
+                  },
+                })
+              }
+            />
+          </label>
 
           <div className={styles.section}>
-            <span className={styles.sectionLabel}>Skills & proficiencies</span>
+            <span className={styles.sectionLabel}>Skills</span>
             <SkillEditor
               skills={hero.skills}
               onChange={(skills) => update({ skills })}
+            />
+          </div>
+
+          <div className={styles.section}>
+            <span className={styles.sectionLabel}>Traits</span>
+            <ChipEditor
+              values={hero.traits}
+              placeholder="Add a trait…"
+              ariaLabel="New trait"
+              onChange={(traits) => update({ traits })}
+            />
+          </div>
+
+          <div className={styles.section}>
+            <span className={styles.sectionLabel}>Conditions</span>
+            <ChipEditor
+              values={hero.conditions}
+              tone="warning"
+              placeholder="Add a condition…"
+              ariaLabel="New condition"
+              onChange={(conditions) => update({ conditions })}
             />
           </div>
 
@@ -222,12 +257,7 @@ const HeroCard = ({ hero, onChange, onRemove, canRemove }) => {
           </div>
 
           <div className={styles.cardFooter}>
-            <Button
-              kind="danger"
-              size="sm"
-              disabled={!canRemove}
-              onClick={onRemove}
-            >
+            <Button kind="danger" size="sm" disabled={!canRemove} onClick={onRemove}>
               <IconTrash />
               Remove hero
             </Button>

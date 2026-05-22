@@ -8,6 +8,8 @@ const COLLECTIONS = {
   FAME: 'fame',
   GOLD: 'gold',
   HEROES: 'heroes',
+  CALENDAR: 'calendar',
+  KEYWORDS: 'keywords',
 };
 
 const API_PATH = '/api';
@@ -18,6 +20,8 @@ const endpoints = [
   { path: `${GAME_ID_PATH}/heroes/`, collection: COLLECTIONS.HEROES },
   { path: `${GAME_ID_PATH}/fame/`, collection: COLLECTIONS.FAME },
   { path: `${GAME_ID_PATH}/gold/`, collection: COLLECTIONS.GOLD },
+  { path: `${GAME_ID_PATH}/calendar/`, collection: COLLECTIONS.CALENDAR },
+  { path: `${GAME_ID_PATH}/keywords/`, collection: COLLECTIONS.KEYWORDS },
 ];
 
 const configureEndpoints = (app, io) => {
