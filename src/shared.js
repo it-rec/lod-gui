@@ -6,4 +6,5 @@ export const collections = {
   CALENDAR: 'calendar',
   KEYWORDS: 'keywords',
   QUESTS: 'quests',
+  NPCS: 'npcs',
 };

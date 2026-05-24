@@ -33,15 +33,9 @@
 
 .app__notebook {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
   gap: $spacing-06;
   align-items: start;
-}
-
-@media (max-width: 960px) {
-  .app__notebook {
-    grid-template-columns: 1fr;
-  }
 }
 
 .app__footer {

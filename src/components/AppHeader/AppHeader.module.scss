@@ -33,6 +33,12 @@
   min-width: 0;
 }
 
+.tools {
+  display: flex;
+  align-items: center;
+  gap: $spacing-04;
+}
+
 .crest {
   width: 3.4rem;
   height: auto;

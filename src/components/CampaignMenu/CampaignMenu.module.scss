@@ -1,0 +1,102 @@
+@use '../../common' as *;
+
+.menu {
+  position: relative;
+}
+
+.dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 0 2px;
+}
+
+.dots > span {
+  display: block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.popover {
+  position: absolute;
+  top: calc(100% + #{$spacing-03});
+  right: 0;
+  z-index: 200;
+
+  list-style: none;
+  margin: 0;
+  padding: $spacing-02;
+  min-width: 18rem;
+
+  background: var(--lod-parchment-hi);
+  border: 1px solid var(--lod-edge-strong);
+  border-radius: var(--lod-radius);
+  box-shadow:
+    0 12px 28px rgba(20, 10, 4, 0.42),
+    0 0 0 1px var(--lod-gold) inset;
+
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-01;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: $spacing-04;
+  width: 100%;
+  padding: $spacing-03 $spacing-04;
+
+  background: transparent;
+  border: none;
+  border-radius: var(--lod-radius);
+  color: var(--lod-ink);
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+
+  transition:
+    background-color 0.12s ease,
+    color 0.12s ease;
+}
+
+.option > svg {
+  flex-shrink: 0;
+  font-size: 1.2rem;
+  color: var(--lod-crimson);
+}
+
+.option:hover,
+.option:focus-visible {
+  background: rgba(196, 160, 74, 0.18);
+  outline: none;
+}
+
+.optionBody {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.optionLabel {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.optionHint {
+  font-size: 0.78rem;
+  color: var(--lod-ink-soft);
+}
+
+.fileInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}

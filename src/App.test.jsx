@@ -33,6 +33,8 @@ describe('App', () => {
     expect(screen.getByText('Fame')).toBeInTheDocument();
     expect(screen.getByText('The Calendar')).toBeInTheDocument();
     expect(screen.getByText('Keywords')).toBeInTheDocument();
+    expect(screen.getByText('Quests')).toBeInTheDocument();
+    expect(screen.getByText('People')).toBeInTheDocument();
     expect(screen.getByText('The Chronicle')).toBeInTheDocument();
   });
 

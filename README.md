@@ -9,9 +9,15 @@ player's screen:
 - **Gold** — the party's coin.
 - **Fame** — the party's reputation and deeds.
 - **The Calendar** — the current day and time of day, with one-tap advancement.
+- **Quests** — pledged errands with notes and active/completed filtering.
+- **People** — the cast met along the way, tagged ally / foe / neutral /
+  unknown, with location and notes.
 - **Keywords** — the log of story keywords and notes recorded along the way.
 - **The Chronicle** — an A1–Z8 grid of story entries, with progress, chapter
   navigation and filtering.
+
+The header also offers a **campaign menu** with one-click **Download backup**
+(every panel saved to a single JSON file) and **Restore from backup**.
 
 Built as a React app (powered by [Vite](https://vitejs.dev/)) with an
 Express + Socket.IO backend. Every change is broadcast over Socket.IO so all
