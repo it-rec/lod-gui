@@ -2,6 +2,7 @@ import cx from 'classnames';
 import Panel from '../common/Panel/Panel';
 import Skeleton from '../common/Skeleton/Skeleton';
 import Button from '../common/Button/Button';
+import TextInput from '../common/TextInput/TextInput';
 import {
   IconCalendar,
   IconSun,
@@ -21,7 +22,7 @@ const PHASES = [
   { id: 'night', label: 'Night', icon: <IconMoon /> },
 ];
 const PHASE_IDS = PHASES.map((phase) => phase.id);
-const INITIAL = { day: 1, time: 'morning' };
+const INITIAL = { day: 1, time: 'morning', adventure: '' };
 
 const Calendar = () => {
   const { value, save, loading, error, reload } = useGameChannel({
@@ -31,6 +32,7 @@ const Calendar = () => {
     fromServer: (raw) => ({
       day: Number.isFinite(raw?.day) && raw.day > 0 ? Math.round(raw.day) : 1,
       time: PHASE_IDS.includes(raw?.time) ? raw.time : 'morning',
+      adventure: typeof raw?.adventure === 'string' ? raw.adventure : '',
     }),
   });
 
@@ -58,6 +60,17 @@ const Calendar = () => {
         <Skeleton height="10rem" />
       ) : (
         <div className={styles.calendar}>
+          <label className={styles.adventure}>
+            <span className={styles.adventureLabel}>Current adventure</span>
+            <TextInput
+              variant="sm"
+              value={value.adventure}
+              placeholder="Untitled tale"
+              aria-label="Current adventure"
+              onChange={(event) => save({ ...value, adventure: event.target.value })}
+            />
+          </label>
+
           <div className={styles.dayBlock}>
             <span className={styles.dayLabel}>Day</span>
             <div className={styles.dayControls}>

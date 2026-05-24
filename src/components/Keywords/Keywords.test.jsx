@@ -28,4 +28,24 @@ describe('Keywords', () => {
     expect(screen.queryByText('Silver key')).not.toBeInTheDocument();
     expect(screen.getByText(/No keywords yet/)).toBeInTheDocument();
   });
+
+  it('reveals search once enough keywords are recorded and filters by text', async () => {
+    const user = userEvent.setup();
+    render(<Keywords />);
+
+    const add = screen.getByLabelText('New keyword');
+    for (const word of ['Silver key', 'Sapphire ring', 'Old map', 'Sealed letter']) {
+      await user.type(add, `${word}{Enter}`);
+    }
+
+    const search = screen.getByLabelText('Search keywords');
+    await user.type(search, 'sil');
+    expect(screen.getByText('Silver key')).toBeInTheDocument();
+    expect(screen.queryByText('Sapphire ring')).not.toBeInTheDocument();
+    expect(screen.queryByText('Old map')).not.toBeInTheDocument();
+
+    await user.clear(search);
+    await user.type(search, 'nothing');
+    expect(screen.getByText(/No keywords match/)).toBeInTheDocument();
+  });
 });

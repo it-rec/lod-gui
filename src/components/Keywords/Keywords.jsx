@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import Panel from '../common/Panel/Panel';
 import Skeleton from '../common/Skeleton/Skeleton';
 import Button from '../common/Button/Button';
 import TextInput from '../common/TextInput/TextInput';
-import { IconKey, IconPlus, IconTrash } from '../common/icons';
+import { IconKey, IconPlus, IconTrash, IconSearch } from '../common/icons';
 import { useGameChannel } from '../../hooks/useGameChannel';
 import { collections } from '../../shared';
 import styles from './Keywords.module.scss';
@@ -49,6 +49,18 @@ const Keywords = () => {
     toServer: (list) => ({ keywords: list }),
   });
   const [draft, setDraft] = useState('');
+  const [query, setQuery] = useState('');
+
+  const trimmedQuery = query.trim().toLowerCase();
+  const visible = useMemo(
+    () =>
+      trimmedQuery
+        ? value.filter((keyword) =>
+          keyword.text.toLowerCase().includes(trimmedQuery)
+        )
+        : value,
+    [value, trimmedQuery]
+  );
 
   const add = () => {
     const text = draft.trim();
@@ -91,13 +103,30 @@ const Keywords = () => {
             </Button>
           </div>
 
+          {value.length > 3 && (
+            <label className={styles.search}>
+              <IconSearch className={styles.searchIcon} aria-hidden="true" />
+              <TextInput
+                variant="sm"
+                value={query}
+                placeholder="Search keywords…"
+                aria-label="Search keywords"
+                onChange={(event) => setQuery(event.target.value)}
+              />
+            </label>
+          )}
+
           {value.length === 0 ? (
             <p className={styles.empty}>
               No keywords yet. The storybook will tell you when to record one.
             </p>
+          ) : visible.length === 0 ? (
+            <p className={styles.empty}>
+              No keywords match &ldquo;{query.trim()}&rdquo;.
+            </p>
           ) : (
             <ul className={styles.list}>
-              {value.map((keyword) => (
+              {visible.map((keyword) => (
                 <li key={keyword.id} className={styles.entry}>
                   <span className={styles.bullet} aria-hidden="true">
                     ❧

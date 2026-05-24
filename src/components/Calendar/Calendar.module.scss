@@ -6,6 +6,21 @@
   gap: $spacing-05;
 }
 
+.adventure {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-02;
+}
+
+.adventureLabel {
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lod-ink-soft);
+}
+
 .dayBlock {
   display: flex;
   flex-direction: column;

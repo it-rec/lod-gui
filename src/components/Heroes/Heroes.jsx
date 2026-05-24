@@ -42,10 +42,11 @@ const Heroes = () => {
   const { value: calendar, save: saveCalendar } = useGameChannel({
     channel: collections.CALENDAR,
     path: '/api/game/1/calendar/',
-    initial: { day: 1, time: 'morning' },
+    initial: { day: 1, time: 'morning', adventure: '' },
     fromServer: (raw) => ({
       day: Number.isFinite(raw?.day) && raw.day > 0 ? Math.round(raw.day) : 1,
       time: PHASE_IDS.includes(raw?.time) ? raw.time : 'morning',
+      adventure: typeof raw?.adventure === 'string' ? raw.adventure : '',
     }),
   });
 
@@ -70,7 +71,7 @@ const Heroes = () => {
         stamina: { ...hero.stamina, current: hero.stamina.max },
       }))
     );
-    saveCalendar({ day: calendar.day + 1, time: 'morning' });
+    saveCalendar({ ...calendar, day: calendar.day + 1, time: 'morning' });
     toast.success(
       'The party rests',
       `Stamina restored. Day ${calendar.day + 1} dawns.`,
