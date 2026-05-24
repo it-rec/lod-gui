@@ -31,6 +31,19 @@
   gap: $spacing-06;
 }
 
+.app__notebook {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: $spacing-06;
+  align-items: start;
+}
+
+@media (max-width: 960px) {
+  .app__notebook {
+    grid-template-columns: 1fr;
+  }
+}
+
 .app__footer {
   text-align: center;
   padding: $spacing-05 $spacing-06 $spacing-07;

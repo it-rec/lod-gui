@@ -5,4 +5,5 @@ export const collections = {
   HEROES: 'heroes',
   CALENDAR: 'calendar',
   KEYWORDS: 'keywords',
+  QUESTS: 'quests',
 };

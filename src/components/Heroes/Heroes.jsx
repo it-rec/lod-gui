@@ -2,9 +2,10 @@ import Panel from '../common/Panel/Panel';
 import Skeleton from '../common/Skeleton/Skeleton';
 import Button from '../common/Button/Button';
 import HeroCard from './HeroCard';
-import { IconParty, IconPlus } from '../common/icons';
+import { IconParty, IconPlus, IconRest } from '../common/icons';
 import { useGameChannel } from '../../hooks/useGameChannel';
 import { collections } from '../../shared';
+import { toast } from '../common/Toast/toastStore';
 import {
   createHero,
   normalizeHeroes,
@@ -17,6 +18,8 @@ import styles from './Heroes.module.scss';
 
 // A stable seed party shown before anything has been saved for this game.
 const DEFAULT_PARTY = normalizeHeroes();
+
+const PHASE_IDS = ['morning', 'afternoon', 'evening', 'night'];
 
 const Heroes = () => {
   const {
@@ -33,7 +36,23 @@ const Heroes = () => {
     toServer: (list) => ({ heroes: list }),
   });
 
+  // The rest action also advances the calendar, so subscribe to that channel
+  // here too. Both Calendar and Heroes can listen to the same channel safely —
+  // saves are broadcast and each hook keeps its own copy in sync.
+  const { value: calendar, save: saveCalendar } = useGameChannel({
+    channel: collections.CALENDAR,
+    path: '/api/game/1/calendar/',
+    initial: { day: 1, time: 'morning' },
+    fromServer: (raw) => ({
+      day: Number.isFinite(raw?.day) && raw.day > 0 ? Math.round(raw.day) : 1,
+      time: PHASE_IDS.includes(raw?.time) ? raw.time : 'morning',
+    }),
+  });
+
   const namedCount = heroes.filter((hero) => hero.name.trim()).length;
+  const woundedCount = heroes.filter(
+    (hero) => hero.stamina.current < hero.stamina.max
+  ).length;
 
   const updateHero = (id, updated) =>
     save(heroes.map((hero) => (hero.id === id ? updated : hero)));
@@ -41,6 +60,23 @@ const Heroes = () => {
   const removeHero = (id) => save(heroes.filter((hero) => hero.id !== id));
 
   const addHero = () => save([...heroes, createHero()]);
+
+  // Restores every hero to full stamina and rolls the calendar to the next
+  // morning. Conditions are left alone — they are story state, not wounds.
+  const restParty = () => {
+    save(
+      heroes.map((hero) => ({
+        ...hero,
+        stamina: { ...hero.stamina, current: hero.stamina.max },
+      }))
+    );
+    saveCalendar({ day: calendar.day + 1, time: 'morning' });
+    toast.success(
+      'The party rests',
+      `Stamina restored. Day ${calendar.day + 1} dawns.`,
+      'party-rest'
+    );
+  };
 
   return (
     <Panel
@@ -55,15 +91,32 @@ const Heroes = () => {
       onRetry={reload}
       actions={
         !loading && (
-          <Button
-            kind="gold"
-            size="sm"
-            onClick={addHero}
-            disabled={heroes.length >= MAX_PARTY}
-          >
-            <IconPlus />
-            Add hero
-          </Button>
+          <div className={styles.actions}>
+            <Button
+              kind="ghost"
+              size="sm"
+              onClick={restParty}
+              disabled={woundedCount === 0}
+              aria-label="Rest the party"
+              title={
+                woundedCount === 0
+                  ? 'The party is already at full strength.'
+                  : 'Restore stamina and advance to the next morning.'
+              }
+            >
+              <IconRest />
+              Long rest
+            </Button>
+            <Button
+              kind="gold"
+              size="sm"
+              onClick={addHero}
+              disabled={heroes.length >= MAX_PARTY}
+            >
+              <IconPlus />
+              Add hero
+            </Button>
+          </div>
         )
       }
     >

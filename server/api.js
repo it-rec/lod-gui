@@ -10,6 +10,7 @@ const COLLECTIONS = {
   HEROES: 'heroes',
   CALENDAR: 'calendar',
   KEYWORDS: 'keywords',
+  QUESTS: 'quests',
 };
 
 const API_PATH = '/api';
@@ -22,6 +23,7 @@ const endpoints = [
   { path: `${GAME_ID_PATH}/gold/`, collection: COLLECTIONS.GOLD },
   { path: `${GAME_ID_PATH}/calendar/`, collection: COLLECTIONS.CALENDAR },
   { path: `${GAME_ID_PATH}/keywords/`, collection: COLLECTIONS.KEYWORDS },
+  { path: `${GAME_ID_PATH}/quests/`, collection: COLLECTIONS.QUESTS },
 ];
 
 const configureEndpoints = (app, io) => {

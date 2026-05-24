@@ -97,6 +97,30 @@
   color: var(--lod-gold-hi);
 }
 
+/* find entry */
+.search {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex: 1;
+  min-width: 8rem;
+  max-width: 14rem;
+}
+
+.searchIcon {
+  position: absolute;
+  left: $spacing-03;
+  color: var(--lod-ink-faint);
+  font-size: 1em;
+  pointer-events: none;
+}
+
+.search input {
+  width: 100%;
+  padding-left: calc(#{$spacing-03} + 1.4em);
+  text-transform: uppercase;
+}
+
 /* chapter navigation */
 .chapterNav {
   display: flex;

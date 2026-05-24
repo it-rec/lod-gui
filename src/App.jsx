@@ -6,6 +6,7 @@ import Gold from './components/Gold/Gold';
 import Fame from './components/Fame/Fame';
 import Calendar from './components/Calendar/Calendar';
 import Keywords from './components/Keywords/Keywords';
+import Quests from './components/Quests/Quests';
 import StoryPoints from './components/StoryPoints/StoryPoints';
 import Toaster from './components/common/Toast/Toaster';
 import { useConnection } from './hooks/useConnection';
@@ -49,7 +50,10 @@ const App = () => {
             <Calendar />
           </aside>
         </div>
-        <Keywords />
+        <div className="app__notebook">
+          <Quests />
+          <Keywords />
+        </div>
         <StoryPoints />
       </main>
       <footer className="app__footer">

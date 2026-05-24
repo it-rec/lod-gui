@@ -165,6 +165,36 @@ export const IconSunset = (props) => (
   </Svg>
 );
 
+export const IconQuest = (props) => (
+  <Svg {...props}>
+    <path
+      d="M5 4h12l-2.5 4L17 12H5z"
+      fill="currentColor"
+      opacity="0.18"
+    />
+    <path {...stroke} d="M5 4h12l-2.5 4L17 12H5z" />
+    <path {...stroke} d="M5 4v17" />
+  </Svg>
+);
+
+export const IconSearch = (props) => (
+  <Svg {...props}>
+    <circle cx="11" cy="11" r="6" fill="currentColor" opacity="0.14" />
+    <circle cx="11" cy="11" r="6" {...stroke} />
+    <path {...stroke} d="M15.5 15.5L20 20" />
+  </Svg>
+);
+
+export const IconPencil = (props) => (
+  <Svg {...props}>
+    <path
+      {...stroke}
+      d="M4 20l1-4L17 4l3 3L8 19l-4 1z"
+    />
+    <path {...stroke} d="M14 7l3 3" />
+  </Svg>
+);
+
 export const IconMoon = (props) => (
   <Svg {...props}>
     <path

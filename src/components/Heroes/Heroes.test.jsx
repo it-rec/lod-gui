@@ -39,4 +39,23 @@ describe('Heroes', () => {
     await user.click(screen.getByRole('button', { name: 'Remove hero' }));
     expect(screen.getAllByLabelText('Hero name')).toHaveLength(3);
   });
+
+  it('disables the party rest while everyone is at full stamina', () => {
+    render(<Heroes />);
+    expect(screen.getByRole('button', { name: 'Rest the party' })).toBeDisabled();
+  });
+
+  it('enables the party rest after a wound and restores everyone on click', async () => {
+    const user = userEvent.setup();
+    render(<Heroes />);
+
+    await user.click(
+      screen.getAllByRole('button', { name: 'Lose a point of stamina' })[0]
+    );
+    const rest = screen.getByRole('button', { name: 'Rest the party' });
+    expect(rest).toBeEnabled();
+
+    await user.click(rest);
+    expect(rest).toBeDisabled();
+  });
 });
