@@ -1,0 +1,192 @@
+@use '../../common' as *;
+
+.quests {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-05;
+}
+
+.add {
+  display: flex;
+  gap: $spacing-03;
+}
+
+.add > :first-child {
+  flex: 1;
+}
+
+.filters {
+  display: inline-flex;
+  align-self: flex-start;
+  border: 1px solid var(--lod-edge-strong);
+  border-radius: var(--lod-radius);
+  overflow: hidden;
+}
+
+.filter {
+  border: none;
+  background: rgba(60, 40, 20, 0.04);
+  color: var(--lod-ink-soft);
+  cursor: pointer;
+
+  padding: $spacing-03 $spacing-04;
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.filter + .filter {
+  border-left: 1px solid var(--lod-edge);
+}
+
+.filter:hover {
+  color: var(--lod-crimson);
+}
+
+.filterActive,
+.filterActive:hover {
+  background: linear-gradient(180deg, var(--lod-crimson-bright), var(--lod-crimson));
+  color: var(--lod-gold-hi);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-03;
+}
+
+.entry {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-04;
+  padding: $spacing-04;
+  background: rgba(255, 252, 240, 0.6);
+  border: 1px solid var(--lod-edge);
+  border-left: 3px solid var(--lod-crimson);
+  border-radius: var(--lod-radius);
+  transition: opacity 0.15s ease, border-color 0.15s ease;
+}
+
+.entryDone {
+  border-left-color: var(--lod-gold);
+  opacity: 0.78;
+}
+
+.entryEditing {
+  border-left-color: var(--lod-gold-bright);
+  background: rgba(255, 252, 240, 0.85);
+}
+
+.checkbox {
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-top: 1px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1.5px solid var(--lod-edge-strong);
+  border-radius: var(--lod-radius);
+  background: rgba(255, 252, 240, 0.4);
+  color: var(--lod-gold-hi);
+  cursor: pointer;
+  transition:
+    background-color 0.12s ease,
+    border-color 0.12s ease;
+}
+
+.checkbox:hover {
+  border-color: var(--lod-gold);
+}
+
+.checkbox[aria-pressed='true'] {
+  background: linear-gradient(160deg, var(--lod-crimson-bright), var(--lod-crimson-ink));
+  border-color: var(--lod-gold);
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--lod-ink);
+  overflow-wrap: anywhere;
+}
+
+.entryDone .title {
+  text-decoration: line-through;
+  text-decoration-color: var(--lod-gold);
+  color: var(--lod-ink-soft);
+}
+
+.detail {
+  font-size: 0.92rem;
+  color: var(--lod-ink-soft);
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.entryActions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-02;
+  flex-shrink: 0;
+}
+
+.editor {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-03;
+}
+
+.notes {
+  width: 100%;
+  resize: vertical;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--lod-ink);
+
+  padding: $spacing-03 $spacing-04;
+  background: rgba(255, 252, 240, 0.8);
+  border: 1px solid var(--lod-edge-strong);
+  border-radius: var(--lod-radius);
+  box-shadow: inset 0 1px 2px rgba(40, 22, 8, 0.18);
+}
+
+.notes:focus {
+  outline: none;
+  border-color: var(--lod-gold);
+  box-shadow: 0 0 0 2px rgba(196, 160, 74, 0.35);
+}
+
+.editorActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: $spacing-03;
+}
+
+.empty {
+  text-align: center;
+  padding: $spacing-05 0;
+  font-style: italic;
+  color: var(--lod-ink-soft);
+}

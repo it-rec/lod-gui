@@ -2,7 +2,8 @@ import { useMemo, useRef, useState } from 'react';
 import cx from 'classnames';
 import Panel from '../common/Panel/Panel';
 import Skeleton from '../common/Skeleton/Skeleton';
-import { IconScroll, IconCheck } from '../common/icons';
+import TextInput from '../common/TextInput/TextInput';
+import { IconScroll, IconCheck, IconSearch } from '../common/icons';
 import { useGameChannel } from '../../hooks/useGameChannel';
 import { collections } from '../../shared';
 import styles from './StoryPoints.module.scss';
@@ -57,6 +58,7 @@ const StoryPoints = () => {
   });
 
   const [filter, setFilter] = useState('all');
+  const [query, setQuery] = useState('');
   const chapterRefs = useRef({});
 
   const doneCount = useMemo(
@@ -85,8 +87,15 @@ const StoryPoints = () => {
       )
     );
 
-  const matches = (entry) =>
-    filter === 'all' || (filter === 'open' ? !entry.isDone : entry.isDone);
+  const trimmedQuery = query.trim().toUpperCase();
+
+  const matches = (entry) => {
+    const passesFilter =
+      filter === 'all' || (filter === 'open' ? !entry.isDone : entry.isDone);
+    const passesQuery =
+      !trimmedQuery || entry.label.includes(trimmedQuery);
+    return passesFilter && passesQuery;
+  };
 
   const scrollToChapter = (letter) =>
     chapterRefs.current[letter]?.scrollIntoView({
@@ -145,6 +154,18 @@ const StoryPoints = () => {
               ))}
             </div>
 
+            <label className={styles.search}>
+              <IconSearch className={styles.searchIcon} aria-hidden="true" />
+              <TextInput
+                variant="sm"
+                value={query}
+                placeholder="Find e.g. A3"
+                aria-label="Find entry"
+                maxLength={3}
+                onChange={(event) => setQuery(event.target.value)}
+              />
+            </label>
+
             <nav className={styles.chapterNav} aria-label="Jump to chapter">
               {chapters.map((chapter) => (
                 <button
@@ -166,9 +187,11 @@ const StoryPoints = () => {
 
           {visibleChapters.length === 0 ? (
             <p className={styles.empty}>
-              {filter === 'done'
-                ? 'No entries have been recorded yet.'
-                : 'Every entry has been chronicled. The tale is complete.'}
+              {trimmedQuery
+                ? `No entries match "${query.trim()}".`
+                : filter === 'done'
+                  ? 'No entries have been recorded yet.'
+                  : 'Every entry has been chronicled. The tale is complete.'}
             </p>
           ) : (
             <div className={styles.chapters}>

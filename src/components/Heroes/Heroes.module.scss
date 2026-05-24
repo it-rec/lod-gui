@@ -6,3 +6,9 @@
   gap: $spacing-05;
   align-items: start;
 }
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-03;
+}
