@@ -1,6 +1,7 @@
 import Crest from '../common/Crest/Crest';
 import ConnectionBadge from '../common/ConnectionBadge/ConnectionBadge';
 import CampaignMenu from '../CampaignMenu/CampaignMenu';
+import DiceRoller from '../DiceRoller/DiceRoller';
 import styles from './AppHeader.module.scss';
 
 const AppHeader = () => (
@@ -15,6 +16,7 @@ const AppHeader = () => (
       </div>
       <div className={styles.tools}>
         <ConnectionBadge />
+        <DiceRoller />
         <CampaignMenu />
       </div>
     </div>

@@ -15,6 +15,9 @@ player's screen:
 - **Keywords** — the log of story keywords and notes recorded along the way.
 - **The Chronicle** — an A1–Z8 grid of story entries, with progress, chapter
   navigation and filtering.
+- **The Dice roller** — quick d4–d100 buttons and a full dice-notation parser
+  (`2d6+3`, `3d4+2d6+1`, …). Every roll is broadcast live so the whole table
+  sees the same dice.
 
 The header also offers a **campaign menu** with one-click **Download backup**
 (every panel saved to a single JSON file) and **Restore from backup**.

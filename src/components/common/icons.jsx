@@ -228,3 +228,43 @@ export const IconMoon = (props) => (
     <path {...stroke} d="M16 4.5l.7 1.5 1.5.7-1.5.7-.7 1.5-.7-1.5L13.8 6.7l1.5-.7z" />
   </Svg>
 );
+
+// A d20 silhouette: an outer hexagon with the front triangular faces traced
+// in. Looks chunky enough to read at icon size.
+export const IconDice = (props) => (
+  <Svg {...props}>
+    <path
+      d="M12 2.5l8.5 4.9v9.2L12 21.5 3.5 16.6V7.4z"
+      fill="currentColor"
+      opacity="0.18"
+    />
+    <path {...stroke} d="M12 2.5l8.5 4.9v9.2L12 21.5 3.5 16.6V7.4z" />
+    <path {...stroke} d="M12 2.5L7 11l5 4 5-4z" />
+    <path {...stroke} d="M3.5 7.4L7 11M20.5 7.4L17 11M12 15v6.5M7 11l-3.5 5.6M17 11l3.5 5.6" />
+  </Svg>
+);
+
+export const IconMap = (props) => (
+  <Svg {...props}>
+    <path
+      d="M9 4.5L3.5 6.5v13L9 17l6 2.5 5.5-2v-13L15 6.5z"
+      fill="currentColor"
+      opacity="0.16"
+    />
+    <path {...stroke} d="M9 4.5L3.5 6.5v13L9 17l6 2.5 5.5-2v-13L15 6.5z" />
+    <path {...stroke} d="M9 4.5V17M15 6.5V19.5" />
+  </Svg>
+);
+
+export const IconCompass = (props) => (
+  <Svg {...props}>
+    <circle cx="12" cy="12" r="8.5" fill="currentColor" opacity="0.14" />
+    <circle cx="12" cy="12" r="8.5" {...stroke} />
+    <path
+      {...stroke}
+      d="M14.5 9.5L10 14l-1 1 4.5-4.5L15 9z"
+      fill="currentColor"
+      opacity="0.55"
+    />
+  </Svg>
+);

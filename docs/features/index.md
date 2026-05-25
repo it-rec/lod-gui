@@ -21,4 +21,5 @@ The pages below walk through each panel in turn:
 - [People](people.md)
 - [Keywords](keywords.md)
 - [The Chronicle](chronicle.md)
+- [Dice roller](dice-roller.md)
 - [Campaign menu — backup & restore](campaign-menu.md)

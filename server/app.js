@@ -25,6 +25,18 @@ app.use(express.static(path.join(__dirname, '../build')));
 io.on('connection', (socket) => {
   logger.debug(`Socket connected: ${socket.id}`);
   socket.on('disconnect', () => logger.debug(`Socket disconnected: ${socket.id}`));
+  // Dice rolls are ephemeral: never written to the store, just relayed so
+  // every connected player sees what was rolled. The server stamps the
+  // payload with the originating socket id and a timestamp so other clients
+  // can ignore their own echo and sort consistently.
+  socket.on('dice:roll', (payload) => {
+    if (!payload || typeof payload !== 'object') return;
+    io.emit('dice:roll', {
+      ...payload,
+      origin: socket.id,
+      rolledAt: payload.rolledAt || new Date().toISOString(),
+    });
+  });
 });
 
 io.on('connect_error', (error) => logger.error('Socket error', error));
