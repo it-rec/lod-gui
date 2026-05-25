@@ -13,6 +13,7 @@ const COLLECTIONS = {
   QUESTS: 'quests',
   NPCS: 'npcs',
   LOCATIONS: 'locations',
+  JOURNAL: 'journal',
 };
 
 const API_PATH = '/api';
@@ -28,6 +29,7 @@ const endpoints = [
   { path: `${GAME_ID_PATH}/quests/`, collection: COLLECTIONS.QUESTS },
   { path: `${GAME_ID_PATH}/npcs/`, collection: COLLECTIONS.NPCS },
   { path: `${GAME_ID_PATH}/locations/`, collection: COLLECTIONS.LOCATIONS },
+  { path: `${GAME_ID_PATH}/journal/`, collection: COLLECTIONS.JOURNAL },
 ];
 
 const configureEndpoints = (app, io) => {

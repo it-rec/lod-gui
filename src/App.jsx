@@ -9,6 +9,7 @@ import Keywords from './components/Keywords/Keywords';
 import Quests from './components/Quests/Quests';
 import NPCs from './components/NPCs/NPCs';
 import Locations from './components/Locations/Locations';
+import Journal from './components/Journal/Journal';
 import StoryPoints from './components/StoryPoints/StoryPoints';
 import Toaster from './components/common/Toast/Toaster';
 import { useConnection } from './hooks/useConnection';
@@ -58,6 +59,7 @@ const App = () => {
           <Locations />
           <Keywords />
         </div>
+        <Journal />
         <StoryPoints />
       </main>
       <footer className="app__footer">

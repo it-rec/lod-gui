@@ -8,4 +8,5 @@ export const collections = {
   QUESTS: 'quests',
   NPCS: 'npcs',
   LOCATIONS: 'locations',
+  JOURNAL: 'journal',
 };
