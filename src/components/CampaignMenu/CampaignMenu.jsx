@@ -1,12 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import Button from '../common/Button/Button';
-import { IconDownload, IconUpload } from '../common/icons';
+import { IconDownload, IconUpload, IconScroll } from '../common/icons';
 import { toast } from '../common/Toast/toastStore';
 import {
   buildBackup,
   filenameForBackup,
   restoreBackup,
 } from './campaignBackup';
+import {
+  campaignToMarkdown,
+  filenameForMarkdown,
+} from './campaignMarkdown';
 import styles from './CampaignMenu.module.scss';
 
 const CampaignMenu = () => {
@@ -53,6 +57,38 @@ const CampaignMenu = () => {
       toast.success('Backup ready', 'Your campaign was saved to disk.', 'backup-export');
     } catch (err) {
       toast.error('Backup failed', err.message || 'Could not assemble the backup.', 'backup-export');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleExportMarkdown = async () => {
+    if (busy) return;
+    setBusy(true);
+    setOpen(false);
+    try {
+      const backup = await buildBackup();
+      const md = campaignToMarkdown(backup);
+      const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filenameForMarkdown();
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      toast.success(
+        'Handout ready',
+        'Your campaign was exported as Markdown.',
+        'markdown-export'
+      );
+    } catch (err) {
+      toast.error(
+        'Export failed',
+        err.message || 'Could not assemble the campaign Markdown.',
+        'markdown-export'
+      );
     } finally {
       setBusy(false);
     }
@@ -123,6 +159,20 @@ const CampaignMenu = () => {
               <span className={styles.optionBody}>
                 <span className={styles.optionLabel}>Download backup</span>
                 <span className={styles.optionHint}>Save the campaign as a JSON file</span>
+              </span>
+            </button>
+          </li>
+          <li role="none">
+            <button
+              type="button"
+              role="menuitem"
+              className={styles.option}
+              onClick={handleExportMarkdown}
+            >
+              <IconScroll />
+              <span className={styles.optionBody}>
+                <span className={styles.optionLabel}>Export as Markdown</span>
+                <span className={styles.optionHint}>Save a readable handout (.md)</span>
               </span>
             </button>
           </li>
