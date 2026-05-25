@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import cx from 'classnames';
 import Button from '../Button/Button';
 import { IconChevron } from '../icons';
 import { prefGet, prefSet } from '../../../utils/localStorageUtil';
 import styles from './Panel.module.scss';
+
+export const REVEAL_EVENT = 'lod:reveal';
 
 // A framed section of the campaign ledger: a crimson title bar over a
 // parchment body. Renders a uniform error/retry state when `error` is set.
@@ -28,6 +30,25 @@ const Panel = ({
     return typeof stored === 'boolean' ? stored : defaultCollapsed;
   });
 
+  const [highlight, setHighlight] = useState(false);
+  const sectionRef = useRef(null);
+
+  // Listen for global "reveal me" events from the search overlay. When our
+  // key is the target, uncollapse, scroll into view, and flash the section.
+  useEffect(() => {
+    if (!collapsibleKey) return undefined;
+    const handler = (event) => {
+      if (event.detail?.panel !== collapsibleKey) return;
+      setCollapsed(false);
+      prefSet(`panel-collapsed:${collapsibleKey}`, false);
+      sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setHighlight(true);
+      window.setTimeout(() => setHighlight(false), 1400);
+    };
+    window.addEventListener(REVEAL_EVENT, handler);
+    return () => window.removeEventListener(REVEAL_EVENT, handler);
+  }, [collapsibleKey]);
+
   const toggle = () => {
     setCollapsed((value) => {
       const next = !value;
@@ -39,7 +60,14 @@ const Panel = ({
   const bodyId = collapsibleKey ? `panel-body-${collapsibleKey}` : undefined;
 
   return (
-    <section className={cx(styles.panel, { [styles.collapsed]: collapsed })}>
+    <section
+      ref={sectionRef}
+      data-panel-key={collapsibleKey}
+      className={cx(styles.panel, {
+        [styles.collapsed]: collapsed,
+        [styles.highlight]: highlight,
+      })}
+    >
       <header className={styles.header}>
         {icon && <span className={styles.icon}>{icon}</span>}
         <div className={styles.heading}>

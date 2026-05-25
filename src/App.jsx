@@ -11,6 +11,7 @@ import NPCs from './components/NPCs/NPCs';
 import Locations from './components/Locations/Locations';
 import Journal from './components/Journal/Journal';
 import StoryPoints from './components/StoryPoints/StoryPoints';
+import GlobalSearch from './components/GlobalSearch/GlobalSearch';
 import Toaster from './components/common/Toast/Toaster';
 import { useConnection } from './hooks/useConnection';
 import { toast } from './components/common/Toast/toastStore';
@@ -65,6 +66,7 @@ const App = () => {
       <footer className="app__footer">
         Track the party, the purse, and the tale — your tabletop campaign companion.
       </footer>
+      <GlobalSearch />
       <Toaster />
     </div>
   );
