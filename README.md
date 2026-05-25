@@ -23,6 +23,13 @@ Built as a React app (powered by [Vite](https://vitejs.dev/)) with an
 Express + Socket.IO backend. Every change is broadcast over Socket.IO so all
 connected players stay in sync instantly.
 
+## Documentation
+
+A guided tour of every panel — with screenshots — is published to GitHub
+Pages from the [`docs/`](./docs) folder. Browse it locally by opening
+[`docs/index.md`](./docs/index.md), or read the live site at
+<https://it-rec.github.io/lod-gui/>.
+
 ## Available Scripts
 
 ### `yarn start`
