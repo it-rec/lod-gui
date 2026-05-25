@@ -2,6 +2,7 @@
   "name": "lod-gui",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@10.33.0",
   "dependencies": {
     "body-parser": "^2.2.2",
     "classnames": "^2.3.2",
@@ -46,15 +47,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "resolutions": {
-    "postcss": "^8.5.10",
-    "qs": "^6.14.2",
-    "socket.io-parser": "^4.2.6",
-    "picomatch": "^2.3.2",
-    "immutable": "^5.1.5",
-    "flatted": "^3.4.2",
-    "lodash": "^4.17.23"
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.0",
