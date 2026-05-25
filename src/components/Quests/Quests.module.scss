@@ -97,6 +97,41 @@
   background: rgba(255, 252, 240, 0.85);
 }
 
+.entryDragging {
+  opacity: 0.38;
+}
+
+.entryDropOver {
+  box-shadow: inset 4px 0 0 var(--lod-gold-bright);
+}
+
+.grip {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-top: 1px;
+  cursor: grab;
+  color: var(--lod-ink-faint);
+  border-radius: var(--lod-radius);
+  transition: color 0.12s ease, background-color 0.12s ease;
+  user-select: none;
+}
+
+.grip:hover,
+.grip:focus-visible {
+  color: var(--lod-gold);
+  background: rgba(156, 122, 45, 0.12);
+  outline: none;
+}
+
+.grip:active {
+  cursor: grabbing;
+  color: var(--lod-crimson);
+}
+
 .checkbox {
   flex-shrink: 0;
   width: 1.5rem;

@@ -5,6 +5,8 @@ import Skeleton from '../common/Skeleton/Skeleton';
 import Button from '../common/Button/Button';
 import TextInput from '../common/TextInput/TextInput';
 import FormattedText from '../common/FormattedText/FormattedText';
+import { useSortable } from '../../hooks/useSortable';
+import { IconGrip } from '../common/icons';
 import {
   IconQuest,
   IconPlus,
@@ -86,6 +88,9 @@ const Quests = () => {
         ? !quest.isDone
         : quest.isDone
   );
+
+  const sortable = useSortable(value, save);
+  const canReorder = filter === 'all' && value.length > 1;
 
   const add = () => {
     const title = draft.trim();
@@ -203,14 +208,28 @@ const Quests = () => {
             <ul className={styles.list}>
               {visible.map((quest) => {
                 const isEditing = editingId === quest.id;
+                const fullIndex = value.indexOf(quest);
+                const isDragging = canReorder && sortable.dragIndex === fullIndex;
+                const isOver = canReorder && sortable.overIndex === fullIndex && !isDragging;
                 return (
                   <li
                     key={quest.id}
+                    {...(canReorder ? sortable.getItemProps(fullIndex) : {})}
                     className={cx(styles.entry, {
                       [styles.entryDone]: quest.isDone,
                       [styles.entryEditing]: isEditing,
+                      [styles.entryDragging]: isDragging,
+                      [styles.entryDropOver]: isOver,
                     })}
                   >
+                    {canReorder && !isEditing && (
+                      <span
+                        {...sortable.getHandleProps(fullIndex, quest.title)}
+                        className={styles.grip}
+                      >
+                        <IconGrip />
+                      </span>
+                    )}
                     {isEditing ? (
                       <div className={styles.editor}>
                         <TextInput

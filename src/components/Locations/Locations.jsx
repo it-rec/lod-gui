@@ -10,8 +10,10 @@ import {
   IconPlus,
   IconTrash,
   IconPencil,
+  IconGrip,
 } from '../common/icons';
 import { useGameChannel } from '../../hooks/useGameChannel';
+import { useSortable } from '../../hooks/useSortable';
 import { collections } from '../../shared';
 import styles from './Locations.module.scss';
 
@@ -96,6 +98,9 @@ const Locations = () => {
   const visible = value.filter((location) =>
     filter === 'all' ? true : location.status === filter
   );
+
+  const sortable = useSortable(value, save);
+  const canReorder = filter === 'all' && value.length > 1;
 
   const add = () => {
     const name = draft.trim();
@@ -235,15 +240,32 @@ const Locations = () => {
             <ul className={styles.list}>
               {visible.map((location) => {
                 const isEditing = editingId === location.id;
+                const fullIndex = value.indexOf(location);
+                const isDragging = canReorder && sortable.dragIndex === fullIndex;
+                const isOver =
+                  canReorder && sortable.overIndex === fullIndex && !isDragging;
                 return (
                   <li
                     key={location.id}
+                    {...(canReorder ? sortable.getItemProps(fullIndex) : {})}
                     className={cx(
                       styles.entry,
                       styles[`entry-${location.status}`],
-                      { [styles.entryEditing]: isEditing }
+                      {
+                        [styles.entryEditing]: isEditing,
+                        [styles.entryDragging]: isDragging,
+                        [styles.entryDropOver]: isOver,
+                      }
                     )}
                   >
+                    {canReorder && !isEditing && (
+                      <span
+                        {...sortable.getHandleProps(fullIndex, location.name)}
+                        className={styles.grip}
+                      >
+                        <IconGrip />
+                      </span>
+                    )}
                     {isEditing ? (
                       <div className={styles.editor}>
                         <TextInput

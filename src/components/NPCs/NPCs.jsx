@@ -10,8 +10,10 @@ import {
   IconPlus,
   IconTrash,
   IconPencil,
+  IconGrip,
 } from '../common/icons';
 import { useGameChannel } from '../../hooks/useGameChannel';
+import { useSortable } from '../../hooks/useSortable';
 import { collections } from '../../shared';
 import styles from './NPCs.module.scss';
 
@@ -91,6 +93,9 @@ const NPCs = () => {
   const visible = value.filter((npc) =>
     filter === 'all' ? true : npc.role === filter
   );
+
+  const sortable = useSortable(value, save);
+  const canReorder = filter === 'all' && value.length > 1;
 
   const add = () => {
     const name = draft.trim();
@@ -226,15 +231,32 @@ const NPCs = () => {
             <ul className={styles.list}>
               {visible.map((npc) => {
                 const isEditing = editingId === npc.id;
+                const fullIndex = value.indexOf(npc);
+                const isDragging = canReorder && sortable.dragIndex === fullIndex;
+                const isOver =
+                  canReorder && sortable.overIndex === fullIndex && !isDragging;
                 return (
                   <li
                     key={npc.id}
+                    {...(canReorder ? sortable.getItemProps(fullIndex) : {})}
                     className={cx(
                       styles.entry,
                       styles[`entry-${npc.role}`],
-                      { [styles.entryEditing]: isEditing }
+                      {
+                        [styles.entryEditing]: isEditing,
+                        [styles.entryDragging]: isDragging,
+                        [styles.entryDropOver]: isOver,
+                      }
                     )}
                   >
+                    {canReorder && !isEditing && (
+                      <span
+                        {...sortable.getHandleProps(fullIndex, npc.name)}
+                        className={styles.grip}
+                      >
+                        <IconGrip />
+                      </span>
+                    )}
                     {isEditing ? (
                       <div className={styles.editor}>
                         <TextInput

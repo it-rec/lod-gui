@@ -268,3 +268,40 @@ export const IconCompass = (props) => (
     />
   </Svg>
 );
+
+// Six-dot grip used as a sortable drag handle.
+export const IconGrip = (props) => (
+  <Svg {...props}>
+    <circle cx="9" cy="6" r="1.4" fill="currentColor" />
+    <circle cx="9" cy="12" r="1.4" fill="currentColor" />
+    <circle cx="9" cy="18" r="1.4" fill="currentColor" />
+    <circle cx="15" cy="6" r="1.4" fill="currentColor" />
+    <circle cx="15" cy="12" r="1.4" fill="currentColor" />
+    <circle cx="15" cy="18" r="1.4" fill="currentColor" />
+  </Svg>
+);
+
+export const IconClock = (props) => (
+  <Svg {...props}>
+    <circle cx="12" cy="12" r="8.5" {...stroke} />
+    <path {...stroke} d="M12 7.5V12l3 2" />
+  </Svg>
+);
+
+export const IconSword = (props) => (
+  <Svg {...props}>
+    <path {...stroke} d="M14 4l6 0 0 6L9 21H5l0-4z" />
+    <path {...stroke} d="M14.5 9.5l-5 5" />
+  </Svg>
+);
+
+export const IconHelp = (props) => (
+  <Svg {...props}>
+    <circle cx="12" cy="12" r="8.5" {...stroke} />
+    <path
+      {...stroke}
+      d="M9.5 9.5c0-1.4 1.1-2.5 2.5-2.5s2.5 1.1 2.5 2.5c0 1.4-2.5 1.7-2.5 3.5"
+    />
+    <circle cx="12" cy="16.5" r="0.6" fill="currentColor" />
+  </Svg>
+);
