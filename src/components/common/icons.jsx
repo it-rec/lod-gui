@@ -305,3 +305,11 @@ export const IconHelp = (props) => (
     <circle cx="12" cy="16.5" r="0.6" fill="currentColor" />
   </Svg>
 );
+
+export const IconLock = (props) => (
+  <Svg {...props}>
+    <rect x="5" y="11" width="14" height="9" rx="1.5" {...stroke} />
+    <path {...stroke} d="M8 11V7.5a4 4 0 0 1 8 0V11" fill="none" />
+    <circle cx="12" cy="15.5" r="1.2" fill="currentColor" />
+  </Svg>
+);

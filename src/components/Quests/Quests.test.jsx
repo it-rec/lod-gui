@@ -60,4 +60,32 @@ describe('Quests', () => {
     expect(screen.getByText('Slay the wyrm')).toBeInTheDocument();
     expect(screen.queryByText('Deliver the letter')).not.toBeInTheDocument();
   });
+
+  it('locks a quest behind another quest and unlocks it on completion', async () => {
+    const user = userEvent.setup();
+    render(<Quests />);
+
+    await user.type(screen.getByLabelText('New quest'), 'Find the key{Enter}');
+    await user.type(screen.getByLabelText('New quest'), 'Open the gate{Enter}');
+
+    // Mark "Open the gate" as blocked by "Find the key".
+    await user.click(screen.getByRole('button', { name: /Edit Open the gate/ }));
+    await user.click(screen.getByRole('checkbox', { name: /Find the key/ }));
+    await user.click(screen.getByRole('button', { name: 'Save' }));
+
+    // The blocked quest cannot be ticked off.
+    const blockedTick = screen.getByRole('button', {
+      name: /Open the gate is blocked by Find the key/,
+    });
+    expect(blockedTick).toBeDisabled();
+
+    // Complete the parent — now the child unlocks.
+    await user.click(
+      screen.getByRole('button', { name: /Mark Find the key as completed/ })
+    );
+    const unblocked = screen.getByRole('button', {
+      name: /Mark Open the gate as completed/,
+    });
+    expect(unblocked).not.toBeDisabled();
+  });
 });
