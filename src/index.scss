@@ -27,10 +27,52 @@
   --lod-good: #3f6b2e;
   --lod-bad: #9a2f1c;
 
+  /* Page backdrop — overridden per theme. */
+  --lod-page-bg: #ddc999;
+  --lod-page-vignette: radial-gradient(
+    ellipse at 50% 38%,
+    rgba(0, 0, 0, 0) 42%,
+    rgba(40, 22, 8, 0.34) 100%
+  );
+  --lod-page-image: url('./assets/background.jpg');
+
   --font-display: 'Cinzel', 'Trajan Pro', Georgia, serif;
   --font-body: 'EB Garamond', Georgia, 'Times New Roman', serif;
 
   --lod-radius: 3px;
+}
+
+/* "Tome by candlelight" — the dark theme. Same colour story, low light. */
+:root[data-theme='dark'] {
+  --lod-ink: #f0e0c4;
+  --lod-ink-soft: #c9b48b;
+  --lod-ink-faint: #8a7355;
+
+  --lod-parchment: #1f1610;
+  --lod-parchment-deep: #160f0a;
+  --lod-parchment-hi: #2a1f15;
+
+  --lod-crimson: #c54043;
+  --lod-crimson-bright: #db5c5e;
+  --lod-crimson-ink: #2a0708;
+
+  --lod-gold: #c4a04a;
+  --lod-gold-bright: #e9d08a;
+  --lod-gold-hi: #f5e2a4;
+
+  --lod-edge: rgba(196, 160, 74, 0.22);
+  --lod-edge-strong: rgba(196, 160, 74, 0.5);
+  --lod-shadow: rgba(0, 0, 0, 0.6);
+  --lod-good: #82c25a;
+  --lod-bad: #e07058;
+
+  --lod-page-bg: #0b0805;
+  --lod-page-vignette: radial-gradient(
+    ellipse at 50% 38%,
+    rgba(0, 0, 0, 0) 30%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  --lod-page-image: none;
 }
 
 *,
@@ -49,14 +91,15 @@ body {
   font-family: var(--font-body);
   font-size: 17px;
   color: var(--lod-ink);
-  background-color: #ddc999;
-  background-image: url('./assets/background.jpg');
+  background-color: var(--lod-page-bg);
+  background-image: var(--lod-page-image);
   background-size: cover;
   background-position: center top;
   background-attachment: fixed;
   background-repeat: no-repeat;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Subtle vignette so the framed panels lift off the page. */
@@ -66,11 +109,7 @@ body::before {
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  background: radial-gradient(
-    ellipse at 50% 38%,
-    rgba(0, 0, 0, 0) 42%,
-    rgba(40, 22, 8, 0.34) 100%
-  );
+  background: var(--lod-page-vignette);
 }
 
 #root {

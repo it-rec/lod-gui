@@ -2,6 +2,7 @@ import Crest from '../common/Crest/Crest';
 import ConnectionBadge from '../common/ConnectionBadge/ConnectionBadge';
 import CampaignMenu from '../CampaignMenu/CampaignMenu';
 import DiceRoller from '../DiceRoller/DiceRoller';
+import ThemeToggle from '../ThemeToggle/ThemeToggle';
 import styles from './AppHeader.module.scss';
 
 const AppHeader = () => (
@@ -17,6 +18,7 @@ const AppHeader = () => (
       <div className={styles.tools}>
         <ConnectionBadge />
         <DiceRoller />
+        <ThemeToggle />
         <CampaignMenu />
       </div>
     </div>
