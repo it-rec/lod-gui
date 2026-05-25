@@ -1,7 +1,14 @@
 import { Fragment } from 'react';
 import cx from 'classnames';
 import { parseInlineMarkdown } from '../../../utils/inlineMarkdown';
+import { openGlobalSearch } from '../../GlobalSearch/GlobalSearch';
 import styles from './FormattedText.module.scss';
+
+const followMention = (name) => {
+  // Reuse the global finder to disambiguate "@Talbot" against the live
+  // index. Pre-fill the query so the player sees matches immediately.
+  openGlobalSearch(name);
+};
 
 const renderNode = (node, key) => {
   if (typeof node === 'string') return node;
@@ -31,6 +38,18 @@ const renderNode = (node, key) => {
       >
         {children}
       </a>
+    );
+  case 'mention':
+    return (
+      <button
+        key={key}
+        type="button"
+        className={styles.mention}
+        onClick={() => followMention(node.name)}
+        title={`Find @${node.name} across the campaign`}
+      >
+        {children}
+      </button>
     );
   default:
     return <Fragment key={key}>{children}</Fragment>;

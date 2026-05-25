@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import FormattedText from './FormattedText';
 
 describe('FormattedText', () => {
@@ -52,5 +53,31 @@ describe('FormattedText', () => {
     );
     expect(container.querySelector('p')).toBeNull();
     expect(container.querySelector('strong')).toHaveTextContent('hi');
+  });
+
+  it('renders @mentions as buttons that open the finder pre-seeded', async () => {
+    const user = userEvent.setup();
+    const events = [];
+    const listener = (event) => events.push(event);
+    window.addEventListener('lod:search:open', listener);
+    try {
+      render(<FormattedText text="met @Talbot at dusk" />);
+
+      const button = screen.getByRole('button', { name: '@Talbot' });
+      expect(button).toBeInTheDocument();
+
+      await user.click(button);
+      expect(events).toHaveLength(1);
+      expect(events[0].detail).toMatchObject({ query: 'Talbot' });
+    } finally {
+      window.removeEventListener('lod:search:open', listener);
+    }
+  });
+
+  it('supports @{multi word} mentions', () => {
+    render(<FormattedText text="visit @{Black Tower} alone" />);
+    expect(
+      screen.getByRole('button', { name: '@Black Tower' })
+    ).toBeInTheDocument();
   });
 });

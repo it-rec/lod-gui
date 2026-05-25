@@ -9,8 +9,10 @@ import styles from './GlobalSearch.module.scss';
 
 const OPEN_EVENT = 'lod:search:open';
 
-export const openGlobalSearch = () => {
-  window.dispatchEvent(new CustomEvent(OPEN_EVENT));
+export const openGlobalSearch = (query) => {
+  window.dispatchEvent(
+    new CustomEvent(OPEN_EVENT, { detail: { query: query || '' } })
+  );
 };
 
 export const GlobalSearchButton = () => (
@@ -66,7 +68,11 @@ const GlobalSearch = () => {
         setOpen(true);
       }
     };
-    const onOpen = () => setOpen(true);
+    const onOpen = (event) => {
+      const seed = event?.detail?.query;
+      if (typeof seed === 'string' && seed) setQuery(seed);
+      setOpen(true);
+    };
     document.addEventListener('keydown', onKey);
     window.addEventListener(OPEN_EVENT, onOpen);
     return () => {

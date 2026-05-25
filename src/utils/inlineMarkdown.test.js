@@ -104,4 +104,28 @@ describe('parseInlineMarkdown', () => {
       'line two',
     ]);
   });
+
+  it('parses @Name mentions', () => {
+    expect(first('met @Talbot at dusk')).toEqual([
+      'met ',
+      { type: 'mention', name: 'Talbot', children: ['@Talbot'] },
+      ' at dusk',
+    ]);
+  });
+
+  it('parses @{multi word} mentions', () => {
+    expect(first('met @{Sir Talbot} at dusk')).toEqual([
+      'met ',
+      { type: 'mention', name: 'Sir Talbot', children: ['@Sir Talbot'] },
+      ' at dusk',
+    ]);
+  });
+
+  it('does not match @ that follows a word character (e.g. email)', () => {
+    expect(first('write me at hi@example')).toEqual(['write me at hi@example']);
+  });
+
+  it('does not match a bare @ followed by nothing', () => {
+    expect(first('a @ b')).toEqual(['a @ b']);
+  });
 });

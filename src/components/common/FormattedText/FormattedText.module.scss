@@ -38,3 +38,28 @@
   text-decoration-color: var(--lod-crimson-bright);
   outline: none;
 }
+
+.mention {
+  display: inline;
+  background: rgba(156, 122, 45, 0.16);
+  color: var(--lod-gold);
+  border: 1px solid rgba(156, 122, 45, 0.4);
+  border-radius: 4px;
+  padding: 0 6px;
+  font-family: inherit;
+  font-size: 0.9em;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.12s ease,
+    color 0.12s ease,
+    border-color 0.12s ease;
+}
+
+.mention:hover,
+.mention:focus-visible {
+  background: var(--lod-gold);
+  color: var(--lod-crimson-ink);
+  border-color: var(--lod-gold-bright);
+  outline: none;
+}

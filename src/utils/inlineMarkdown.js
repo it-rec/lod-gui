@@ -26,6 +26,39 @@ const PATTERNS = [
   { type: 'code', open: '`', close: '`', raw: true },
 ];
 
+// "@Name" mentions other entities. The bare form picks up a single word
+// (letters, digits, ', - and . are kept); the braced form @{Sir Talbot}
+// captures any non-} run so multi-word names work too. A leading word
+// character before the `@` (e.g. an email address) disables the match.
+const MENTION_BARE_RE = /^@([A-Za-z][\w'.-]*)/;
+const MENTION_BRACED_RE = /^@\{([^}]+)\}/;
+
+const parseMention = (text, start) => {
+  if (text[start] !== '@') return null;
+  if (start > 0) {
+    const prev = text[start - 1];
+    if (/[\w]/.test(prev)) return null;
+  }
+  const slice = text.slice(start);
+  const braced = slice.match(MENTION_BRACED_RE);
+  if (braced) {
+    const name = braced[1].trim();
+    if (!name) return null;
+    return {
+      node: { type: 'mention', name, children: [`@${name}`] },
+      end: start + braced[0].length,
+    };
+  }
+  const bare = slice.match(MENTION_BARE_RE);
+  if (bare) {
+    return {
+      node: { type: 'mention', name: bare[1], children: [`@${bare[1]}`] },
+      end: start + bare[0].length,
+    };
+  }
+  return null;
+};
+
 const parseLink = (text, start) => {
   if (text[start] !== '[') return null;
   // [label](url): both halves must close cleanly. Brackets and parens inside
@@ -114,6 +147,14 @@ const parseInline = (text) => {
       if (link) {
         nodes.push(link.node);
         i = link.end;
+        continue;
+      }
+    }
+    if (ch === '@') {
+      const mention = parseMention(text, i);
+      if (mention) {
+        nodes.push(mention.node);
+        i = mention.end;
         continue;
       }
     }
