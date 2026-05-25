@@ -195,6 +195,28 @@ export const IconPencil = (props) => (
   </Svg>
 );
 
+export const IconPeople = (props) => (
+  <Svg {...props}>
+    <circle cx="9" cy="8" r="3.2" fill="currentColor" opacity="0.18" />
+    <circle cx="9" cy="8" r="3.2" {...stroke} />
+    <path {...stroke} d="M3 19c0-3 2.7-5 6-5s6 2 6 5" />
+    <circle cx="16.5" cy="9" r="2.4" {...stroke} />
+    <path {...stroke} d="M15 14.5c3 .2 5 2.1 6 4.5" />
+  </Svg>
+);
+
+export const IconDownload = (props) => (
+  <Svg {...props}>
+    <path {...stroke} d="M12 4v11M7 11l5 5 5-5M5 19h14" />
+  </Svg>
+);
+
+export const IconUpload = (props) => (
+  <Svg {...props}>
+    <path {...stroke} d="M12 16V5M7 10l5-5 5 5M5 19h14" />
+  </Svg>
+);
+
 export const IconMoon = (props) => (
   <Svg {...props}>
     <path

@@ -1,5 +1,6 @@
 import Crest from '../common/Crest/Crest';
 import ConnectionBadge from '../common/ConnectionBadge/ConnectionBadge';
+import CampaignMenu from '../CampaignMenu/CampaignMenu';
 import styles from './AppHeader.module.scss';
 
 const AppHeader = () => (
@@ -12,7 +13,10 @@ const AppHeader = () => (
           <p className={styles.subtitle}>Campaign Companion</p>
         </div>
       </div>
-      <ConnectionBadge />
+      <div className={styles.tools}>
+        <ConnectionBadge />
+        <CampaignMenu />
+      </div>
     </div>
   </header>
 );

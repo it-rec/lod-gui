@@ -118,6 +118,7 @@ const StoryPoints = () => {
       }
       error={error}
       onRetry={reload}
+      collapsibleKey="chronicle"
     >
       {loading ? (
         <div className={styles.loading}>

@@ -55,4 +55,14 @@ describe('Calendar', () => {
     await user.click(screen.getByRole('button', { name: 'Next day' }));
     expect(screen.getByText('2')).toBeInTheDocument();
   });
+
+  it('captures the current adventure title', async () => {
+    const user = userEvent.setup();
+    render(<Calendar />);
+
+    const adventure = screen.getByLabelText('Current adventure');
+    expect(adventure).toHaveValue('');
+    await user.type(adventure, 'The Ransom of Dragonholt');
+    expect(adventure).toHaveValue('The Ransom of Dragonholt');
+  });
 });

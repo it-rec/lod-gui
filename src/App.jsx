@@ -7,6 +7,7 @@ import Fame from './components/Fame/Fame';
 import Calendar from './components/Calendar/Calendar';
 import Keywords from './components/Keywords/Keywords';
 import Quests from './components/Quests/Quests';
+import NPCs from './components/NPCs/NPCs';
 import StoryPoints from './components/StoryPoints/StoryPoints';
 import Toaster from './components/common/Toast/Toaster';
 import { useConnection } from './hooks/useConnection';
@@ -52,6 +53,7 @@ const App = () => {
         </div>
         <div className="app__notebook">
           <Quests />
+          <NPCs />
           <Keywords />
         </div>
         <StoryPoints />

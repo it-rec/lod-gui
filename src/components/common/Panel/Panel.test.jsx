@@ -29,4 +29,37 @@ describe('Panel', () => {
     await user.click(screen.getByRole('button', { name: 'Try again' }));
     expect(onRetry).toHaveBeenCalledTimes(1);
   });
+
+  it('collapses and remembers the state when a key is provided', async () => {
+    const user = userEvent.setup();
+    window.localStorage.clear();
+
+    const { unmount } = render(
+      <Panel title="The Chronicle" collapsibleKey="chronicle">
+        <p>scroll content</p>
+      </Panel>
+    );
+
+    expect(screen.getByText('scroll content')).toBeInTheDocument();
+    const toggle = screen.getByRole('button', { name: 'Hide The Chronicle' });
+    expect(toggle).toHaveAttribute('aria-expanded', 'true');
+
+    await user.click(toggle);
+    expect(screen.queryByText('scroll content')).not.toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Show The Chronicle' })
+    ).toHaveAttribute('aria-expanded', 'false');
+
+    // Remount — the collapsed state should be restored from localStorage.
+    unmount();
+    render(
+      <Panel title="The Chronicle" collapsibleKey="chronicle">
+        <p>scroll content</p>
+      </Panel>
+    );
+    expect(screen.queryByText('scroll content')).not.toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Show The Chronicle' })
+    ).toBeInTheDocument();
+  });
 });

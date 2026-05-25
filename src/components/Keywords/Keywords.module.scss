@@ -15,6 +15,33 @@
   flex: 1;
 }
 
+.search {
+  display: flex;
+  align-items: center;
+  gap: $spacing-02;
+  padding: 0 $spacing-03;
+  border: 1px solid var(--lod-edge-strong);
+  border-radius: var(--lod-radius);
+  background: rgba(255, 252, 240, 0.6);
+}
+
+.search > :last-child {
+  flex: 1;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  padding-left: 0;
+}
+
+.search > :last-child:focus {
+  box-shadow: none;
+}
+
+.searchIcon {
+  color: var(--lod-ink-faint);
+  font-size: 1rem;
+}
+
 .list {
   list-style: none;
   margin: 0;

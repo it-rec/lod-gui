@@ -30,6 +30,7 @@
 .header {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: $spacing-04;
 
   padding: $spacing-04 $spacing-05;
@@ -43,6 +44,22 @@
   box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.35);
 }
 
+.collapsed .header {
+  border-bottom-color: transparent;
+}
+
+.collapseToggle {
+  color: var(--lod-gold-hi);
+}
+
+.collapseChevron {
+  transition: transform 0.18s ease;
+}
+
+.collapseChevronCollapsed {
+  transform: rotate(-90deg);
+}
+
 .icon {
   display: flex;
   flex-shrink: 0;
@@ -52,8 +69,8 @@
 }
 
 .heading {
-  flex: 1;
-  min-width: 0;
+  flex: 1 1 auto;
+  min-width: min(12rem, 100%);
 }
 
 .title {
@@ -66,6 +83,7 @@
   line-height: 1.15;
   color: var(--lod-gold-hi);
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+  overflow-wrap: break-word;
 }
 
 .subtitle {
@@ -80,6 +98,8 @@
   align-items: center;
   gap: $spacing-03;
   flex-shrink: 0;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .body {
@@ -87,6 +107,15 @@
   z-index: 1;
   flex: 1;
   padding: $spacing-05;
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: $spacing-03 $spacing-04;
+  }
+  .body {
+    padding: $spacing-04;
+  }
 }
 
 .error {

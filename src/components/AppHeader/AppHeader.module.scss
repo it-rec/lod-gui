@@ -23,7 +23,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: $spacing-05;
+  gap: $spacing-04;
 }
 
 .brand {
@@ -31,6 +31,14 @@
   align-items: center;
   gap: $spacing-05;
   min-width: 0;
+  flex: 1;
+}
+
+.tools {
+  display: flex;
+  align-items: center;
+  gap: $spacing-03;
+  flex-shrink: 0;
 }
 
 .crest {
@@ -66,15 +74,30 @@
 @media (max-width: 640px) {
   .inner {
     padding: $spacing-04 $spacing-05;
-    flex-wrap: wrap;
+    gap: $spacing-03;
+  }
+
+  .brand {
     gap: $spacing-04;
   }
 
   .title {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
+    letter-spacing: 0.14em;
+  }
+
+  .subtitle {
+    font-size: 0.66rem;
+    letter-spacing: 0.18em;
   }
 
   .crest {
-    width: 2.8rem;
+    width: 2.5rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .subtitle {
+    display: none;
   }
 }
