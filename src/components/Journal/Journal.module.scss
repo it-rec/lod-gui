@@ -1,0 +1,193 @@
+@use '../../common' as *;
+
+.journal {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-05;
+}
+
+.compose {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-03;
+  padding: $spacing-04;
+  background: rgba(255, 252, 240, 0.5);
+  border: 1px solid var(--lod-edge);
+  border-radius: var(--lod-radius);
+}
+
+.composeStamp {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lod-crimson);
+}
+
+.composeActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $spacing-03;
+}
+
+.hint {
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--lod-ink-faint);
+}
+
+.textarea {
+  width: 100%;
+  resize: vertical;
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  color: var(--lod-ink);
+
+  padding: $spacing-03 $spacing-04;
+  background: rgba(255, 252, 240, 0.8);
+  border: 1px solid var(--lod-edge-strong);
+  border-radius: var(--lod-radius);
+  box-shadow: inset 0 1px 2px rgba(40, 22, 8, 0.18);
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: var(--lod-gold);
+  box-shadow: 0 0 0 2px rgba(196, 160, 74, 0.35);
+}
+
+.empty {
+  text-align: center;
+  padding: $spacing-05 0;
+  font-style: italic;
+  color: var(--lod-ink-soft);
+}
+
+.days {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-05;
+}
+
+.day {
+  list-style: none;
+}
+
+.dayHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: $spacing-03;
+  padding-bottom: $spacing-02;
+  border-bottom: 1px dashed var(--lod-edge);
+  margin-bottom: $spacing-03;
+}
+
+.dayLabel {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lod-crimson);
+}
+
+.dayCount {
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--lod-ink-faint);
+}
+
+.entries {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-03;
+}
+
+.entry {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: $spacing-03;
+  padding: $spacing-04;
+  background: rgba(255, 252, 240, 0.65);
+  border: 1px solid var(--lod-edge);
+  border-left: 3px solid var(--lod-gold);
+  border-radius: var(--lod-radius);
+}
+
+.entryEditing {
+  background: rgba(255, 252, 240, 0.92);
+  border-left-color: var(--lod-gold-bright);
+}
+
+.entryStamp {
+  align-self: flex-start;
+  padding: 2px 8px;
+  background: rgba(156, 122, 45, 0.14);
+  border: 1px solid rgba(156, 122, 45, 0.4);
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lod-gold);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.entryAuthor {
+  text-transform: none;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--lod-ink-soft);
+  border-left: 1px solid var(--lod-edge);
+  padding-left: 6px;
+}
+
+.entryBody {
+  min-width: 0;
+  font-size: 0.96rem;
+  color: var(--lod-ink);
+}
+
+.entryActions {
+  display: flex;
+  gap: $spacing-02;
+  align-self: flex-start;
+}
+
+.editor {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-03;
+}
+
+.editorActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: $spacing-03;
+}
+
+@media (max-width: 480px) {
+  .entry {
+    grid-template-columns: 1fr auto;
+  }
+  .entryStamp {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+}

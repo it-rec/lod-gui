@@ -228,3 +228,96 @@ export const IconMoon = (props) => (
     <path {...stroke} d="M16 4.5l.7 1.5 1.5.7-1.5.7-.7 1.5-.7-1.5L13.8 6.7l1.5-.7z" />
   </Svg>
 );
+
+// A d20 silhouette: an outer hexagon with the front triangular faces traced
+// in. Looks chunky enough to read at icon size.
+export const IconDice = (props) => (
+  <Svg {...props}>
+    <path
+      d="M12 2.5l8.5 4.9v9.2L12 21.5 3.5 16.6V7.4z"
+      fill="currentColor"
+      opacity="0.18"
+    />
+    <path {...stroke} d="M12 2.5l8.5 4.9v9.2L12 21.5 3.5 16.6V7.4z" />
+    <path {...stroke} d="M12 2.5L7 11l5 4 5-4z" />
+    <path {...stroke} d="M3.5 7.4L7 11M20.5 7.4L17 11M12 15v6.5M7 11l-3.5 5.6M17 11l3.5 5.6" />
+  </Svg>
+);
+
+export const IconMap = (props) => (
+  <Svg {...props}>
+    <path
+      d="M9 4.5L3.5 6.5v13L9 17l6 2.5 5.5-2v-13L15 6.5z"
+      fill="currentColor"
+      opacity="0.16"
+    />
+    <path {...stroke} d="M9 4.5L3.5 6.5v13L9 17l6 2.5 5.5-2v-13L15 6.5z" />
+    <path {...stroke} d="M9 4.5V17M15 6.5V19.5" />
+  </Svg>
+);
+
+export const IconCompass = (props) => (
+  <Svg {...props}>
+    <circle cx="12" cy="12" r="8.5" fill="currentColor" opacity="0.14" />
+    <circle cx="12" cy="12" r="8.5" {...stroke} />
+    <path
+      {...stroke}
+      d="M14.5 9.5L10 14l-1 1 4.5-4.5L15 9z"
+      fill="currentColor"
+      opacity="0.55"
+    />
+  </Svg>
+);
+
+// Six-dot grip used as a sortable drag handle.
+export const IconGrip = (props) => (
+  <Svg {...props}>
+    <circle cx="9" cy="6" r="1.4" fill="currentColor" />
+    <circle cx="9" cy="12" r="1.4" fill="currentColor" />
+    <circle cx="9" cy="18" r="1.4" fill="currentColor" />
+    <circle cx="15" cy="6" r="1.4" fill="currentColor" />
+    <circle cx="15" cy="12" r="1.4" fill="currentColor" />
+    <circle cx="15" cy="18" r="1.4" fill="currentColor" />
+  </Svg>
+);
+
+export const IconClock = (props) => (
+  <Svg {...props}>
+    <circle cx="12" cy="12" r="8.5" {...stroke} />
+    <path {...stroke} d="M12 7.5V12l3 2" />
+  </Svg>
+);
+
+export const IconSword = (props) => (
+  <Svg {...props}>
+    <path {...stroke} d="M14 4l6 0 0 6L9 21H5l0-4z" />
+    <path {...stroke} d="M14.5 9.5l-5 5" />
+  </Svg>
+);
+
+export const IconHelp = (props) => (
+  <Svg {...props}>
+    <circle cx="12" cy="12" r="8.5" {...stroke} />
+    <path
+      {...stroke}
+      d="M9.5 9.5c0-1.4 1.1-2.5 2.5-2.5s2.5 1.1 2.5 2.5c0 1.4-2.5 1.7-2.5 3.5"
+    />
+    <circle cx="12" cy="16.5" r="0.6" fill="currentColor" />
+  </Svg>
+);
+
+export const IconLock = (props) => (
+  <Svg {...props}>
+    <rect x="5" y="11" width="14" height="9" rx="1.5" {...stroke} />
+    <path {...stroke} d="M8 11V7.5a4 4 0 0 1 8 0V11" fill="none" />
+    <circle cx="12" cy="15.5" r="1.2" fill="currentColor" />
+  </Svg>
+);
+
+export const IconChest = (props) => (
+  <Svg {...props}>
+    <path {...stroke} d="M4 11h16v9H4z" />
+    <path {...stroke} d="M4 11l1.5-4h13L20 11" />
+    <rect x="10.5" y="13.5" width="3" height="3.5" rx="0.5" {...stroke} fill="currentColor" />
+  </Svg>
+);

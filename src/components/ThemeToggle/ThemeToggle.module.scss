@@ -1,0 +1,17 @@
+@use '../../common' as *;
+
+.toggle {
+  position: relative;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.35s ease;
+}
+
+// Half-rotate as the player flips between sun and moon — nice tactile feel.
+.toggle:active .icon {
+  transform: rotate(-15deg);
+}

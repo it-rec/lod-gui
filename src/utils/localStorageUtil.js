@@ -39,3 +39,11 @@ export const prefSet = (key, value) => {
     /* best-effort */
   }
 };
+
+export const prefRemove = (key) => {
+  try {
+    window.localStorage.removeItem(PREF_PREFIX + key);
+  } catch {
+    /* best-effort */
+  }
+};

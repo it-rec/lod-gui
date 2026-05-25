@@ -25,6 +25,15 @@
   border: 1px solid rgba(156, 122, 45, 0.4);
   border-radius: 2px;
   z-index: 2;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* When the search jumps to this panel, flash the gold frame to draw the eye. */
+.highlight::after {
+  border-color: var(--lod-gold-bright);
+  box-shadow:
+    0 0 0 2px rgba(196, 160, 74, 0.55),
+    0 0 24px rgba(196, 160, 74, 0.5);
 }
 
 .header {

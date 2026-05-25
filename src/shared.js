@@ -7,4 +7,8 @@ export const collections = {
   KEYWORDS: 'keywords',
   QUESTS: 'quests',
   NPCS: 'npcs',
+  LOCATIONS: 'locations',
+  JOURNAL: 'journal',
+  INITIATIVE: 'initiative',
+  INVENTORY: 'inventory',
 };

@@ -1,0 +1,305 @@
+@use '../../common' as *;
+
+.locations {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-05;
+}
+
+.add {
+  display: flex;
+  gap: $spacing-03;
+}
+
+.add > :first-child {
+  flex: 1;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-02;
+  align-items: center;
+}
+
+.filter {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-02;
+  border: 1px solid var(--lod-edge-strong);
+  border-radius: var(--lod-radius);
+  background: rgba(60, 40, 20, 0.04);
+  color: var(--lod-ink-soft);
+  cursor: pointer;
+
+  padding: $spacing-02 $spacing-04;
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.filter:hover {
+  color: var(--lod-crimson);
+}
+
+.filterActive,
+.filterActive:hover {
+  background: linear-gradient(180deg, var(--lod-crimson-bright), var(--lod-crimson));
+  color: var(--lod-gold-hi);
+}
+
+.filterCount {
+  display: inline-block;
+  min-width: 1.4em;
+  padding: 0 0.35em;
+  text-align: center;
+  font-size: 0.66rem;
+  background: rgba(60, 40, 20, 0.16);
+  color: inherit;
+  border-radius: 999px;
+}
+
+.filterActive .filterCount {
+  background: rgba(255, 240, 200, 0.22);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-03;
+}
+
+.entry {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: $spacing-03 $spacing-04;
+  padding: $spacing-04;
+  background: rgba(255, 252, 240, 0.6);
+  border: 1px solid var(--lod-edge);
+  border-left: 3px solid var(--lod-edge-strong);
+  border-radius: var(--lod-radius);
+  transition: border-color 0.15s ease;
+}
+
+.entry > .body {
+  flex: 1 1 8rem;
+}
+
+@media (max-width: 480px) {
+  .entry > .entryActions {
+    flex: 1 0 100%;
+    justify-content: flex-end;
+  }
+}
+
+.entry-visited { border-left-color: var(--lod-good); }
+.entry-home { border-left-color: var(--lod-crimson-bright); }
+.entry-rumored { border-left-color: var(--lod-gold); }
+.entry-lost { border-left-color: var(--lod-ink-faint); }
+
+.entryEditing {
+  background: rgba(255, 252, 240, 0.85);
+  border-left-color: var(--lod-gold-bright);
+}
+
+.entryDragging {
+  opacity: 0.38;
+}
+
+.entryDropOver {
+  box-shadow: inset 4px 0 0 var(--lod-gold-bright);
+}
+
+.grip {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-top: 1px;
+  cursor: grab;
+  color: var(--lod-ink-faint);
+  border-radius: var(--lod-radius);
+  transition: color 0.12s ease, background-color 0.12s ease;
+  user-select: none;
+}
+
+.grip:hover,
+.grip:focus-visible {
+  color: var(--lod-gold);
+  background: rgba(156, 122, 45, 0.12);
+  outline: none;
+}
+
+.grip:active {
+  cursor: grabbing;
+  color: var(--lod-crimson);
+}
+
+.statusBadge {
+  flex-shrink: 0;
+  align-self: flex-start;
+  padding: $spacing-02 $spacing-03;
+  border: 1px solid var(--lod-edge-strong);
+  border-radius: var(--lod-radius);
+  background: rgba(255, 252, 240, 0.75);
+  color: var(--lod-ink);
+  cursor: pointer;
+
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.statusBadge:hover { border-color: var(--lod-gold); }
+
+.statusBadge-visited {
+  background: rgba(63, 107, 46, 0.16);
+  color: var(--lod-good);
+  border-color: rgba(63, 107, 46, 0.55);
+}
+
+.statusBadge-home {
+  background: rgba(124, 26, 28, 0.16);
+  color: var(--lod-crimson-bright);
+  border-color: rgba(124, 26, 28, 0.55);
+}
+
+.statusBadge-rumored {
+  background: rgba(156, 122, 45, 0.16);
+  color: var(--lod-gold);
+  border-color: rgba(156, 122, 45, 0.6);
+}
+
+.statusBadge-lost {
+  background: rgba(60, 40, 20, 0.08);
+  color: var(--lod-ink-soft);
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.name {
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--lod-ink);
+  overflow-wrap: anywhere;
+}
+
+.region {
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--lod-ink-faint);
+  overflow-wrap: anywhere;
+}
+
+.detail {
+  font-size: 0.92rem;
+  color: var(--lod-ink-soft);
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.entryActions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-02;
+  flex-shrink: 0;
+}
+
+.editor {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-03;
+}
+
+.statusSelect {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-02;
+}
+
+.statusOption {
+  padding: $spacing-02 $spacing-03;
+  border: 1px solid var(--lod-edge-strong);
+  border-radius: var(--lod-radius);
+  background: rgba(60, 40, 20, 0.04);
+  color: var(--lod-ink-soft);
+  cursor: pointer;
+
+  font-family: var(--font-display);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.statusOption:hover { color: var(--lod-crimson); }
+
+.statusOptionActive,
+.statusOptionActive:hover {
+  background: linear-gradient(180deg, var(--lod-crimson-bright), var(--lod-crimson));
+  color: var(--lod-gold-hi);
+  border-color: var(--lod-crimson-ink);
+}
+
+.notes {
+  width: 100%;
+  resize: vertical;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--lod-ink);
+
+  padding: $spacing-03 $spacing-04;
+  background: rgba(255, 252, 240, 0.8);
+  border: 1px solid var(--lod-edge-strong);
+  border-radius: var(--lod-radius);
+  box-shadow: inset 0 1px 2px rgba(40, 22, 8, 0.18);
+}
+
+.notes:focus {
+  outline: none;
+  border-color: var(--lod-gold);
+  box-shadow: 0 0 0 2px rgba(196, 160, 74, 0.35);
+}
+
+.editorActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: $spacing-03;
+}
+
+.empty {
+  text-align: center;
+  padding: $spacing-05 0;
+  font-style: italic;
+  color: var(--lod-ink-soft);
+}

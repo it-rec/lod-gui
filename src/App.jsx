@@ -8,7 +8,13 @@ import Calendar from './components/Calendar/Calendar';
 import Keywords from './components/Keywords/Keywords';
 import Quests from './components/Quests/Quests';
 import NPCs from './components/NPCs/NPCs';
+import Locations from './components/Locations/Locations';
+import Journal from './components/Journal/Journal';
+import Initiative from './components/Initiative/Initiative';
+import Inventory from './components/Inventory/Inventory';
 import StoryPoints from './components/StoryPoints/StoryPoints';
+import GlobalSearch from './components/GlobalSearch/GlobalSearch';
+import KeyboardHelp from './components/KeyboardHelp/KeyboardHelp';
 import Toaster from './components/common/Toast/Toaster';
 import { useConnection } from './hooks/useConnection';
 import { toast } from './components/common/Toast/toastStore';
@@ -54,13 +60,19 @@ const App = () => {
         <div className="app__notebook">
           <Quests />
           <NPCs />
+          <Locations />
           <Keywords />
         </div>
+        <Initiative />
+        <Inventory />
+        <Journal />
         <StoryPoints />
       </main>
       <footer className="app__footer">
         Track the party, the purse, and the tale — your tabletop campaign companion.
       </footer>
+      <GlobalSearch />
+      <KeyboardHelp />
       <Toaster />
     </div>
   );

@@ -1,6 +1,17 @@
 {
   "short_name": "LoD Companion",
   "name": "LoD — Campaign Companion",
+  "description": "Tabletop RPG companion — track quests, party, people, places, dice rolls, and the chronicle of your adventure.",
+  "lang": "en",
+  "dir": "ltr",
+  "orientation": "any",
+  "categories": ["games", "entertainment", "utilities"],
+  "scope": "/",
+  "start_url": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "theme_color": "#5a0c0e",
+  "background_color": "#ece0c0",
   "icons": [
     {
       "src": "favicon.ico",
@@ -10,16 +21,42 @@
     {
       "src": "logo192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
     },
     {
       "src": "logo512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
     }
   ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#5a0c0e",
-  "background_color": "#ece0c0"
+  "shortcuts": [
+    {
+      "name": "Open the finder",
+      "short_name": "Search",
+      "description": "Search across every panel of the campaign ledger.",
+      "url": "/?action=search",
+      "icons": [{ "src": "logo192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Roll dice",
+      "short_name": "Dice",
+      "description": "Open the dice roller.",
+      "url": "/?action=dice",
+      "icons": [{ "src": "logo192.png", "sizes": "192x192" }]
+    }
+  ]
 }
