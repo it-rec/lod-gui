@@ -14,12 +14,26 @@ const setStatus = (next) => {
   statusListeners.forEach((listener) => listener(status));
 };
 
+const presenceListeners = new Set();
+let presence = 0;
+
+const setPresence = (next) => {
+  const value = Number.isFinite(next) ? Math.max(0, Math.round(next)) : 0;
+  if (value === presence) return;
+  presence = value;
+  presenceListeners.forEach((listener) => listener(presence));
+};
+
 export const getSocket = () => {
   if (!socket) {
     socket = io({ reconnectionDelayMax: 8000 });
     socket.on('connect', () => setStatus('connected'));
-    socket.on('disconnect', () => setStatus('disconnected'));
+    socket.on('disconnect', () => {
+      setStatus('disconnected');
+      setPresence(0);
+    });
     socket.on('connect_error', () => setStatus('disconnected'));
+    socket.on('presence', (payload) => setPresence(payload?.players));
   }
   return socket;
 };
@@ -34,4 +48,12 @@ export const subscribeConnectionStatus = (listener) => {
   getSocket();
   statusListeners.add(listener);
   return () => statusListeners.delete(listener);
+};
+
+export const getPresence = () => presence;
+
+export const subscribePresence = (listener) => {
+  getSocket();
+  presenceListeners.add(listener);
+  return () => presenceListeners.delete(listener);
 };
