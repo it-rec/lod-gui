@@ -2,9 +2,9 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { getSocket, getClientId } from '../socket/socket';
 import { prefGet, prefSet } from '../utils/localStorageUtil';
 import { rollExpression } from '../utils/dice';
+import { usePlayerName } from './usePlayerName';
 
 const LOG_PREF_KEY = 'dice-log';
-const NAME_PREF_KEY = 'dice-roller-name';
 const MAX_ENTRIES = 20;
 
 const sanitizeEntry = (raw) => {
@@ -44,10 +44,9 @@ const newId = () =>
 // keeps the recent log.
 export const useDiceLog = () => {
   const [entries, setEntries] = useState(() => loadLog());
-  const [rollerName, setRollerNameState] = useState(() => {
-    const stored = prefGet(NAME_PREF_KEY);
-    return typeof stored === 'string' ? stored : '';
-  });
+  // Roller name is shared across the app via usePlayerName so the same name
+  // attributes dice rolls, journal entries, etc. for the current device.
+  const { name: rollerName, setName: setRollerName } = usePlayerName();
 
   const entriesRef = useRef(entries);
   entriesRef.current = entries;
@@ -75,11 +74,6 @@ export const useDiceLog = () => {
     socket.on('dice:roll', handler);
     return () => socket.off('dice:roll', handler);
   }, [writeLog]);
-
-  const setRollerName = useCallback((value) => {
-    setRollerNameState(value);
-    prefSet(NAME_PREF_KEY, value);
-  }, []);
 
   // Roll an expression. Returns the new entry, or `{ error }` if the
   // expression didn't parse — the caller decides how to surface that.

@@ -11,6 +11,7 @@ import {
   IconPencil,
 } from '../common/icons';
 import { useGameChannel } from '../../hooks/useGameChannel';
+import { usePlayerName } from '../../hooks/usePlayerName';
 import { collections } from '../../shared';
 import styles from './Journal.module.scss';
 
@@ -40,6 +41,8 @@ const normalizeEntries = (raw) => {
             : 1,
         time: PHASE_IDS.includes(entry.time) ? entry.time : null,
         text: text.trim(),
+        author:
+          typeof entry.author === 'string' ? entry.author.trim() : '',
         createdAt:
           typeof entry.createdAt === 'string'
             ? entry.createdAt
@@ -78,6 +81,7 @@ const Journal = () => {
     }),
   });
 
+  const { name: playerName } = usePlayerName();
   const [draft, setDraft] = useState('');
   const [editingId, setEditingId] = useState(null);
   const [editingText, setEditingText] = useState('');
@@ -115,6 +119,7 @@ const Journal = () => {
         day: calendar.day,
         time: calendar.time,
         text,
+        author: playerName.trim(),
         createdAt: new Date().toISOString(),
       },
     ]);
@@ -267,6 +272,11 @@ const Journal = () => {
                                 {entry.time
                                   ? PHASE_LABELS[entry.time]
                                   : 'Anytime'}
+                                {entry.author && (
+                                  <span className={styles.entryAuthor}>
+                                    {entry.author}
+                                  </span>
+                                )}
                               </span>
                               <FormattedText
                                 className={styles.entryBody}

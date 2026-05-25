@@ -1,0 +1,64 @@
+@use '../../common' as *;
+
+.wrapper {
+  position: relative;
+}
+
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-02;
+  padding: 4px 10px;
+  max-width: 10rem;
+}
+
+.label {
+  font-family: var(--font-display);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.popover {
+  position: absolute;
+  top: calc(100% + $spacing-02);
+  right: 0;
+  z-index: 200;
+  min-width: 18rem;
+  padding: $spacing-04 $spacing-05;
+  background: var(--lod-parchment-hi);
+  border: 1px solid var(--lod-edge-strong);
+  border-radius: var(--lod-radius);
+  box-shadow:
+    0 12px 28px rgba(20, 10, 4, 0.45),
+    0 0 0 1px var(--lod-gold) inset;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-03;
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lod-crimson);
+}
+
+.hint {
+  margin: 0;
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--lod-ink-soft);
+}
+
+.actions {
+  display: flex;
+  gap: $spacing-02;
+  justify-content: flex-end;
+}
