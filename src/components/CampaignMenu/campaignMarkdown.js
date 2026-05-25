@@ -243,7 +243,7 @@ export const campaignToMarkdown = (backup) => {
   const date = exportedAt.slice(0, 10);
 
   const sections = [
-    `# Campaign Ledger`,
+    '# Campaign Ledger',
     `_Exported ${date}_`,
     '',
     renderHeaderBlock(data),
