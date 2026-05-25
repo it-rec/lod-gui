@@ -15,6 +15,7 @@ const COLLECTIONS = {
   LOCATIONS: 'locations',
   JOURNAL: 'journal',
   INITIATIVE: 'initiative',
+  INVENTORY: 'inventory',
 };
 
 const API_PATH = '/api';
@@ -32,6 +33,7 @@ const endpoints = [
   { path: `${GAME_ID_PATH}/locations/`, collection: COLLECTIONS.LOCATIONS },
   { path: `${GAME_ID_PATH}/journal/`, collection: COLLECTIONS.JOURNAL },
   { path: `${GAME_ID_PATH}/initiative/`, collection: COLLECTIONS.INITIATIVE },
+  { path: `${GAME_ID_PATH}/inventory/`, collection: COLLECTIONS.INVENTORY },
 ];
 
 const configureEndpoints = (app, io) => {

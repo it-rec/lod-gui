@@ -12,6 +12,7 @@ const ENDPOINTS = [
   { key: collections.LOCATIONS, path: '/api/game/1/locations/' },
   { key: collections.JOURNAL, path: '/api/game/1/journal/' },
   { key: collections.INITIATIVE, path: '/api/game/1/initiative/' },
+  { key: collections.INVENTORY, path: '/api/game/1/inventory/' },
   { key: collections.STORY_POINTS, path: '/api/game/1/storyPoints/' },
 ];
 

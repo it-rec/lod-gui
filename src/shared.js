@@ -10,4 +10,5 @@ export const collections = {
   LOCATIONS: 'locations',
   JOURNAL: 'journal',
   INITIATIVE: 'initiative',
+  INVENTORY: 'inventory',
 };

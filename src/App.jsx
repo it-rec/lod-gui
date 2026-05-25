@@ -11,6 +11,7 @@ import NPCs from './components/NPCs/NPCs';
 import Locations from './components/Locations/Locations';
 import Journal from './components/Journal/Journal';
 import Initiative from './components/Initiative/Initiative';
+import Inventory from './components/Inventory/Inventory';
 import StoryPoints from './components/StoryPoints/StoryPoints';
 import GlobalSearch from './components/GlobalSearch/GlobalSearch';
 import KeyboardHelp from './components/KeyboardHelp/KeyboardHelp';
@@ -63,6 +64,7 @@ const App = () => {
           <Keywords />
         </div>
         <Initiative />
+        <Inventory />
         <Journal />
         <StoryPoints />
       </main>
