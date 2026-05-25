@@ -80,13 +80,25 @@
 .entry {
   display: flex;
   align-items: flex-start;
-  gap: $spacing-04;
+  flex-wrap: wrap;
+  gap: $spacing-03 $spacing-04;
   padding: $spacing-04;
   background: rgba(255, 252, 240, 0.6);
   border: 1px solid var(--lod-edge);
   border-left: 3px solid var(--lod-edge-strong);
   border-radius: var(--lod-radius);
   transition: border-color 0.15s ease;
+}
+
+.entry > .body {
+  flex: 1 1 8rem;
+}
+
+@media (max-width: 480px) {
+  .entry > .entryActions {
+    flex: 1 0 100%;
+    justify-content: flex-end;
+  }
 }
 
 .entry-ally { border-left-color: var(--lod-good); }

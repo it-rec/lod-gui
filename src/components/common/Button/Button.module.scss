@@ -54,16 +54,34 @@
 
 .iconOnly.md {
   padding: 0;
-  width: 2.2rem;
-  height: 2.2rem;
+  width: 2.4rem;
+  height: 2.4rem;
   font-size: 1.1rem;
 }
 
 .iconOnly.sm {
   padding: 0;
-  width: 1.7rem;
-  height: 1.7rem;
+  width: 2rem;
+  height: 2rem;
   font-size: 0.95rem;
+}
+
+/* Bump touch targets on coarse-pointer devices (phones/tablets). */
+@media (pointer: coarse) {
+  .iconOnly.sm {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .iconOnly.md {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .sm {
+    padding: $spacing-03 $spacing-04;
+    font-size: 0.74rem;
+  }
 }
 
 /* kinds */

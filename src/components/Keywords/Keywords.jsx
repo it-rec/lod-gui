@@ -79,6 +79,7 @@ const Keywords = () => {
       }
       error={error}
       onRetry={reload}
+      collapsibleKey="keywords"
     >
       {loading ? (
         <Skeleton height="8rem" />

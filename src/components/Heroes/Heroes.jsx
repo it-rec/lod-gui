@@ -90,6 +90,7 @@ const Heroes = () => {
       }
       error={error}
       onRetry={reload}
+      collapsibleKey="party"
       actions={
         !loading && (
           <div className={styles.actions}>

@@ -12,6 +12,8 @@
   max-width: 84rem;
   margin: 0 auto;
   padding: $spacing-07 $spacing-06;
+  padding-left: max(#{$spacing-06}, env(safe-area-inset-left));
+  padding-right: max(#{$spacing-06}, env(safe-area-inset-right));
 
   display: flex;
   flex-direction: column;
@@ -33,7 +35,7 @@
 
 .app__notebook {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
   gap: $spacing-06;
   align-items: start;
 }
@@ -55,6 +57,8 @@
 @media (max-width: 600px) {
   .app__main {
     padding: $spacing-05 $spacing-04;
+    padding-left: max(#{$spacing-04}, env(safe-area-inset-left));
+    padding-right: max(#{$spacing-04}, env(safe-area-inset-right));
     gap: $spacing-06;
   }
 }

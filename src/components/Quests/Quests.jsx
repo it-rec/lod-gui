@@ -146,6 +146,7 @@ const Quests = () => {
       subtitle={subtitle}
       error={error}
       onRetry={reload}
+      collapsibleKey="quests"
     >
       {loading ? (
         <Skeleton height="10rem" />

@@ -28,7 +28,9 @@
   list-style: none;
   margin: 0;
   padding: $spacing-02;
-  min-width: 18rem;
+  width: max-content;
+  min-width: 16rem;
+  max-width: calc(100vw - #{$spacing-05} * 2);
 
   background: var(--lod-parchment-hi);
   border: 1px solid var(--lod-edge-strong);

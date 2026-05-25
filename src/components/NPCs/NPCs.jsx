@@ -167,6 +167,7 @@ const NPCs = () => {
       subtitle={subtitle}
       error={error}
       onRetry={reload}
+      collapsibleKey="people"
     >
       {loading ? (
         <Skeleton height="10rem" />
