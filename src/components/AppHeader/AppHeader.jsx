@@ -5,6 +5,7 @@ import DiceRoller from '../DiceRoller/DiceRoller';
 import ThemeToggle from '../ThemeToggle/ThemeToggle';
 import SessionTimer from '../SessionTimer/SessionTimer';
 import { GlobalSearchButton } from '../GlobalSearch/GlobalSearch';
+import { KeyboardHelpButton } from '../KeyboardHelp/KeyboardHelp';
 import styles from './AppHeader.module.scss';
 
 const AppHeader = () => (
@@ -23,6 +24,7 @@ const AppHeader = () => (
         <GlobalSearchButton />
         <DiceRoller />
         <ThemeToggle />
+        <KeyboardHelpButton />
         <CampaignMenu />
       </div>
     </div>

@@ -12,6 +12,7 @@ import Locations from './components/Locations/Locations';
 import Journal from './components/Journal/Journal';
 import StoryPoints from './components/StoryPoints/StoryPoints';
 import GlobalSearch from './components/GlobalSearch/GlobalSearch';
+import KeyboardHelp from './components/KeyboardHelp/KeyboardHelp';
 import Toaster from './components/common/Toast/Toaster';
 import { useConnection } from './hooks/useConnection';
 import { toast } from './components/common/Toast/toastStore';
@@ -67,6 +68,7 @@ const App = () => {
         Track the party, the purse, and the tale — your tabletop campaign companion.
       </footer>
       <GlobalSearch />
+      <KeyboardHelp />
       <Toaster />
     </div>
   );
