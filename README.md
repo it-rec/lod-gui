@@ -35,15 +35,22 @@ Pages from the [`docs/`](./docs) folder. Browse it locally by opening
 [`docs/index.md`](./docs/index.md), or read the live site at
 <https://it-rec.github.io/lod-gui/>.
 
+## Package manager
+
+This project uses [**pnpm**](https://pnpm.io/) (pinned via the
+`packageManager` field in `package.json`, so [Corepack](https://nodejs.org/api/corepack.html)
+will pick the right version automatically — just run `corepack enable` once).
+Install dependencies with `pnpm install`.
+
 ## Available Scripts
 
-### `yarn start`
+### `pnpm start`
 
 Runs the Vite dev server at [http://localhost:3000](http://localhost:3000).
 Requests to `/api` and `/socket.io` are proxied to the backend on
 `http://localhost:3080`.
 
-### `yarn dev`
+### `pnpm dev`
 
 Runs the backend server (Express + Socket.IO) with `nodemon` on port `3080`.
 
@@ -51,20 +58,20 @@ If MongoDB is not reachable the server logs a warning and falls back to an
 **in-memory store**, so the app is fully usable for local development and demos
 without a database. Set `MONGO_URL` to point at a database for real persistence.
 
-### `yarn build`
+### `pnpm build`
 
 Builds the app for production into the `build/` folder. The Express server
 (`server/app.js`) serves this directory and provides the SPA fallback.
 
-### `yarn preview`
+### `pnpm preview`
 
 Serves the production build locally for previewing.
 
-### `yarn test`
+### `pnpm test`
 
 Runs the test suite with [Vitest](https://vitest.dev/).
 
-### `yarn lint`
+### `pnpm lint`
 
 Runs ESLint over the project.
 
