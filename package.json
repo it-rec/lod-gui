@@ -35,7 +35,7 @@
     "dev": "bun --watch server/app.js localhost 3080",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "vitest run",
+    "test": "vitest run --passWithNoTests=false",
     "lint": "eslint ."
   },
   "browserslist": {

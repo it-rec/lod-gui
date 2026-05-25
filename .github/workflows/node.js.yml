@@ -21,5 +21,6 @@ jobs:
       with:
         bun-version-file: .bun-version
     - run: bun install --frozen-lockfile
-    - run: bun run test
+    - name: Run tests (Vitest, invoked explicitly to avoid bun's built-in test runner)
+      run: bun x vitest run --reporter=verbose --passWithNoTests=false
     - run: bun run build
