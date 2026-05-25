@@ -10,6 +10,7 @@ import Quests from './components/Quests/Quests';
 import NPCs from './components/NPCs/NPCs';
 import Locations from './components/Locations/Locations';
 import Journal from './components/Journal/Journal';
+import Initiative from './components/Initiative/Initiative';
 import StoryPoints from './components/StoryPoints/StoryPoints';
 import GlobalSearch from './components/GlobalSearch/GlobalSearch';
 import KeyboardHelp from './components/KeyboardHelp/KeyboardHelp';
@@ -61,6 +62,7 @@ const App = () => {
           <Locations />
           <Keywords />
         </div>
+        <Initiative />
         <Journal />
         <StoryPoints />
       </main>

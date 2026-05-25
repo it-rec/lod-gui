@@ -9,4 +9,5 @@ export const collections = {
   NPCS: 'npcs',
   LOCATIONS: 'locations',
   JOURNAL: 'journal',
+  INITIATIVE: 'initiative',
 };

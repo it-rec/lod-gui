@@ -37,10 +37,11 @@ describe('campaignBackup', () => {
         npcs: expect.any(Object),
         locations: expect.any(Object),
         journal: expect.any(Object),
+        initiative: expect.any(Object),
         storyPoints: expect.any(Object),
       })
     );
-    expect(get).toHaveBeenCalledTimes(10);
+    expect(get).toHaveBeenCalledTimes(11);
   });
 
   it('restores by posting every channel back', async () => {
@@ -57,10 +58,11 @@ describe('campaignBackup', () => {
         npcs: { npcs: [] },
         locations: { locations: [] },
         journal: { entries: [] },
+        initiative: { combatants: [], round: 1, currentId: null },
         storyPoints: [],
       },
     });
-    expect(post).toHaveBeenCalledTimes(10);
+    expect(post).toHaveBeenCalledTimes(11);
     expect(post).toHaveBeenCalledWith('/api/game/1/gold/', { gold: 42 });
     expect(post).toHaveBeenCalledWith('/api/game/1/calendar/', {
       day: 5,
