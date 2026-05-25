@@ -13,18 +13,11 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [22.x]
-
     steps:
     - uses: actions/checkout@v4
-    - name: Install pnpm
-      uses: pnpm/action-setup@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
+    - name: Install Bun
+      uses: oven-sh/setup-bun@v2
       with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'pnpm'
-    - run: pnpm install --frozen-lockfile
-    - run: pnpm run lint
+        bun-version-file: .bun-version
+    - run: bun install --frozen-lockfile
+    - run: bun run lint
