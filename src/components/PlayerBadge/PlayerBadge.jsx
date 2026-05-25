@@ -35,14 +35,13 @@ const PlayerBadge = () => {
   }, [open]);
 
   useEffect(() => {
-    if (open) {
-      const id = window.setTimeout(() => {
-        inputRef.current?.focus();
-        inputRef.current?.select();
-      }, 30);
-      return () => window.clearTimeout(id);
-    }
-    return undefined;
+    if (!open) return;
+    // Focus immediately so the player can start typing without a click; if
+    // there is an existing draft, pre-select it so a new name overwrites.
+    const input = inputRef.current;
+    if (!input) return;
+    input.focus();
+    if (input.value && typeof input.select === 'function') input.select();
   }, [open]);
 
   const commit = () => {

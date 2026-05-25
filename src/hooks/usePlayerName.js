@@ -31,11 +31,16 @@ export const usePlayerName = () => {
         setNameState(readStored());
       }
     };
+    // Same-tab CustomEvent path needs a named handler so the cleanup can
+    // actually remove it; otherwise unmounted instances keep handling
+    // updates and shout into stale React state.
+    const onCustom = () => setNameState(readStored());
     window.addEventListener('storage', onStorage);
-    window.addEventListener(STORAGE_EVENT, () => onChange(readStored()));
+    window.addEventListener(STORAGE_EVENT, onCustom);
     return () => {
       listeners.delete(onChange);
       window.removeEventListener('storage', onStorage);
+      window.removeEventListener(STORAGE_EVENT, onCustom);
     };
   }, []);
 
