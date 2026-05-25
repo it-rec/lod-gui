@@ -8,6 +8,7 @@ import Calendar from './components/Calendar/Calendar';
 import Keywords from './components/Keywords/Keywords';
 import Quests from './components/Quests/Quests';
 import NPCs from './components/NPCs/NPCs';
+import Locations from './components/Locations/Locations';
 import StoryPoints from './components/StoryPoints/StoryPoints';
 import Toaster from './components/common/Toast/Toaster';
 import { useConnection } from './hooks/useConnection';
@@ -54,6 +55,7 @@ const App = () => {
         <div className="app__notebook">
           <Quests />
           <NPCs />
+          <Locations />
           <Keywords />
         </div>
         <StoryPoints />

@@ -7,4 +7,5 @@ export const collections = {
   KEYWORDS: 'keywords',
   QUESTS: 'quests',
   NPCS: 'npcs',
+  LOCATIONS: 'locations',
 };

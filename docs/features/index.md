@@ -19,6 +19,7 @@ The pages below walk through each panel in turn:
 - [The Calendar](calendar.md)
 - [Quests](quests.md)
 - [People](people.md)
+- [Locations](locations.md)
 - [Keywords](keywords.md)
 - [The Chronicle](chronicle.md)
 - [Dice roller](dice-roller.md)

@@ -12,6 +12,7 @@ const COLLECTIONS = {
   KEYWORDS: 'keywords',
   QUESTS: 'quests',
   NPCS: 'npcs',
+  LOCATIONS: 'locations',
 };
 
 const API_PATH = '/api';
@@ -26,6 +27,7 @@ const endpoints = [
   { path: `${GAME_ID_PATH}/keywords/`, collection: COLLECTIONS.KEYWORDS },
   { path: `${GAME_ID_PATH}/quests/`, collection: COLLECTIONS.QUESTS },
   { path: `${GAME_ID_PATH}/npcs/`, collection: COLLECTIONS.NPCS },
+  { path: `${GAME_ID_PATH}/locations/`, collection: COLLECTIONS.LOCATIONS },
 ];
 
 const configureEndpoints = (app, io) => {

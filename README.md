@@ -12,6 +12,8 @@ player's screen:
 - **Quests** — pledged errands with notes and active/completed filtering.
 - **People** — the cast met along the way, tagged ally / foe / neutral /
   unknown, with location and notes.
+- **Locations** — the map ledger of towns, wilds and ruins, tagged
+  rumored / visited / home / lost, with region and notes.
 - **Keywords** — the log of story keywords and notes recorded along the way.
 - **The Chronicle** — an A1–Z8 grid of story entries, with progress, chapter
   navigation and filtering.
