@@ -4,6 +4,7 @@ import Panel from '../common/Panel/Panel';
 import Skeleton from '../common/Skeleton/Skeleton';
 import Button from '../common/Button/Button';
 import TextInput from '../common/TextInput/TextInput';
+import FormattedText from '../common/FormattedText/FormattedText';
 import {
   IconMap,
   IconPlus,
@@ -322,7 +323,10 @@ const Locations = () => {
                             <p className={styles.region}>{location.region}</p>
                           )}
                           {location.notes && (
-                            <p className={styles.detail}>{location.notes}</p>
+                            <FormattedText
+                              className={styles.detail}
+                              text={location.notes}
+                            />
                           )}
                         </div>
                         <div className={styles.entryActions}>

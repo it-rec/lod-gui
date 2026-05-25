@@ -4,6 +4,7 @@ import Panel from '../common/Panel/Panel';
 import Skeleton from '../common/Skeleton/Skeleton';
 import Button from '../common/Button/Button';
 import TextInput from '../common/TextInput/TextInput';
+import FormattedText from '../common/FormattedText/FormattedText';
 import {
   IconQuest,
   IconPlus,
@@ -261,7 +262,10 @@ const Quests = () => {
                         <div className={styles.body}>
                           <p className={styles.title}>{quest.title}</p>
                           {quest.notes && (
-                            <p className={styles.detail}>{quest.notes}</p>
+                            <FormattedText
+                              className={styles.detail}
+                              text={quest.notes}
+                            />
                           )}
                         </div>
                         <div className={styles.entryActions}>

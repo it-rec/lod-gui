@@ -1,0 +1,40 @@
+@use '../../../common' as *;
+
+.text {
+  display: block;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.paragraph {
+  margin: 0;
+}
+
+.paragraph + .paragraph {
+  margin-top: $spacing-02;
+}
+
+.code {
+  font-family: 'Source Code Pro', Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-size: 0.86em;
+  padding: 0 0.32em;
+  border-radius: 3px;
+  background: rgba(60, 40, 20, 0.1);
+  border: 1px solid var(--lod-edge);
+  color: var(--lod-crimson-ink);
+}
+
+.link {
+  color: var(--lod-crimson);
+  text-decoration: underline;
+  text-decoration-color: rgba(124, 26, 28, 0.4);
+  text-underline-offset: 2px;
+  transition: color 0.12s ease, text-decoration-color 0.12s ease;
+}
+
+.link:hover,
+.link:focus-visible {
+  color: var(--lod-crimson-bright);
+  text-decoration-color: var(--lod-crimson-bright);
+  outline: none;
+}

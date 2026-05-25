@@ -4,6 +4,7 @@ import Panel from '../common/Panel/Panel';
 import Skeleton from '../common/Skeleton/Skeleton';
 import Button from '../common/Button/Button';
 import TextInput from '../common/TextInput/TextInput';
+import FormattedText from '../common/FormattedText/FormattedText';
 import {
   IconPeople,
   IconPlus,
@@ -309,7 +310,10 @@ const NPCs = () => {
                             <p className={styles.location}>{npc.location}</p>
                           )}
                           {npc.notes && (
-                            <p className={styles.detail}>{npc.notes}</p>
+                            <FormattedText
+                              className={styles.detail}
+                              text={npc.notes}
+                            />
                           )}
                         </div>
                         <div className={styles.entryActions}>
