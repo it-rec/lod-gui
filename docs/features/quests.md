@@ -5,8 +5,6 @@ parent: Features
 nav_order: 4
 ---
 
-# Quests
-
 The Quests panel is the party's writ — the list of errands they have
 pledged to see through. Each quest carries a title, optional notes, and an
 active/completed state.

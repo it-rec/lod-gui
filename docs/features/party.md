@@ -5,8 +5,6 @@ parent: Features
 nav_order: 1
 ---
 
-# The Party
-
 The Party panel holds the heroes that the players have brought to the table.
 Up to **six** characters fit, and the panel seeds itself with four blank
 cards so a new campaign is ready to be filled in.

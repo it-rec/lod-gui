@@ -1,0 +1,161 @@
+---
+layout: landing
+title: LoD — Campaign Companion
+description: A real-time companion app for the storytelling board game Legacy of Dragonholt.
+---
+
+<section class="hero">
+  <div class="hero__copy">
+    <p class="hero__eyebrow">For Legacy of <em>Dragonholt</em></p>
+    <h1 class="hero__title">The campaign,<br/>kept in <em>sync</em>.</h1>
+    <p class="hero__lede">
+      A real-time companion app for the storytelling board game.
+      The party, the purse, the renown, the calendar, the chronicle —
+      every panel updates on every player's screen the moment it changes.
+    </p>
+    <div class="hero__actions">
+      <a class="btn btn--primary" href="{{ '/getting-started/' | relative_url }}">Get started</a>
+      <a class="btn btn--ghost" href="{{ '/features/' | relative_url }}">Tour the features</a>
+    </div>
+  </div>
+  <div class="hero__shot">
+    <img src="{{ '/screenshots/overview.png' | relative_url }}" alt="The full Campaign Companion app: party, ledger, notebook and chronicle." />
+  </div>
+</section>
+
+<section class="section">
+  <header class="section__head">
+    <h2 class="section__title">What it tracks</h2>
+    <p class="section__subtitle">One panel per concern. All of them in sync.</p>
+  </header>
+
+  <div class="feature-grid">
+    <a class="feature" href="{{ '/features/party/' | relative_url }}">
+      <div class="feature__shot"><img src="{{ '/screenshots/party.png' | relative_url }}" alt="The Party panel" /></div>
+      <div class="feature__body">
+        <h3 class="feature__title">The Party</h3>
+        <p class="feature__text">Hero cards with species, background, stamina, skills, traits, conditions, inventory and notes — up to six characters.</p>
+        <span class="feature__more">Read more →</span>
+      </div>
+    </a>
+
+    <a class="feature" href="{{ '/features/treasury/' | relative_url }}">
+      <div class="feature__shot"><img src="{{ '/screenshots/gold.png' | relative_url }}" alt="The Gold and Fame panels" /></div>
+      <div class="feature__body">
+        <h3 class="feature__title">Gold &amp; Fame</h3>
+        <p class="feature__text">The party's coin and renown — two slim counters in the ledger column.</p>
+        <span class="feature__more">Read more →</span>
+      </div>
+    </a>
+
+    <a class="feature" href="{{ '/features/calendar/' | relative_url }}">
+      <div class="feature__shot"><img src="{{ '/screenshots/calendar.png' | relative_url }}" alt="The Calendar panel" /></div>
+      <div class="feature__body">
+        <h3 class="feature__title">The Calendar</h3>
+        <p class="feature__text">Current adventure, day, and time of day — with one-tap advancement and a long-rest action.</p>
+        <span class="feature__more">Read more →</span>
+      </div>
+    </a>
+
+    <a class="feature" href="{{ '/features/quests/' | relative_url }}">
+      <div class="feature__shot"><img src="{{ '/screenshots/quests.png' | relative_url }}" alt="The Quests panel" /></div>
+      <div class="feature__body">
+        <h3 class="feature__title">Quests</h3>
+        <p class="feature__text">Pledged errands with notes and active/completed filtering.</p>
+        <span class="feature__more">Read more →</span>
+      </div>
+    </a>
+
+    <a class="feature" href="{{ '/features/people/' | relative_url }}">
+      <div class="feature__shot"><img src="{{ '/screenshots/people.png' | relative_url }}" alt="The People panel" /></div>
+      <div class="feature__body">
+        <h3 class="feature__title">People</h3>
+        <p class="feature__text">The cast met along the way — tagged ally, foe, neutral or unknown, with locations and notes.</p>
+        <span class="feature__more">Read more →</span>
+      </div>
+    </a>
+
+    <a class="feature" href="{{ '/features/keywords/' | relative_url }}">
+      <div class="feature__shot"><img src="{{ '/screenshots/keywords.png' | relative_url }}" alt="The Keywords panel" /></div>
+      <div class="feature__body">
+        <h3 class="feature__title">Keywords</h3>
+        <p class="feature__text">The book's story tokens, logged and searchable as the party finds them.</p>
+        <span class="feature__more">Read more →</span>
+      </div>
+    </a>
+
+    <a class="feature" href="{{ '/features/chronicle/' | relative_url }}">
+      <div class="feature__shot"><img src="{{ '/screenshots/chronicle.png' | relative_url }}" alt="The Chronicle panel" /></div>
+      <div class="feature__body">
+        <h3 class="feature__title">The Chronicle</h3>
+        <p class="feature__text">The A1–Z8 grid of story entries with progress, chapter navigation and filtering.</p>
+        <span class="feature__more">Read more →</span>
+      </div>
+    </a>
+
+    <a class="feature" href="{{ '/features/campaign-menu/' | relative_url }}">
+      <div class="feature__shot"><img src="{{ '/screenshots/campaign-menu.png' | relative_url }}" alt="The campaign menu" /></div>
+      <div class="feature__body">
+        <h3 class="feature__title">Backup &amp; restore</h3>
+        <p class="feature__text">Bundle the whole campaign into a JSON file with one click. Restore it onto any fresh server.</p>
+        <span class="feature__more">Read more →</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section class="section">
+  <header class="section__head">
+    <h2 class="section__title">Real-time, on every screen</h2>
+    <p class="section__subtitle">No refresh. No accounts. Just sync.</p>
+  </header>
+
+  <div class="realtime">
+    <div>
+      <h3>Edit anywhere, see it everywhere</h3>
+      <p>
+        Every panel is wired to a shared Socket.IO channel. When one player
+        marks a quest done, advances the calendar, or restores stamina with
+        a long rest, the change is broadcast to every other browser in the
+        campaign — phone, tablet or laptop, all at once.
+      </p>
+      <p>
+        If the realtime link drops, edits keep working locally and a toast
+        announces the loss. When the link returns, sync resumes.
+      </p>
+      <p>
+        The backend can persist to MongoDB or fall back to an in-memory
+        store — perfect for an evening around the table without any setup.
+      </p>
+    </div>
+    <div class="realtime__mobile">
+      <img src="{{ '/screenshots/mobile.png' | relative_url }}" alt="The companion app on a mobile screen." />
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <header class="section__head">
+    <h2 class="section__title">Get going</h2>
+    <p class="section__subtitle">Two terminals and you're at the table.</p>
+  </header>
+
+  <div class="realtime">
+    <div>
+      <p>Install dependencies, start the backend on <code>:3080</code>, start the dev server on <code>:3000</code>, point your players' browsers at the same backend, and you're done. The full walkthrough — including production builds and remote-play setup — is on the <a href="{{ '/getting-started/' | relative_url }}">Get started</a> page.</p>
+      <div class="hero__actions" style="margin-top: 1rem;">
+        <a class="btn btn--primary" href="{{ '/getting-started/' | relative_url }}">Read the setup guide</a>
+        <a class="btn btn--ghost" href="https://github.com/it-rec/lod-gui">View on GitHub</a>
+      </div>
+    </div>
+    <div>
+<pre><code>yarn install --frozen-lockfile
+
+# Terminal 1 — backend on :3080
+yarn dev
+
+# Terminal 2 — Vite dev server on :3000
+yarn start</code></pre>
+    </div>
+  </div>
+</section>

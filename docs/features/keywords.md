@@ -5,8 +5,6 @@ parent: Features
 nav_order: 6
 ---
 
-# Keywords
-
 Keywords are the **story tokens** that *Legacy of Dragonholt* sprinkles
 through its prose: cryptic words that unlock new entries elsewhere in the
 book. The Keywords panel is where the party logs them as they are found.

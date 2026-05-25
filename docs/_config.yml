@@ -1,13 +1,13 @@
 title: LoD — Campaign Companion
 description: A real-time companion app for the storytelling board game Legacy of Dragonholt.
-theme: jekyll-theme-cayman
 
-# Build settings
+# No theme — the site uses the custom layouts under _layouts.
 markdown: kramdown
 highlighter: rouge
+permalink: pretty
 
-# Rewrite relative .md links to their rendered URLs so the docs read
-# correctly both on GitHub itself and on the published Pages site.
+# Rewrite relative .md links to their rendered URLs so the same Markdown
+# reads correctly both on GitHub and on the published Pages site.
 plugins:
   - jekyll-relative-links
 
@@ -15,13 +15,19 @@ relative_links:
   enabled: true
   collections: true
 
-# Treat README-style index files as the directory's index page.
 include:
   - screenshots
   - features
+  - assets
 
 exclude:
   - Gemfile
   - Gemfile.lock
   - node_modules
   - vendor
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default

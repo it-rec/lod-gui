@@ -5,8 +5,6 @@ parent: Features
 nav_order: 3
 ---
 
-# The Calendar
-
 The Calendar tracks the **current adventure**, the **day** and the **time of
 day** the party is in. It sits in the ledger column next to Gold and Fame.
 

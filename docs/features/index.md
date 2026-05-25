@@ -5,8 +5,6 @@ nav_order: 3
 has_children: true
 ---
 
-# Features
-
 The campaign companion is built as a grid of panels — each one focused on a
 single aspect of an LoD campaign. They all share a parchment-and-crimson
 visual style, can be collapsed independently, and update in real time across

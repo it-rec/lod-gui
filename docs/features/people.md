@@ -5,8 +5,6 @@ parent: Features
 nav_order: 5
 ---
 
-# People
-
 The People panel is the party's social ledger — the villagers, strangers
 and adversaries the heroes have met along the way.
 

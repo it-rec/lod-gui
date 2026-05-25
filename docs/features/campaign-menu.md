@@ -5,8 +5,6 @@ parent: Features
 nav_order: 8
 ---
 
-# Campaign menu — backup & restore
-
 The header carries a small **campaign menu** with the heaviest off-table
 chores: getting the whole campaign out of the app and back into it later.
 

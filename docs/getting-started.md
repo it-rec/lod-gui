@@ -4,8 +4,6 @@ layout: default
 nav_order: 2
 ---
 
-# Getting started
-
 LoD is a small two-process app: a Vite-powered React frontend and an
 Express + Socket.IO backend. You can run them side by side in development
 or build a single production bundle that the backend serves.

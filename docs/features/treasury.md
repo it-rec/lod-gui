@@ -5,8 +5,6 @@ parent: Features
 nav_order: 2
 ---
 
-# Treasury — Gold & Fame
-
 Two slim panels in the ledger column track the party's wealth and renown.
 
 ## Gold

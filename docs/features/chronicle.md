@@ -5,8 +5,6 @@ parent: Features
 nav_order: 7
 ---
 
-# The Chronicle
-
 The Chronicle is the campaign's spine: the **A1 to Z8** grid of numbered
 story entries that *Legacy of Dragonholt* uses to thread its branching tale.
 Each entry is either read-and-resolved or still untouched, and the party's
