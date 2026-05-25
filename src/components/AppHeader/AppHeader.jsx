@@ -3,6 +3,7 @@ import ConnectionBadge from '../common/ConnectionBadge/ConnectionBadge';
 import CampaignMenu from '../CampaignMenu/CampaignMenu';
 import DiceRoller from '../DiceRoller/DiceRoller';
 import ThemeToggle from '../ThemeToggle/ThemeToggle';
+import SessionTimer from '../SessionTimer/SessionTimer';
 import { GlobalSearchButton } from '../GlobalSearch/GlobalSearch';
 import styles from './AppHeader.module.scss';
 
@@ -18,6 +19,7 @@ const AppHeader = () => (
       </div>
       <div className={styles.tools}>
         <ConnectionBadge />
+        <SessionTimer />
         <GlobalSearchButton />
         <DiceRoller />
         <ThemeToggle />

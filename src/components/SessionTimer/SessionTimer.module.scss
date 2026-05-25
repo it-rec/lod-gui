@@ -1,0 +1,87 @@
+@use '../../common' as *;
+
+.wrapper {
+  position: relative;
+}
+
+.trigger {
+  // Inline icon + label.
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-02;
+  padding: 4px 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.label {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  min-width: 3.6rem;
+  text-align: right;
+}
+
+.iconRunning {
+  color: var(--lod-good);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.popover {
+  position: absolute;
+  top: calc(100% + $spacing-02);
+  right: 0;
+  z-index: 200;
+  min-width: 14rem;
+  padding: $spacing-04 $spacing-05;
+  background: var(--lod-parchment-hi);
+  border: 1px solid var(--lod-edge-strong);
+  border-radius: var(--lod-radius);
+  box-shadow:
+    0 12px 28px rgba(20, 10, 4, 0.45),
+    0 0 0 1px var(--lod-gold) inset;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-03;
+  text-align: center;
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lod-crimson);
+}
+
+.display {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 2.1rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--lod-ink);
+  letter-spacing: 0.04em;
+}
+
+.state {
+  margin: 0;
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--lod-ink-faint);
+}
+
+.controls {
+  display: flex;
+  gap: $spacing-02;
+  justify-content: center;
+  padding-top: $spacing-02;
+  border-top: 1px dashed var(--lod-edge);
+}
