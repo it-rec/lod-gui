@@ -35,6 +35,11 @@ jobs:
       run: bun x vitest run --reporter=verbose --passWithNoTests=false
 
   build:
+    # The display name keeps the legacy "build (22.x)" status check name so
+    # the existing branch-protection rule on master still resolves. The
+    # "22.x" suffix is historical — the project no longer uses Node 22 as
+    # a runtime, it runs on Bun (see .bun-version).
+    name: build (22.x)
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
