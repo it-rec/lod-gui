@@ -22,6 +22,10 @@ player's screen:
   (`2d6+3`, `3d4+2d6+1`, …) and **named macros** (_Longsword attack_, _Sneak_)
   saved per device for one-tap repeat rolls. Every roll is broadcast live so
   the whole table sees the same dice.
+- **Ambient soundscape** — a synth-only ambience picker (tavern, forest,
+  dungeon, storm, sea). Picking a scene plays it for every connected
+  player; volume and mute are per device. No audio assets — every scene
+  is built procedurally with Web Audio.
 
 The header also offers a **campaign menu** with one-click **Download backup**
 (every panel saved to a single JSON file) and **Restore from backup**, and a

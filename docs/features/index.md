@@ -23,5 +23,6 @@ The pages below walk through each panel in turn:
 - [Keywords](keywords.md)
 - [The Chronicle](chronicle.md)
 - [Dice roller](dice-roller.md)
+- [Ambient soundscape](soundscape.md)
 - [GM notebook](gm-notebook.md)
 - [Campaign menu — backup & restore](campaign-menu.md)
