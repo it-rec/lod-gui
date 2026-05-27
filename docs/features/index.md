@@ -25,3 +25,4 @@ The pages below walk through each panel in turn:
 - [Dice roller](dice-roller.md)
 - [GM notebook](gm-notebook.md)
 - [Campaign menu — backup & restore](campaign-menu.md)
+- [Session recap](session-recap.md)

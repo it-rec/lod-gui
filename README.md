@@ -24,9 +24,12 @@ player's screen:
   the whole table sees the same dice.
 
 The header also offers a **campaign menu** with one-click **Download backup**
-(every panel saved to a single JSON file) and **Restore from backup**, and a
+(every panel saved to a single JSON file), **Restore from backup**, a
 **GM notebook** — a private scratchpad for the storyteller, kept local to the
-device that wrote it and never broadcast to the table.
+device that wrote it and never broadcast to the table — and a **Session
+recap** view, a one-screen "where the party stands" with stat cards and the
+most recent journal entries, with a Copy-as-text button for dropping a
+handout into the table's group chat.
 
 Built as a React app (powered by [Vite](https://vitejs.dev/)) with an
 Express + Socket.IO backend. Every change is broadcast over Socket.IO so all
