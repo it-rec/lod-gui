@@ -17,11 +17,13 @@ import GlobalSearch from './components/GlobalSearch/GlobalSearch';
 import KeyboardHelp from './components/KeyboardHelp/KeyboardHelp';
 import Toaster from './components/common/Toast/Toaster';
 import { useConnection } from './hooks/useConnection';
+import { useTimeOfDayTheme } from './hooks/useTimeOfDayTheme';
 import { toast } from './components/common/Toast/toastStore';
 
 const App = () => {
   const status = useConnection();
   const previousStatus = useRef(status);
+  useTimeOfDayTheme();
 
   // Announce realtime link drops and recoveries (but not the first connect).
   useEffect(() => {
