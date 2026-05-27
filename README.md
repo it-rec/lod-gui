@@ -35,43 +35,55 @@ Pages from the [`docs/`](./docs) folder. Browse it locally by opening
 [`docs/index.md`](./docs/index.md), or read the live site at
 <https://it-rec.github.io/lod-gui/>.
 
-## Package manager
+## Toolchain
 
-This project uses [**pnpm**](https://pnpm.io/) (pinned via the
-`packageManager` field in `package.json`, so [Corepack](https://nodejs.org/api/corepack.html)
-will pick the right version automatically — just run `corepack enable` once).
-Install dependencies with `pnpm install`.
+This project uses [**Bun**](https://bun.sh/) as both its package manager
+**and** its runtime for the backend dev server. The version is pinned in
+[`.bun-version`](./.bun-version) and mirrored in the `packageManager` and
+`engines.bun` fields of `package.json`.
+
+Install [Bun](https://bun.sh/docs/installation) (`curl -fsSL https://bun.sh/install | bash`),
+then install dependencies with `bun install`.
+
+Vite still builds the React app and Vitest still runs the tests — Bun
+just executes them.
 
 ## Available Scripts
 
-### `pnpm start`
+> Always use `bun run <script>`. Bare `bun test` would invoke Bun's
+> built-in test runner instead of the `test` script — we use Vitest here
+> for its React Testing Library integration, so `bun run test` is what
+> you want.
+
+### `bun run start`
 
 Runs the Vite dev server at [http://localhost:3000](http://localhost:3000).
 Requests to `/api` and `/socket.io` are proxied to the backend on
 `http://localhost:3080`.
 
-### `pnpm dev`
+### `bun run dev`
 
-Runs the backend server (Express + Socket.IO) with `nodemon` on port `3080`.
+Runs the backend server (Express + Socket.IO) on port `3080` under Bun
+with `--watch`, which restarts on changes to `server/` and its imports.
 
 If MongoDB is not reachable the server logs a warning and falls back to an
 **in-memory store**, so the app is fully usable for local development and demos
 without a database. Set `MONGO_URL` to point at a database for real persistence.
 
-### `pnpm build`
+### `bun run build`
 
 Builds the app for production into the `build/` folder. The Express server
 (`server/app.js`) serves this directory and provides the SPA fallback.
 
-### `pnpm preview`
+### `bun run preview`
 
 Serves the production build locally for previewing.
 
-### `pnpm test`
+### `bun run test`
 
 Runs the test suite with [Vitest](https://vitest.dev/).
 
-### `pnpm lint`
+### `bun run lint`
 
 Runs ESLint over the project.
 

@@ -1,0 +1,52 @@
+# Runs lint, tests, and the production build as three independent jobs.
+# They share no steps so they fan out in parallel — the PR's checks panel
+# shows progress and outcome for each one at a glance.
+
+name: CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install Bun
+      uses: oven-sh/setup-bun@v2
+      with:
+        bun-version-file: .bun-version
+    - run: bun install --frozen-lockfile
+    - run: bun run lint
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install Bun
+      uses: oven-sh/setup-bun@v2
+      with:
+        bun-version-file: .bun-version
+    - run: bun install --frozen-lockfile
+    - name: Run tests (Vitest, invoked explicitly to avoid bun's built-in test runner)
+      run: bun x vitest run --reporter=verbose --passWithNoTests=false
+
+  build:
+    # The display name keeps the legacy "build (22.x)" status check name so
+    # the existing branch-protection rule on master still resolves. The
+    # "22.x" suffix is historical — the project no longer uses Node 22 as
+    # a runtime, it runs on Bun (see .bun-version).
+    name: build (22.x)
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install Bun
+      uses: oven-sh/setup-bun@v2
+      with:
+        bun-version-file: .bun-version
+    - run: bun install --frozen-lockfile
+    - name: Build (Vite, invoked explicitly to avoid bun's built-in bundler)
+      run: bun x vite build
