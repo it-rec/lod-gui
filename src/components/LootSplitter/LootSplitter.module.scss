@@ -1,0 +1,182 @@
+@use '../../common' as *;
+
+.defaultTrigger {
+  margin-top: $spacing-03;
+  width: 100%;
+  justify-content: center;
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: rgba(8, 4, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-05;
+  backdrop-filter: blur(2px);
+}
+
+.dialog {
+  width: min(28rem, 100%);
+  padding: $spacing-05;
+  background: var(--lod-parchment-hi);
+  border: 1px solid var(--lod-edge-strong);
+  border-radius: var(--lod-radius);
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.55),
+    0 0 0 1px var(--lod-gold) inset;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-04;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lod-crimson);
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--lod-ink-soft);
+}
+
+.totalRow {
+  display: flex;
+  align-items: center;
+  gap: $spacing-03;
+}
+
+.totalLabel {
+  font-family: var(--font-display);
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lod-ink-soft);
+}
+
+.totalRow > :global(input),
+.totalRow > * input {
+  width: 6rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.totalUnit {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  color: var(--lod-ink-soft);
+}
+
+.heroes {
+  border: 1px solid var(--lod-edge);
+  border-radius: var(--lod-radius);
+  padding: $spacing-03 $spacing-04;
+  margin: 0;
+  background: rgba(255, 240, 200, 0.32);
+}
+
+.heroesLegend {
+  padding: 0 $spacing-02;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lod-ink-soft);
+}
+
+.empty {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--lod-ink-soft);
+  font-style: italic;
+}
+
+.heroList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+  gap: $spacing-02;
+}
+
+.heroLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-02;
+  padding: $spacing-02 $spacing-03;
+  border-radius: var(--lod-radius);
+  cursor: pointer;
+  transition: background-color 0.12s ease, opacity 0.12s ease;
+
+  &:hover {
+    background: rgba(196, 160, 74, 0.16);
+  }
+}
+
+.heroExcluded {
+  opacity: 0.45;
+}
+
+.heroName {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+}
+
+.preview {
+  display: flex;
+  gap: $spacing-05;
+  padding: $spacing-03 $spacing-04;
+  background: var(--lod-parchment);
+  border: 1px dashed var(--lod-edge-strong);
+  border-radius: var(--lod-radius);
+}
+
+.previewLine {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.previewLabel {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lod-ink-soft);
+}
+
+.previewValue {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-02;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--lod-crimson);
+  font-variant-numeric: tabular-nums;
+
+  svg {
+    color: var(--lod-gold);
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: $spacing-03;
+}

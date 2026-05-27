@@ -6,7 +6,9 @@ player's screen:
 
 - **The Party** — character cards with species, background, a stamina tracker
   and a full sheet: ranked skills, traits, conditions, inventory and notes.
-- **Gold** — the party's coin.
+- **Gold** — the party's coin, with a **Split loot** action that divides a
+  haul evenly across the named heroes and logs the breakdown in the
+  journal.
 - **Fame** — the party's reputation and deeds.
 - **The Calendar** — the current day and time of day, with one-tap advancement.
 - **Quests** — pledged errands with notes and active/completed filtering.
