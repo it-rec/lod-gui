@@ -18,6 +18,27 @@ or **Pledge** to add it. Each entry can be expanded into an editor that lets
 you rewrite the title and add longer **notes** — details, hooks, gossip — on
 a second line. Empty titles are rejected; submitting an empty edit cancels.
 
+## Graph view
+
+The **List / Graph** toggle just under the input swaps the writ for a
+left-to-right DAG of the quests, drawn from their **dependsOn** edges
+that the list-view editor already exposes. Roots sit on the leftmost
+column; each child quest moves one column past the deepest of its
+prerequisites.
+
+![A quest dependency graph: completed root, locked descendant, plus a focused-quest detail panel](../screenshots/quest-graph.png)
+
+- **Green** node — completed quest. The edge from it to its child is
+  also green, so an unblocked next step is obvious at a glance.
+- **Dashed** node — locked: at least one prerequisite is still open.
+- **Solid** node — active and ready to take up.
+- Clicking a node opens a small detail panel below the canvas with the
+  quest's title, status (Active / Locked / Completed) and notes.
+- The view is **read-only**; editing still happens in the list view to
+  keep the graph uncluttered.
+
+The active view is remembered per device under `lod:pref:quests-view`.
+
 ## Filters
 
 The three filter chips above the list scope what's shown:

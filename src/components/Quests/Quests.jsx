@@ -17,6 +17,16 @@ import {
 } from '../common/icons';
 import { useGameChannel } from '../../hooks/useGameChannel';
 import { collections } from '../../shared';
+import { prefGet, prefSet } from '../../utils/localStorageUtil';
+import QuestGraph from './QuestGraph';
+
+const VIEW_PREF_KEY = 'quests-view';
+const VALID_VIEWS = new Set(['list', 'graph']);
+
+const loadViewPref = () => {
+  const stored = prefGet(VIEW_PREF_KEY);
+  return VALID_VIEWS.has(stored) ? stored : 'list';
+};
 import styles from './Quests.module.scss';
 
 const uid = () =>
@@ -91,10 +101,16 @@ const Quests = () => {
 
   const [draft, setDraft] = useState('');
   const [filter, setFilter] = useState('all');
+  const [view, setView] = useState(loadViewPref);
   const [editingId, setEditingId] = useState(null);
   const [editingTitle, setEditingTitle] = useState('');
   const [editingNotes, setEditingNotes] = useState('');
   const [editingDeps, setEditingDeps] = useState([]);
+
+  const setViewPersisted = (next) => {
+    setView(next);
+    prefSet(VIEW_PREF_KEY, next);
+  };
 
   const counts = useMemo(() => {
     const done = value.filter((quest) => quest.isDone).length;
@@ -222,6 +238,27 @@ const Quests = () => {
           </div>
 
           {value.length > 0 && (
+            <div className={styles.viewToggle} role="group" aria-label="Quests view">
+              <button
+                type="button"
+                className={cx(styles.viewOption, { [styles.viewOptionActive]: view === 'list' })}
+                onClick={() => setViewPersisted('list')}
+                aria-pressed={view === 'list'}
+              >
+                List
+              </button>
+              <button
+                type="button"
+                className={cx(styles.viewOption, { [styles.viewOptionActive]: view === 'graph' })}
+                onClick={() => setViewPersisted('graph')}
+                aria-pressed={view === 'graph'}
+              >
+                Graph
+              </button>
+            </div>
+          )}
+
+          {value.length > 0 && view === 'list' && (
             <div className={styles.filters} role="group" aria-label="Filter quests">
               {FILTERS.map((option) => (
                 <button
@@ -238,11 +275,15 @@ const Quests = () => {
             </div>
           )}
 
+          {value.length > 0 && view === 'graph' && (
+            <QuestGraph quests={value} />
+          )}
+
           {value.length === 0 ? (
             <p className={styles.empty}>
               No quests yet. Pledge one when an errand finds the party.
             </p>
-          ) : visible.length === 0 ? (
+          ) : view === 'graph' ? null : visible.length === 0 ? (
             <p className={styles.empty}>
               {filter === 'done'
                 ? 'No quests have been completed yet.'
