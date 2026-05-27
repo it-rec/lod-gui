@@ -13,7 +13,8 @@ player's screen:
 - **People** — the cast met along the way, tagged ally / foe / neutral /
   unknown, with location and notes.
 - **Locations** — the map ledger of towns, wilds and ruins, tagged
-  rumored / visited / home / lost, with region and notes.
+  rumored / visited / home / lost, with region and notes; flips
+  between a list and a hand-drawn parchment map with draggable pins.
 - **Keywords** — the log of story keywords and notes recorded along the way.
 - **The Chronicle** — an A1–Z8 grid of story entries, with progress, chapter
   navigation and filtering.

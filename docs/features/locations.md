@@ -29,6 +29,26 @@ So a place starts as something the party has merely heard about, becomes
 when it is a haven they return to, and falls to **Lost** when the road
 has carried them away. The cycle wraps back to **Rumored**.
 
+## Map view
+
+A **List / Map** toggle just under the input flips between the existing
+list and a hand-drawn parchment map. Each location becomes a coloured
+pin (rumored / visited / home / lost) at its `{x, y}` percentage on the
+canvas. Clicking a pin pops up the place's full details — status,
+region, notes — without leaving the map.
+
+![A parchment map view with seven coloured pins labelled with location names](../screenshots/locations-map.png)
+
+Pins are **draggable**: hold and drag to reposition. The new coords are
+saved on the location record itself, broadcast like any other change,
+and persisted in the campaign backup. Locations that don't yet have
+coords get tidy grid slots so a fresh map is at least glanceable; the
+moment you drag a pin, its position becomes persistent.
+
+The active view is remembered per device under
+`lod:pref:locations-view`, so opening the app on a phone won't override
+your laptop's choice.
+
 ## Filters
 
 A row of status chips filters the list to a single status at a time, with
