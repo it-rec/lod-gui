@@ -27,3 +27,4 @@ The pages below walk through each panel in turn:
 - [GM notebook](gm-notebook.md)
 - [Campaign menu — backup & restore](campaign-menu.md)
 - [Session recap](session-recap.md)
+- [Reactions](reactions.md)
