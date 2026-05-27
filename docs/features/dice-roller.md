@@ -29,6 +29,24 @@ The text field below the quick grid takes standard dice notation:
 
 Bad input (`hello`, `0d6`, ...) surfaces a toast instead of a roll.
 
+## Macros
+
+Repeated rolls — _Longsword attack_, _Sneak_, _Healing touch_ — don't
+need to be retyped. Type an expression in the custom-roll field, give
+it a **name** below, and tap **Save**: the macro shows up as a one-tap
+pill in the **Macros** strip and rolls the saved expression on a
+single click.
+
+![The dice popover with four saved macros: Longsword attack, Longsword damage, Sneak, Heal touch](../screenshots/dice-macros.png)
+
+Macros are stored under the per-device preference namespace in
+`localStorage`. They survive reloads but are **device-local** — they
+are not part of the shared campaign state and are not included in the
+campaign backup file. Re-saving an existing name overwrites the
+expression rather than piling up duplicates, and the strip caps at
+twelve to keep the popover tight. The trash icon on each pill removes
+it.
+
 ## Rolled by
 
 The **Rolled by** field carries the player's name into every roll they make

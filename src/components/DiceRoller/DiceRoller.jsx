@@ -2,8 +2,9 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import cx from 'classnames';
 import Button from '../common/Button/Button';
 import TextInput from '../common/TextInput/TextInput';
-import { IconDice, IconTrash } from '../common/icons';
+import { IconDice, IconTrash, IconPlus } from '../common/icons';
 import { useDiceLog } from '../../hooks/useDiceLog';
+import { useDiceMacros } from '../../hooks/useDiceMacros';
 import { toast } from '../common/Toast/toastStore';
 import styles from './DiceRoller.module.scss';
 
@@ -98,11 +99,13 @@ const RollEntry = ({ entry, now, onReroll }) => {
 const DiceRoller = () => {
   const [open, setOpen] = useState(false);
   const [draft, setDraft] = useState('');
+  const [macroName, setMacroName] = useState('');
   const [flash, setFlash] = useState(null);
   const popoverRef = useRef(null);
   const triggerRef = useRef(null);
   const inputRef = useRef(null);
   const { entries, roll, clear, rollerName, setRollerName } = useDiceLog();
+  const { macros, add: addMacro, remove: removeMacro } = useDiceMacros();
 
   const [now, setNow] = useState(() => Date.now());
   useEffect(() => {
@@ -183,6 +186,19 @@ const DiceRoller = () => {
     handleRoll(expression);
   };
 
+  const handleSaveMacro = () => {
+    const name = macroName.trim();
+    const expression = draft.trim();
+    if (!name || !expression) return;
+    const entry = addMacro(name, expression);
+    if (!entry) {
+      toast.error('Macro not saved', 'Name and expression are required.', 'macro-save');
+      return;
+    }
+    setMacroName('');
+    setDraft('');
+  };
+
   const latestOwnTotal = useMemo(() => {
     const latest = entries.find((entry) => entry.own);
     return latest?.total ?? null;
@@ -261,6 +277,67 @@ const DiceRoller = () => {
               Roll
             </Button>
           </form>
+
+          <div className={styles.macroSection}>
+            <div className={styles.macroHead}>
+              <span className={styles.macroTitle}>Macros</span>
+              <span className={styles.macroHint}>Saved on this device only</span>
+            </div>
+            {macros.length === 0 ? (
+              <p className={styles.macroEmpty}>
+                Name your custom roll above to save it as a one-tap macro.
+              </p>
+            ) : (
+              <ul className={styles.macroList} aria-label="Saved dice macros">
+                {macros.map((macro) => (
+                  <li key={macro.id} className={styles.macroItem}>
+                    <button
+                      type="button"
+                      className={styles.macroPill}
+                      onClick={() => handleRoll(macro.expression)}
+                      title={`Roll ${macro.expression}`}
+                    >
+                      <span className={styles.macroName}>{macro.name}</span>
+                      <span className={styles.macroExpr}>{macro.expression}</span>
+                    </button>
+                    <button
+                      type="button"
+                      className={styles.macroDelete}
+                      onClick={() => removeMacro(macro.id)}
+                      aria-label={`Delete macro ${macro.name}`}
+                    >
+                      <IconTrash />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <div className={styles.macroForm}>
+              <TextInput
+                variant="sm"
+                value={macroName}
+                placeholder="Name (e.g. Longsword attack)"
+                aria-label="New macro name"
+                onChange={(event) => setMacroName(event.target.value)}
+              />
+              <Button
+                kind="ghost"
+                size="sm"
+                onClick={handleSaveMacro}
+                disabled={!macroName.trim() || !draft.trim()}
+                title={
+                  !draft.trim()
+                    ? 'Type an expression above first'
+                    : !macroName.trim()
+                      ? 'Give it a name first'
+                      : 'Save macro'
+                }
+              >
+                <IconPlus />
+                Save
+              </Button>
+            </div>
+          </div>
 
           <div className={styles.logHead}>
             <span className={styles.logTitle}>Recent rolls</span>
