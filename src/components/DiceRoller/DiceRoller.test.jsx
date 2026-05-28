@@ -193,4 +193,60 @@ describe('DiceRoller', () => {
       screen.getByText('No rolls yet. Tap a die above or type your own.')
     ).toBeInTheDocument();
   });
+
+  it('saves a named macro from the current custom expression', async () => {
+    const user = userEvent.setup();
+    render(<DiceRoller />);
+    await openPopover(user);
+
+    // Save is disabled while either input is empty.
+    expect(screen.getByRole('button', { name: /Save/ })).toBeDisabled();
+
+    fireEvent.change(screen.getByLabelText('Custom roll expression'), {
+      target: { value: '1d20+5' },
+    });
+    fireEvent.change(screen.getByLabelText('New macro name'), {
+      target: { value: 'Longsword attack' },
+    });
+    await user.click(screen.getByRole('button', { name: /Save/ }));
+
+    expect(screen.getByRole('list', { name: 'Saved dice macros' })).toBeInTheDocument();
+    expect(screen.getByText('Longsword attack')).toBeInTheDocument();
+    expect(screen.getByText('1d20+5')).toBeInTheDocument();
+    // Inputs were cleared after a successful save.
+    expect(screen.getByLabelText('Custom roll expression')).toHaveValue('');
+    expect(screen.getByLabelText('New macro name')).toHaveValue('');
+  });
+
+  it('rolls a saved macro by clicking its pill', async () => {
+    window.localStorage.setItem(
+      'lod:pref:dice-macros',
+      JSON.stringify([{ id: 'm1', name: 'Shortbow', expression: '1d20+4' }])
+    );
+    const user = userEvent.setup();
+    render(<DiceRoller />);
+    await openPopover(user);
+
+    await user.click(screen.getByRole('button', { name: /Shortbow.*1d20\+4/ }));
+
+    // floor(0.5*20)+1 = 11, plus 4 = 15
+    expect(screen.getByLabelText('Total 15')).toBeInTheDocument();
+  });
+
+  it('deletes a saved macro', async () => {
+    window.localStorage.setItem(
+      'lod:pref:dice-macros',
+      JSON.stringify([{ id: 'm1', name: 'Heal', expression: '1d4+2' }])
+    );
+    const user = userEvent.setup();
+    render(<DiceRoller />);
+    await openPopover(user);
+
+    await user.click(screen.getByRole('button', { name: 'Delete macro Heal' }));
+
+    expect(screen.queryByText('Heal')).not.toBeInTheDocument();
+    expect(
+      screen.getByText('Name your custom roll above to save it as a one-tap macro.')
+    ).toBeInTheDocument();
+  });
 });
