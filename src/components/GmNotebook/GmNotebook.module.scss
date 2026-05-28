@@ -1,0 +1,114 @@
+@use '../../common' as *;
+
+.wrapper {
+  position: relative;
+}
+
+.trigger {
+  position: relative;
+}
+
+.icon {
+  display: inline-flex;
+}
+
+.badge {
+  position: absolute;
+  top: -2px;
+  right: -4px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--lod-crimson);
+  color: var(--lod-parchment-hi);
+  font-size: 0.65rem;
+  font-weight: 600;
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  border: 1px solid var(--lod-gold);
+}
+
+.popover {
+  position: absolute;
+  top: calc(100% + #{$spacing-03});
+  right: 0;
+  z-index: 200;
+  width: min(32rem, calc(100vw - #{$spacing-05} * 2));
+  padding: $spacing-05;
+  background: linear-gradient(180deg, #1f1610 0%, #14100b 100%);
+  color: var(--lod-parchment-hi);
+  border: 1px solid var(--lod-gold);
+  border-radius: var(--lod-radius);
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(196, 160, 74, 0.4) inset;
+}
+
+.head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $spacing-04;
+  margin-bottom: $spacing-04;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lod-gold-hi);
+}
+
+.subtitle {
+  margin: $spacing-01 0 0;
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-02;
+  font-size: 0.78rem;
+  color: rgba(233, 208, 138, 0.78);
+  letter-spacing: 0.04em;
+}
+
+.subtitleIcon {
+  width: 12px;
+  height: 12px;
+}
+
+.counter {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(233, 208, 138, 0.6);
+}
+
+.textarea {
+  width: 100%;
+  min-height: 14rem;
+  padding: $spacing-04;
+  background: rgba(8, 6, 4, 0.6);
+  color: var(--lod-parchment-hi);
+  border: 1px solid rgba(196, 160, 74, 0.32);
+  border-radius: var(--lod-radius);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  resize: vertical;
+
+  &::placeholder {
+    color: rgba(233, 208, 138, 0.45);
+    font-style: italic;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--lod-gold-bright);
+    box-shadow: 0 0 0 2px rgba(196, 160, 74, 0.25);
+  }
+}
