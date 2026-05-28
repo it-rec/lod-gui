@@ -58,12 +58,6 @@
   stroke: var(--lod-good);
 }
 
-.nodeLocked .nodeBox {
-  fill: rgba(60, 40, 20, 0.08);
-  stroke: var(--lod-ink-faint);
-  stroke-dasharray: 3 3;
-}
-
 .nodeFocused .nodeBox {
   stroke: var(--lod-crimson);
   stroke-width: 2.2;
@@ -79,21 +73,11 @@
   fill: var(--lod-good);
 }
 
-.nodeLocked .nodeTitle {
-  fill: var(--lod-ink-faint);
-  font-style: italic;
-}
-
 .nodeBadge {
   font-family: var(--font-display);
   font-size: 12px;
   font-weight: 700;
   fill: var(--lod-good);
-}
-
-.nodeBadgeLock {
-  font-size: 12px;
-  fill: var(--lod-ink-faint);
 }
 
 .detail {

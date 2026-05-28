@@ -26,16 +26,27 @@ that the list-view editor already exposes. Roots sit on the leftmost
 column; each child quest moves one column past the deepest of its
 prerequisites.
 
-![A quest dependency graph: completed root, locked descendant, plus a focused-quest detail panel](../screenshots/quest-graph.png)
+![The dependency graph: a completed root, an unblocked next step, an unrelated root, and the focused-quest detail panel](../screenshots/quest-graph.png)
 
-- **Green** node — completed quest. The edge from it to its child is
-  also green, so an unblocked next step is obvious at a glance.
-- **Dashed** node — locked: at least one prerequisite is still open.
+- **Green** node — completed quest.
 - **Solid** node — active and ready to take up.
 - Clicking a node opens a small detail panel below the canvas with the
-  quest's title, status (Active / Locked / Completed) and notes.
+  quest's title, status (Active / Completed) and notes.
 - The view is **read-only**; editing still happens in the list view to
   keep the graph uncluttered.
+
+### Locked quests stay hidden
+
+A quest with at least one **open prerequisite** is **not drawn at all**
+— neither as a card nor as a destination for an arrow. The graph only
+shows what the table already knows about, matching how the Legacy of
+Dragonholt book itself reveals paragraphs only after they're unlocked.
+The moment a prerequisite is marked done, the newly-unlocked quest
+appears in its column with the edge from its parent in tow.
+
+If you want a retrospective overview of the whole writ after the
+campaign — including everything that was once locked — the list view
+already shows every quest, dependencies and all.
 
 The active view is remembered per device under `lod:pref:quests-view`.
 

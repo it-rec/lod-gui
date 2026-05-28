@@ -16,11 +16,28 @@ describe('QuestGraph', () => {
     expect(screen.getByText(/No quests yet/)).toBeInTheDocument();
   });
 
-  it('renders one node per quest', () => {
+  it('renders nodes only for completed or unlocked quests', () => {
     render(<QuestGraph quests={QUESTS} />);
-    for (const q of QUESTS) {
-      expect(screen.getByTestId(`graph-node-${q.id}`)).toBeInTheDocument();
-    }
+    // Done root is shown.
+    expect(screen.getByTestId('graph-node-q-fight')).toBeInTheDocument();
+    // Open root is shown.
+    expect(screen.getByTestId('graph-node-q-find')).toBeInTheDocument();
+    // Recover the seal depends on the still-open "Find the heir" → hidden.
+    expect(screen.queryByTestId('graph-node-q-seal')).toBeNull();
+    // Coronation depends on the hidden seal quest → also hidden.
+    expect(screen.queryByTestId('graph-node-q-coron')).toBeNull();
+  });
+
+  it('reveals a quest the moment its prerequisite is marked done', () => {
+    const { rerender } = render(<QuestGraph quests={QUESTS} />);
+    expect(screen.queryByTestId('graph-node-q-seal')).toBeNull();
+
+    const unlocked = QUESTS.map((q) =>
+      q.id === 'q-find' ? { ...q, isDone: true } : q
+    );
+    rerender(<QuestGraph quests={unlocked} />);
+
+    expect(screen.getByTestId('graph-node-q-seal')).toBeInTheDocument();
   });
 
   it('flags completed quests on the node label', () => {
@@ -30,24 +47,17 @@ describe('QuestGraph', () => {
     ).toBeInTheDocument();
   });
 
-  it('flags locked quests (open prereq) on the node label', () => {
-    render(<QuestGraph quests={QUESTS} />);
-    // Coronation depends on q-seal (open) → it's locked.
-    expect(
-      screen.getByRole('button', { name: 'Coronation at Bronze (locked)' })
-    ).toBeInTheDocument();
-  });
-
   it('clicking a node opens its detail panel and reports focus outward', async () => {
     const onFocus = vi.fn();
     const user = userEvent.setup();
     render(<QuestGraph quests={QUESTS} onFocusQuest={onFocus} />);
 
-    await user.click(screen.getByTestId('graph-node-q-seal'));
+    await user.click(screen.getByTestId('graph-node-q-find'));
 
-    expect(onFocus).toHaveBeenCalledWith('q-seal');
-    const dialog = screen.getByRole('dialog', { name: /Recover the seal details/ });
-    expect(dialog).toHaveTextContent('Recover the seal');
-    expect(dialog).toHaveTextContent('Inside the manor.');
+    expect(onFocus).toHaveBeenCalledWith('q-find');
+    const dialog = screen.getByRole('dialog', { name: /Find the heir details/ });
+    expect(dialog).toHaveTextContent('Find the heir');
+    expect(dialog).toHaveTextContent('Start in Greycross.');
+    expect(dialog).toHaveTextContent('Active');
   });
 });

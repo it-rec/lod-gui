@@ -25,10 +25,11 @@ export default async ({ browser, seed, newPage, OUT, APP }) => {
   await page.goto(APP, { waitUntil: 'networkidle0' });
   await wait(300);
 
-  // Click the second node so the detail panel appears, making the
-  // screenshot show both the graph and a "focused quest" state.
+  // Click "Find the missing heir" so the detail panel appears, making the
+  // screenshot show both the graph and a "focused quest" state. Locked
+  // quests are deliberately hidden from the view, so we can't focus those.
   await page.evaluate(() => {
-    const node = document.querySelector('[data-testid="graph-node-q-seal"]');
+    const node = document.querySelector('[data-testid="graph-node-q-find"]');
     if (node) node.dispatchEvent(new MouseEvent('click', { bubbles: true }));
   });
   await wait(150);
