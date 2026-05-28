@@ -1,6 +1,7 @@
 import Panel from '../common/Panel/Panel';
 import StatCounter from '../common/StatCounter/StatCounter';
 import Skeleton from '../common/Skeleton/Skeleton';
+import LootSplitter from '../LootSplitter/LootSplitter';
 import { IconCoins } from '../common/icons';
 import { useGameChannel } from '../../hooks/useGameChannel';
 import { collections } from '../../shared';
@@ -25,7 +26,10 @@ const Gold = () => {
       {loading ? (
         <Skeleton height="6.5rem" />
       ) : (
-        <StatCounter value={value} onChange={save} watermark={<IconCoins />} />
+        <>
+          <StatCounter value={value} onChange={save} watermark={<IconCoins />} />
+          <LootSplitter />
+        </>
       )}
     </Panel>
   );

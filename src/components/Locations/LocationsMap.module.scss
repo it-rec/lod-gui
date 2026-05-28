@@ -1,0 +1,170 @@
+@use '../../common' as *;
+
+.surface {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  min-height: 22rem;
+  border: 1px solid var(--lod-edge-strong);
+  border-radius: var(--lod-radius);
+  background: var(--lod-parchment-deep);
+  overflow: hidden;
+  user-select: none;
+  touch-action: none;
+}
+
+.parchment {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(154, 47, 28, 0.06), transparent 55%),
+    radial-gradient(circle at 70% 60%, rgba(60, 96, 48, 0.07), transparent 60%),
+    repeating-linear-gradient(
+      45deg,
+      rgba(60, 40, 20, 0.04) 0 2px,
+      transparent 2px 8px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(60, 40, 20, 0.04) 0 2px,
+      transparent 2px 8px
+    );
+}
+
+.compass {
+  position: absolute;
+  top: $spacing-03;
+  right: $spacing-04;
+  width: 2.2rem;
+  height: 2.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--lod-parchment-hi);
+  color: var(--lod-crimson);
+  border: 1px solid var(--lod-gold);
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 10px rgba(20, 10, 4, 0.25);
+  pointer-events: none;
+}
+
+.empty {
+  margin: 0;
+  padding: $spacing-06 0;
+  text-align: center;
+  color: var(--lod-ink-soft);
+  font-style: italic;
+}
+
+.pin {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: grab;
+  z-index: 2;
+
+  &:focus-visible .pinLabel {
+    outline: 2px solid var(--lod-gold-bright);
+    outline-offset: 2px;
+  }
+}
+
+.pinDragging {
+  cursor: grabbing;
+  z-index: 4;
+}
+
+.pinDot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--lod-crimson);
+  border: 2px solid var(--lod-parchment-hi);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
+}
+
+.pin-rumored .pinDot { background: var(--lod-ink-faint); }
+.pin-visited .pinDot { background: var(--lod-good); }
+.pin-home    .pinDot { background: var(--lod-crimson); }
+.pin-lost    .pinDot { background: var(--lod-bad); opacity: 0.6; }
+
+.pinLabel {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+  color: var(--lod-ink);
+  background: rgba(251, 243, 218, 0.86);
+  border: 1px solid var(--lod-edge);
+  border-radius: 999px;
+  padding: 1px 6px;
+  white-space: nowrap;
+  margin-top: 1px;
+}
+
+.popover {
+  position: absolute;
+  transform: translate(8px, 12px);
+  z-index: 5;
+  min-width: 12rem;
+  max-width: 18rem;
+  padding: $spacing-03 $spacing-04;
+  background: var(--lod-parchment-hi);
+  border: 1px solid var(--lod-gold);
+  border-radius: var(--lod-radius);
+  box-shadow: 0 10px 22px rgba(20, 10, 4, 0.45);
+
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-02;
+}
+
+.popoverFlip {
+  transform: translate(8px, calc(-100% - 12px));
+}
+.popoverFlipX {
+  transform: translate(calc(-100% - 8px), 12px);
+}
+.popoverFlip.popoverFlipX {
+  transform: translate(calc(-100% - 8px), calc(-100% - 12px));
+}
+
+.popoverName {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 0.96rem;
+  color: var(--lod-crimson);
+}
+
+.popoverMeta {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--lod-ink-soft);
+}
+
+.popoverStatus {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.popoverStatus-rumored { color: var(--lod-ink-faint); }
+.popoverStatus-visited { color: var(--lod-good); }
+.popoverStatus-home    { color: var(--lod-crimson); }
+.popoverStatus-lost    { color: var(--lod-bad); }
+
+.popoverNotes {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--lod-ink);
+  line-height: 1.4;
+}

@@ -6,23 +6,44 @@ player's screen:
 
 - **The Party** — character cards with species, background, a stamina tracker
   and a full sheet: ranked skills, traits, conditions, inventory and notes.
-- **Gold** — the party's coin.
+- **Gold** — the party's coin, with a **Split loot** action that divides a
+  haul evenly across the named heroes and logs the breakdown in the
+  journal.
 - **Fame** — the party's reputation and deeds.
 - **The Calendar** — the current day and time of day, with one-tap advancement.
-- **Quests** — pledged errands with notes and active/completed filtering.
+- **Quests** — pledged errands with notes, dependency tracking and
+  active/completed filtering; flips between a list and a left-to-right
+  DAG view showing which quests are unblocked, locked or done.
 - **People** — the cast met along the way, tagged ally / foe / neutral /
   unknown, with location and notes.
 - **Locations** — the map ledger of towns, wilds and ruins, tagged
-  rumored / visited / home / lost, with region and notes.
+  rumored / visited / home / lost, with region and notes; flips
+  between a list and a hand-drawn parchment map with draggable pins.
 - **Keywords** — the log of story keywords and notes recorded along the way.
 - **The Chronicle** — an A1–Z8 grid of story entries, with progress, chapter
   navigation and filtering.
-- **The Dice roller** — quick d4–d100 buttons and a full dice-notation parser
-  (`2d6+3`, `3d4+2d6+1`, …). Every roll is broadcast live so the whole table
-  sees the same dice.
+- **The Dice roller** — quick d4–d100 buttons, a full dice-notation parser
+  (`2d6+3`, `3d4+2d6+1`, …) and **named macros** (_Longsword attack_, _Sneak_)
+  saved per device for one-tap repeat rolls. Every roll is broadcast live so
+  the whole table sees the same dice.
+- **Ambient soundscape** — a synth-only ambience picker (tavern, forest,
+  dungeon, storm, sea). Picking a scene plays it for every connected
+  player; volume and mute are per device. No audio assets — every scene
+  is built procedurally with Web Audio.
+- **Reactions** — a docked pill of six quick emoji (applause, crit, "oh no",
+  battle, "down they go", cheers). Tapping one fires off a floating emoji
+  that every connected player sees rise up their screen for a couple of
+  seconds; nothing is persisted.
 
 The header also offers a **campaign menu** with one-click **Download backup**
-(every panel saved to a single JSON file) and **Restore from backup**.
+(every panel saved to a single JSON file), **Restore from backup**, a
+**GM notebook** — a private scratchpad for the storyteller, kept local to the
+device that wrote it and never broadcast to the table — a **Session recap**
+view, a one-screen "where the party stands" with stat cards and the most
+recent journal entries, with a Copy-as-text button for dropping a handout
+into the table's group chat — and a **lore generator** that rolls fresh
+tavern names, NPCs and weather reports when the table is stuck on what to
+call the next inn.
 
 Built as a React app (powered by [Vite](https://vitejs.dev/)) with an
 Express + Socket.IO backend. Every change is broadcast over Socket.IO so all

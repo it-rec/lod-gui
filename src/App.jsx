@@ -15,13 +15,16 @@ import Inventory from './components/Inventory/Inventory';
 import StoryPoints from './components/StoryPoints/StoryPoints';
 import GlobalSearch from './components/GlobalSearch/GlobalSearch';
 import KeyboardHelp from './components/KeyboardHelp/KeyboardHelp';
+import Reactions from './components/Reactions/Reactions';
 import Toaster from './components/common/Toast/Toaster';
 import { useConnection } from './hooks/useConnection';
+import { useTimeOfDayTheme } from './hooks/useTimeOfDayTheme';
 import { toast } from './components/common/Toast/toastStore';
 
 const App = () => {
   const status = useConnection();
   const previousStatus = useRef(status);
+  useTimeOfDayTheme();
 
   // Announce realtime link drops and recoveries (but not the first connect).
   useEffect(() => {
@@ -73,6 +76,7 @@ const App = () => {
       </footer>
       <GlobalSearch />
       <KeyboardHelp />
+      <Reactions />
       <Toaster />
     </div>
   );
