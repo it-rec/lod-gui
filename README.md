@@ -30,6 +30,10 @@ player's screen:
   dungeon, storm, sea). Picking a scene plays it for every connected
   player; volume and mute are per device. No audio assets — every scene
   is built procedurally with Web Audio.
+- **Reactions** — a docked pill of six quick emoji (applause, crit, "oh no",
+  battle, "down they go", cheers). Tapping one fires off a floating emoji
+  that every connected player sees rise up their screen for a couple of
+  seconds; nothing is persisted.
 
 The header also offers a **campaign menu** with one-click **Download backup**
 (every panel saved to a single JSON file), **Restore from backup**, a

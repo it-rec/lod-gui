@@ -15,6 +15,7 @@ import Inventory from './components/Inventory/Inventory';
 import StoryPoints from './components/StoryPoints/StoryPoints';
 import GlobalSearch from './components/GlobalSearch/GlobalSearch';
 import KeyboardHelp from './components/KeyboardHelp/KeyboardHelp';
+import Reactions from './components/Reactions/Reactions';
 import Toaster from './components/common/Toast/Toaster';
 import { useConnection } from './hooks/useConnection';
 import { useTimeOfDayTheme } from './hooks/useTimeOfDayTheme';
@@ -75,6 +76,7 @@ const App = () => {
       </footer>
       <GlobalSearch />
       <KeyboardHelp />
+      <Reactions />
       <Toaster />
     </div>
   );

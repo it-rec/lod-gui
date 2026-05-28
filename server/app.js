@@ -57,6 +57,18 @@ io.on('connection', (socket) => {
     if (!scene || scene.length > 32) return;
     io.emit('soundscape:set', { scene, origin: socket.id });
   });
+  // Reactions are also ephemeral table-side noise. The server only relays
+  // them; the client decides what to render and for how long.
+  socket.on('reaction:send', (payload) => {
+    if (!payload || typeof payload !== 'object') return;
+    const emoji = typeof payload.emoji === 'string' ? payload.emoji : null;
+    if (!emoji || emoji.length > 8) return;
+    io.emit('reaction:send', {
+      emoji,
+      origin: socket.id,
+      sentAt: new Date().toISOString(),
+    });
+  });
 });
 
 io.on('connect_error', (error) => logger.error('Socket error', error));
