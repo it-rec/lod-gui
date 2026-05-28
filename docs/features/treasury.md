@@ -16,6 +16,24 @@ parchment is the current total; the `−` and `+` buttons step by one. The
 counter accepts any whole number and is shared across every connected
 screen.
 
+### Split loot…
+
+Below the counter, **Split loot…** opens a small dialog for handing out
+treasure after a fight or a chest. Type the total, untick anyone who isn't
+sharing, and the preview shows the per-hero cut and the remainder.
+
+![Split loot dialog: 31 gold across Mira, Bram, Sela — 10 each, 1 left over](../screenshots/loot-splitter.png)
+
+Hitting **Distribute**:
+
+- adds the total to the party's gold counter (the shared pool), and
+- writes a single journal entry stamped with the current day and time of
+  day, e.g. _"Split 31 gold: 10 each to Mira, Bram and Sela; 1 left to
+  the party kitty."_
+
+The remainder (`total % heroes`) stays in the kitty rather than vanishing
+or being assigned arbitrarily, so the breakdown is always reconcilable.
+
 ## Fame
 
 ![The Fame panel showing 3 renown](../screenshots/fame.png)
