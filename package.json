@@ -63,5 +63,8 @@
     "jsdom": "^29.1.1",
     "vite": "^8.0.14",
     "vitest": "^4.1.7"
+  },
+  "patchedDependencies": {
+    "eslint-plugin-react@7.37.5": "patches/eslint-plugin-react@7.37.5.patch"
   }
 }
