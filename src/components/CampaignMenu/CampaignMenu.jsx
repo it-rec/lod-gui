@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import Button from '../common/Button/Button';
-import { IconDownload, IconUpload, IconScroll } from '../common/icons';
+import { IconDownload, IconUpload, IconScroll, IconCompass } from '../common/icons';
 import { toast } from '../common/Toast/toastStore';
+import SessionRecap from '../SessionRecap/SessionRecap';
 import {
   buildBackup,
   filenameForBackup,
@@ -16,8 +17,14 @@ import styles from './CampaignMenu.module.scss';
 const CampaignMenu = () => {
   const [open, setOpen] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [recapOpen, setRecapOpen] = useState(false);
   const menuRef = useRef(null);
   const fileInputRef = useRef(null);
+
+  const openRecap = () => {
+    setOpen(false);
+    setRecapOpen(true);
+  };
 
   useEffect(() => {
     if (!open) return undefined;
@@ -153,6 +160,20 @@ const CampaignMenu = () => {
               type="button"
               role="menuitem"
               className={styles.option}
+              onClick={openRecap}
+            >
+              <IconCompass />
+              <span className={styles.optionBody}>
+                <span className={styles.optionLabel}>Session recap…</span>
+                <span className={styles.optionHint}>Where the party stands at a glance</span>
+              </span>
+            </button>
+          </li>
+          <li role="none">
+            <button
+              type="button"
+              role="menuitem"
+              className={styles.option}
               onClick={handleExport}
             >
               <IconDownload />
@@ -201,6 +222,7 @@ const CampaignMenu = () => {
         aria-hidden="true"
         tabIndex={-1}
       />
+      <SessionRecap open={recapOpen} onClose={() => setRecapOpen(false)} />
     </div>
   );
 };
