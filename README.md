@@ -34,10 +34,12 @@ player's screen:
 The header also offers a **campaign menu** with one-click **Download backup**
 (every panel saved to a single JSON file), **Restore from backup**, a
 **GM notebook** — a private scratchpad for the storyteller, kept local to the
-device that wrote it and never broadcast to the table — and a **Session
-recap** view, a one-screen "where the party stands" with stat cards and the
-most recent journal entries, with a Copy-as-text button for dropping a
-handout into the table's group chat.
+device that wrote it and never broadcast to the table — a **Session recap**
+view, a one-screen "where the party stands" with stat cards and the most
+recent journal entries, with a Copy-as-text button for dropping a handout
+into the table's group chat — and a **lore generator** that rolls fresh
+tavern names, NPCs and weather reports when the table is stuck on what to
+call the next inn.
 
 Built as a React app (powered by [Vite](https://vitejs.dev/)) with an
 Express + Socket.IO backend. Every change is broadcast over Socket.IO so all

@@ -24,6 +24,7 @@ The pages below walk through each panel in turn:
 - [The Chronicle](chronicle.md)
 - [Dice roller](dice-roller.md)
 - [Ambient soundscape](soundscape.md)
+- [Lore generator](lore-generator.md)
 - [GM notebook](gm-notebook.md)
 - [Campaign menu — backup & restore](campaign-menu.md)
 - [Session recap](session-recap.md)

@@ -1,0 +1,85 @@
+@use '../../common' as *;
+
+.wrapper {
+  position: relative;
+}
+
+.popover {
+  position: absolute;
+  top: calc(100% + #{$spacing-03});
+  right: 0;
+  z-index: 200;
+  width: min(28rem, calc(100vw - #{$spacing-05} * 2));
+
+  padding: $spacing-04 $spacing-05 $spacing-05;
+  background: var(--lod-parchment-hi);
+  border: 1px solid var(--lod-edge-strong);
+  border-radius: var(--lod-radius);
+  box-shadow:
+    0 12px 28px rgba(20, 10, 4, 0.42),
+    0 0 0 1px var(--lod-gold) inset;
+  color: var(--lod-ink);
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: $spacing-04;
+  margin-bottom: $spacing-04;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lod-crimson);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-04;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-02;
+  padding: $spacing-03 $spacing-04;
+  background: rgba(255, 240, 200, 0.4);
+  border: 1px solid var(--lod-edge);
+  border-radius: var(--lod-radius);
+}
+
+.rowHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-03;
+}
+
+.rowLabel {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lod-ink-soft);
+}
+
+.rowActions {
+  display: flex;
+  gap: $spacing-02;
+}
+
+.result {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  line-height: 1.3;
+  color: var(--lod-ink);
+}

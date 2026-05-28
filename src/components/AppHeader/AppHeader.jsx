@@ -3,6 +3,7 @@ import ConnectionBadge from '../common/ConnectionBadge/ConnectionBadge';
 import CampaignMenu from '../CampaignMenu/CampaignMenu';
 import DiceRoller from '../DiceRoller/DiceRoller';
 import GmNotebook from '../GmNotebook/GmNotebook';
+import LoreGenerator from '../LoreGenerator/LoreGenerator';
 import Soundscape from '../Soundscape/Soundscape';
 import ThemeToggle from '../ThemeToggle/ThemeToggle';
 import SessionTimer from '../SessionTimer/SessionTimer';
@@ -27,6 +28,7 @@ const AppHeader = () => (
         <SessionTimer />
         <GlobalSearchButton />
         <DiceRoller />
+        <LoreGenerator />
         <Soundscape />
         <GmNotebook />
         <ThemeToggle />
