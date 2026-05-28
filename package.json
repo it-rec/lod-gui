@@ -57,11 +57,14 @@
     "@testing-library/user-event": "^14.5.2",
     "@eslint/js": "^10.0.1",
     "@vitejs/plugin-react": "^6.0.2",
-    "eslint": "^9.0.0",
+    "eslint": "^10.4.0",
     "eslint-plugin-react": "^7.37.5",
     "globals": "^17.6.0",
     "jsdom": "^29.1.1",
     "vite": "^8.0.14",
     "vitest": "^4.1.7"
+  },
+  "patchedDependencies": {
+    "eslint-plugin-react@7.37.5": "patches/eslint-plugin-react@7.37.5.patch"
   }
 }
