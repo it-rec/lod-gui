@@ -32,7 +32,7 @@ connected players stay in sync instantly.
 
 A guided tour of every panel — with screenshots — is published to GitHub
 Pages from the [`docs/`](./docs) folder. Browse it locally by opening
-[`docs/index.md`](./docs/index.md), or read the live site at
+[`docs/features/index.md`](./docs/features/index.md), or read the live site at
 <https://it-rec.github.io/lod-gui/>.
 
 ## Toolchain
