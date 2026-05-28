@@ -15,7 +15,17 @@ import {
 import { useGameChannel } from '../../hooks/useGameChannel';
 import { useSortable } from '../../hooks/useSortable';
 import { collections } from '../../shared';
+import { prefGet, prefSet } from '../../utils/localStorageUtil';
+import LocationsMap from './LocationsMap';
 import styles from './Locations.module.scss';
+
+const VIEW_PREF_KEY = 'locations-view';
+const VALID_VIEWS = new Set(['list', 'map']);
+
+const loadViewPref = () => {
+  const stored = prefGet(VIEW_PREF_KEY);
+  return VALID_VIEWS.has(stored) ? stored : 'list';
+};
 
 const uid = () =>
   typeof crypto !== 'undefined' && crypto.randomUUID
@@ -55,12 +65,18 @@ const normalizeLocations = (raw) => {
         typeof entry.name === 'string' &&
         entry.name.trim()
       ) {
+        // Pass `x` / `y` through only when they are sensible percentages.
+        // Anything else stays undefined and the map's auto-layout takes over.
+        const x = Number.isFinite(entry.x) ? Math.max(0, Math.min(100, entry.x)) : undefined;
+        const y = Number.isFinite(entry.y) ? Math.max(0, Math.min(100, entry.y)) : undefined;
         return {
           id: entry.id || uid(),
           name: entry.name.trim(),
           status: STATUS_IDS.includes(entry.status) ? entry.status : 'rumored',
           region: typeof entry.region === 'string' ? entry.region : '',
           notes: typeof entry.notes === 'string' ? entry.notes : '',
+          ...(x !== undefined ? { x } : {}),
+          ...(y !== undefined ? { y } : {}),
         };
       }
       return null;
@@ -81,11 +97,21 @@ const Locations = () => {
 
   const [draft, setDraft] = useState('');
   const [filter, setFilter] = useState('all');
+  const [view, setView] = useState(loadViewPref);
   const [editingId, setEditingId] = useState(null);
   const [editingName, setEditingName] = useState('');
   const [editingStatus, setEditingStatus] = useState('rumored');
   const [editingRegion, setEditingRegion] = useState('');
   const [editingNotes, setEditingNotes] = useState('');
+
+  const setViewPersisted = (next) => {
+    setView(next);
+    prefSet(VIEW_PREF_KEY, next);
+  };
+
+  const movePin = ({ id, x, y }) => {
+    save(value.map((loc) => (loc.id === id ? { ...loc, x, y } : loc)));
+  };
 
   const counts = useMemo(() => {
     const byStatus = Object.fromEntries(STATUS_IDS.map((id) => [id, 0]));
@@ -208,6 +234,27 @@ const Locations = () => {
           </div>
 
           {value.length > 0 && (
+            <div className={styles.viewToggle} role="group" aria-label="Locations view">
+              <button
+                type="button"
+                className={cx(styles.viewOption, { [styles.viewOptionActive]: view === 'list' })}
+                onClick={() => setViewPersisted('list')}
+                aria-pressed={view === 'list'}
+              >
+                List
+              </button>
+              <button
+                type="button"
+                className={cx(styles.viewOption, { [styles.viewOptionActive]: view === 'map' })}
+                onClick={() => setViewPersisted('map')}
+                aria-pressed={view === 'map'}
+              >
+                Map
+              </button>
+            </div>
+          )}
+
+          {value.length > 0 && view === 'list' && (
             <div className={styles.filters} role="group" aria-label="Filter locations">
               {FILTERS.map((option) => {
                 const count = option.id === 'all' ? total : counts[option.id] || 0;
@@ -228,11 +275,15 @@ const Locations = () => {
             </div>
           )}
 
+          {value.length > 0 && view === 'map' && (
+            <LocationsMap locations={value} onMove={movePin} />
+          )}
+
           {value.length === 0 ? (
             <p className={styles.empty}>
               No places yet. Mark the towns, ruins and roads the party will tread.
             </p>
-          ) : visible.length === 0 ? (
+          ) : view === 'map' ? null : visible.length === 0 ? (
             <p className={styles.empty}>
               No places match this filter.
             </p>
