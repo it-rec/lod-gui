@@ -15,6 +15,35 @@
   flex: 1;
 }
 
+.viewToggle {
+  display: inline-flex;
+  align-self: flex-start;
+  border: 1px solid var(--lod-edge-strong);
+  border-radius: var(--lod-radius);
+  overflow: hidden;
+}
+
+.viewOption {
+  padding: $spacing-02 $spacing-04;
+  background: rgba(60, 40, 20, 0.04);
+  border: 0;
+  color: var(--lod-ink-soft);
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+
+  &:hover { color: var(--lod-crimson); }
+  & + & { border-left: 1px solid var(--lod-edge-strong); }
+}
+
+.viewOptionActive,
+.viewOptionActive:hover {
+  background: var(--lod-crimson);
+  color: var(--lod-gold-hi);
+}
+
 .filters {
   display: inline-flex;
   align-self: flex-start;

@@ -11,7 +11,9 @@ player's screen:
   journal.
 - **Fame** — the party's reputation and deeds.
 - **The Calendar** — the current day and time of day, with one-tap advancement.
-- **Quests** — pledged errands with notes and active/completed filtering.
+- **Quests** — pledged errands with notes, dependency tracking and
+  active/completed filtering; flips between a list and a left-to-right
+  DAG view showing which quests are unblocked, locked or done.
 - **People** — the cast met along the way, tagged ally / foe / neutral /
   unknown, with location and notes.
 - **Locations** — the map ledger of towns, wilds and ruins, tagged

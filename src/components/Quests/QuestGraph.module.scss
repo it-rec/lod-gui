@@ -1,0 +1,123 @@
+@use '../../common' as *;
+
+.surface {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-04;
+}
+
+.scroll {
+  border: 1px solid var(--lod-edge-strong);
+  border-radius: var(--lod-radius);
+  background: rgba(255, 252, 240, 0.5);
+  overflow: auto;
+  max-height: 30rem;
+  padding: $spacing-04;
+}
+
+.canvas {
+  display: block;
+}
+
+.edge {
+  stroke: var(--lod-ink-faint);
+  stroke-width: 1.4;
+  color: var(--lod-ink-faint);
+  transition: stroke 0.18s ease;
+}
+
+.edgeUnlocked {
+  stroke: var(--lod-good);
+  color: var(--lod-good);
+}
+
+.node {
+  cursor: pointer;
+  outline: none;
+
+  &:focus-visible .nodeBox {
+    stroke: var(--lod-gold-bright);
+    stroke-width: 2.4;
+  }
+}
+
+.nodeBox {
+  fill: var(--lod-parchment-hi);
+  stroke: var(--lod-edge-strong);
+  stroke-width: 1.4;
+  transition: fill 0.18s ease, stroke 0.18s ease;
+}
+
+.node:hover .nodeBox {
+  fill: var(--lod-gold-hi);
+  stroke: var(--lod-gold);
+}
+
+.nodeDone .nodeBox {
+  fill: rgba(63, 107, 46, 0.16);
+  stroke: var(--lod-good);
+}
+
+.nodeFocused .nodeBox {
+  stroke: var(--lod-crimson);
+  stroke-width: 2.2;
+}
+
+.nodeTitle {
+  font-family: var(--font-display);
+  font-size: 13px;
+  fill: var(--lod-ink);
+}
+
+.nodeDone .nodeTitle {
+  fill: var(--lod-good);
+}
+
+.nodeBadge {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  fill: var(--lod-good);
+}
+
+.detail {
+  padding: $spacing-03 $spacing-04;
+  background: var(--lod-parchment-hi);
+  border: 1px solid var(--lod-edge);
+  border-left: 3px solid var(--lod-gold);
+  border-radius: var(--lod-radius);
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-02;
+}
+
+.detailTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--lod-crimson);
+}
+
+.detailStatus {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 0.74rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lod-ink-soft);
+}
+
+.detailNotes {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--lod-ink);
+  white-space: pre-wrap;
+}
+
+.empty {
+  margin: 0;
+  padding: $spacing-06 0;
+  text-align: center;
+  font-style: italic;
+  color: var(--lod-ink-soft);
+}
