@@ -30,3 +30,19 @@ a single tap, not two.
 
 Like every other panel, edits are persisted to the backend and broadcast in
 real time, so the whole table sees Day 7 turn into Day 8 at the same moment.
+
+## Time-of-day theming
+
+The active phase doesn't just set an icon — the whole page picks it up. A
+thin colour wash is layered behind every panel so the table can read the
+hour at a glance, even from across the room. Morning warms the page, evening
+casts an amber sunset, night drops the room into a deep indigo dusk;
+afternoon is the neutral baseline.
+
+![Each calendar phase tints the page — morning, afternoon, evening, night](../screenshots/time-of-day-theming.png)
+
+The wash respects the active theme (parchment or candlelight) and uses CSS
+blend modes, so panels stay readable in every phase. It's driven by
+`useTimeOfDayTheme`, which mirrors the calendar's `time` field onto
+`<html data-time-of-day>` — no component has to know what colour "evening"
+is, and adding a new phase is a single CSS rule.

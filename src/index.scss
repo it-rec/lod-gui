@@ -112,6 +112,49 @@ body::before {
   background: var(--lod-page-vignette);
 }
 
+/* Time-of-day tint — a thin colour wash layered between the parchment and
+   the vignette. The active phase is mirrored onto <html data-time-of-day>
+   by useTimeOfDayTheme, so panels and components stay phase-unaware. The
+   afternoon phase intentionally has no overlay; it is the baseline. */
+html {
+  --tod-tint: transparent;
+}
+html[data-time-of-day='morning'] {
+  --tod-tint: radial-gradient(
+    ellipse at 50% 25%,
+    rgba(255, 196, 140, 0.18) 0%,
+    rgba(255, 196, 140, 0) 60%
+  );
+}
+html[data-time-of-day='evening'] {
+  --tod-tint: linear-gradient(
+    180deg,
+    rgba(214, 96, 38, 0.16) 0%,
+    rgba(214, 96, 38, 0.06) 40%,
+    rgba(60, 18, 42, 0.18) 100%
+  );
+}
+html[data-time-of-day='night'] {
+  --tod-tint: linear-gradient(
+    180deg,
+    rgba(18, 24, 64, 0.4) 0%,
+    rgba(8, 12, 32, 0.55) 100%
+  );
+}
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: var(--tod-tint);
+  transition: background 0.6s ease;
+  mix-blend-mode: multiply;
+}
+html[data-theme='dark'] body::after {
+  mix-blend-mode: screen;
+}
+
 #root {
   position: relative;
   z-index: 1;
