@@ -4,12 +4,12 @@ import Skeleton from '../common/Skeleton/Skeleton';
 import LootSplitter from '../LootSplitter/LootSplitter';
 import { IconCoins } from '../common/icons';
 import { useGameChannel } from '../../hooks/useGameChannel';
-import { collections } from '../../shared';
+import { collections, gamePath } from '../../shared';
 
 const Gold = () => {
   const { value, save, loading, error, reload } = useGameChannel({
     channel: collections.GOLD,
-    path: '/api/game/1/gold/',
+    path: gamePath('gold'),
     initial: 0,
     fromServer: (raw) => raw?.gold ?? 0,
     toServer: (gold) => ({ gold }),

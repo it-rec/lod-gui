@@ -12,7 +12,7 @@ import {
 } from '../common/icons';
 import { useGameChannel } from '../../hooks/useGameChannel';
 import { usePlayerName } from '../../hooks/usePlayerName';
-import { collections } from '../../shared';
+import { collections, gamePath } from '../../shared';
 import styles from './Journal.module.scss';
 
 const uid = () =>
@@ -62,7 +62,7 @@ const PHASE_LABELS = {
 const Journal = () => {
   const { value: entries, save, loading, error, reload } = useGameChannel({
     channel: collections.JOURNAL,
-    path: '/api/game/1/journal/',
+    path: gamePath('journal'),
     initial: [],
     fromServer: normalizeEntries,
     toServer: (list) => ({ entries: list }),
@@ -73,7 +73,7 @@ const Journal = () => {
   // — just with day 1 as the default.
   const { value: calendar } = useGameChannel({
     channel: collections.CALENDAR,
-    path: '/api/game/1/calendar/',
+    path: gamePath('calendar'),
     initial: { day: 1, time: 'morning' },
     fromServer: (raw) => ({
       day: Number.isFinite(raw?.day) && raw.day > 0 ? Math.round(raw.day) : 1,

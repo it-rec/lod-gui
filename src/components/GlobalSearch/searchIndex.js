@@ -1,4 +1,4 @@
-import { collections } from '../../shared';
+import { collections, gamePath } from '../../shared';
 import { get } from '../../utils/networkUtils';
 import { cacheGet } from '../../utils/localStorageUtil';
 
@@ -106,11 +106,11 @@ const fromJournal = (raw) =>
     .filter(Boolean);
 
 const SOURCES = [
-  { collection: collections.QUESTS, path: '/api/game/1/quests/', reader: fromQuests },
-  { collection: collections.NPCS, path: '/api/game/1/npcs/', reader: fromNpcs },
-  { collection: collections.LOCATIONS, path: '/api/game/1/locations/', reader: fromLocations },
-  { collection: collections.KEYWORDS, path: '/api/game/1/keywords/', reader: fromKeywords },
-  { collection: collections.JOURNAL, path: '/api/game/1/journal/', reader: fromJournal },
+  { collection: collections.QUESTS, path: gamePath('quests'), reader: fromQuests },
+  { collection: collections.NPCS, path: gamePath('npcs'), reader: fromNpcs },
+  { collection: collections.LOCATIONS, path: gamePath('locations'), reader: fromLocations },
+  { collection: collections.KEYWORDS, path: gamePath('keywords'), reader: fromKeywords },
+  { collection: collections.JOURNAL, path: gamePath('journal'), reader: fromJournal },
 ];
 
 // Builds a single flat list of every searchable record across the campaign.

@@ -1,4 +1,5 @@
 import { io } from 'socket.io-client';
+import { GAME_ID } from '../shared';
 
 // A single shared Socket.IO connection for the whole app. The original code
 // opened a separate socket in every component (Heroes, Gold, Fame,
@@ -27,7 +28,12 @@ const setPresence = (next) => {
 export const getSocket = () => {
   if (!socket) {
     socket = io({ reconnectionDelayMax: 8000 });
-    socket.on('connect', () => setStatus('connected'));
+    socket.on('connect', () => {
+      setStatus('connected');
+      // Join this game's room so we only receive its updates. Re-sent on
+      // every (re)connect because room membership lives on the server socket.
+      socket.emit('game:join', GAME_ID);
+    });
     socket.on('disconnect', () => {
       setStatus('disconnected');
       setPresence(0);

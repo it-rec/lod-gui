@@ -14,7 +14,7 @@ import {
 } from '../common/icons';
 import { useGameChannel } from '../../hooks/useGameChannel';
 import { useSortable } from '../../hooks/useSortable';
-import { collections } from '../../shared';
+import { collections, gamePath } from '../../shared';
 import { prefGet, prefSet } from '../../utils/localStorageUtil';
 import LocationsMap from './LocationsMap';
 import styles from './Locations.module.scss';
@@ -89,7 +89,7 @@ const FILTERS = [{ id: 'all', label: 'All' }, ...STATUSES];
 const Locations = () => {
   const { value, save, loading, error, reload } = useGameChannel({
     channel: collections.LOCATIONS,
-    path: '/api/game/1/locations/',
+    path: gamePath('locations'),
     initial: [],
     fromServer: normalizeLocations,
     toServer: (list) => ({ locations: list }),

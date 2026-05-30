@@ -39,6 +39,7 @@ vi.mock('../../shared', () => ({
     LOCATIONS: 'locations',
     JOURNAL: 'journal',
   },
+  gamePath: (collection) => `/api/game/1/${collection}/`,
 }));
 
 const rawFor = (channel) => {

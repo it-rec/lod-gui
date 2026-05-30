@@ -4,7 +4,7 @@ import Button from '../common/Button/Button';
 import HeroCard from './HeroCard';
 import { IconParty, IconPlus, IconRest } from '../common/icons';
 import { useGameChannel } from '../../hooks/useGameChannel';
-import { collections } from '../../shared';
+import { collections, gamePath } from '../../shared';
 import { toast } from '../common/Toast/toastStore';
 import {
   createHero,
@@ -30,7 +30,7 @@ const Heroes = () => {
     reload,
   } = useGameChannel({
     channel: collections.HEROES,
-    path: '/api/game/1/heroes/',
+    path: gamePath('heroes'),
     initial: DEFAULT_PARTY,
     fromServer: (raw) => normalizeHeroes(raw?.heroes ?? raw),
     toServer: (list) => ({ heroes: list }),
@@ -41,7 +41,7 @@ const Heroes = () => {
   // saves are broadcast and each hook keeps its own copy in sync.
   const { value: calendar, save: saveCalendar } = useGameChannel({
     channel: collections.CALENDAR,
-    path: '/api/game/1/calendar/',
+    path: gamePath('calendar'),
     initial: { day: 1, time: 'morning', adventure: '' },
     fromServer: (raw) => ({
       day: Number.isFinite(raw?.day) && raw.day > 0 ? Math.round(raw.day) : 1,

@@ -11,7 +11,7 @@ import {
   IconCheck,
 } from '../common/icons';
 import { useGameChannel } from '../../hooks/useGameChannel';
-import { collections } from '../../shared';
+import { collections, gamePath } from '../../shared';
 import { toast } from '../common/Toast/toastStore';
 import { summariseRecap, recapToText } from './sessionRecap';
 import styles from './SessionRecap.module.scss';
@@ -32,7 +32,7 @@ const SessionRecap = ({ open, onClose }) => {
 
   const { value: calendar } = useGameChannel({
     channel: collections.CALENDAR,
-    path: '/api/game/1/calendar/',
+    path: gamePath('calendar'),
     initial: { day: 1, time: 'morning', adventure: '' },
     fromServer: (raw) => ({
       day: safeNumber(raw?.day, 1),
@@ -42,43 +42,43 @@ const SessionRecap = ({ open, onClose }) => {
   });
   const { value: gold } = useGameChannel({
     channel: collections.GOLD,
-    path: '/api/game/1/gold/',
+    path: gamePath('gold'),
     initial: 0,
     fromServer: (raw) => safeNumber(raw?.gold, 0),
   });
   const { value: fame } = useGameChannel({
     channel: collections.FAME,
-    path: '/api/game/1/fame/',
+    path: gamePath('fame'),
     initial: 0,
     fromServer: (raw) => safeNumber(raw?.fame, 0),
   });
   const { value: heroes } = useGameChannel({
     channel: collections.HEROES,
-    path: '/api/game/1/heroes/',
+    path: gamePath('heroes'),
     initial: [],
     fromServer: (raw) => (Array.isArray(raw?.heroes) ? raw.heroes : []),
   });
   const { value: quests } = useGameChannel({
     channel: collections.QUESTS,
-    path: '/api/game/1/quests/',
+    path: gamePath('quests'),
     initial: [],
     fromServer: (raw) => (Array.isArray(raw?.quests) ? raw.quests : []),
   });
   const { value: npcs } = useGameChannel({
     channel: collections.NPCS,
-    path: '/api/game/1/npcs/',
+    path: gamePath('npcs'),
     initial: [],
     fromServer: (raw) => (Array.isArray(raw?.npcs) ? raw.npcs : []),
   });
   const { value: locations } = useGameChannel({
     channel: collections.LOCATIONS,
-    path: '/api/game/1/locations/',
+    path: gamePath('locations'),
     initial: [],
     fromServer: (raw) => (Array.isArray(raw?.locations) ? raw.locations : []),
   });
   const { value: journal } = useGameChannel({
     channel: collections.JOURNAL,
-    path: '/api/game/1/journal/',
+    path: gamePath('journal'),
     initial: [],
     fromServer: (raw) => (Array.isArray(raw?.entries) ? raw.entries : []),
   });

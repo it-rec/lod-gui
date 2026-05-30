@@ -1,19 +1,19 @@
-import { collections } from '../../shared';
+import { collections, gamePath } from '../../shared';
 import { get, post } from '../../utils/networkUtils';
 
 const ENDPOINTS = [
-  { key: collections.HEROES, path: '/api/game/1/heroes/' },
-  { key: collections.GOLD, path: '/api/game/1/gold/' },
-  { key: collections.FAME, path: '/api/game/1/fame/' },
-  { key: collections.CALENDAR, path: '/api/game/1/calendar/' },
-  { key: collections.KEYWORDS, path: '/api/game/1/keywords/' },
-  { key: collections.QUESTS, path: '/api/game/1/quests/' },
-  { key: collections.NPCS, path: '/api/game/1/npcs/' },
-  { key: collections.LOCATIONS, path: '/api/game/1/locations/' },
-  { key: collections.JOURNAL, path: '/api/game/1/journal/' },
-  { key: collections.INITIATIVE, path: '/api/game/1/initiative/' },
-  { key: collections.INVENTORY, path: '/api/game/1/inventory/' },
-  { key: collections.STORY_POINTS, path: '/api/game/1/storyPoints/' },
+  { key: collections.HEROES, path: gamePath('heroes') },
+  { key: collections.GOLD, path: gamePath('gold') },
+  { key: collections.FAME, path: gamePath('fame') },
+  { key: collections.CALENDAR, path: gamePath('calendar') },
+  { key: collections.KEYWORDS, path: gamePath('keywords') },
+  { key: collections.QUESTS, path: gamePath('quests') },
+  { key: collections.NPCS, path: gamePath('npcs') },
+  { key: collections.LOCATIONS, path: gamePath('locations') },
+  { key: collections.JOURNAL, path: gamePath('journal') },
+  { key: collections.INITIATIVE, path: gamePath('initiative') },
+  { key: collections.INVENTORY, path: gamePath('inventory') },
+  { key: collections.STORY_POINTS, path: gamePath('storyPoints') },
 ];
 
 export const BACKUP_VERSION = 1;

@@ -5,7 +5,7 @@ import Button from '../common/Button/Button';
 import TextInput from '../common/TextInput/TextInput';
 import { IconKey, IconPlus, IconTrash, IconSearch } from '../common/icons';
 import { useGameChannel } from '../../hooks/useGameChannel';
-import { collections } from '../../shared';
+import { collections, gamePath } from '../../shared';
 import styles from './Keywords.module.scss';
 
 const uid = () =>
@@ -43,7 +43,7 @@ const INITIAL = [];
 const Keywords = () => {
   const { value, save, loading, error, reload } = useGameChannel({
     channel: collections.KEYWORDS,
-    path: '/api/game/1/keywords/',
+    path: gamePath('keywords'),
     initial: INITIAL,
     fromServer: normalizeKeywords,
     toServer: (list) => ({ keywords: list }),

@@ -14,7 +14,7 @@ import {
 } from '../common/icons';
 import { useGameChannel } from '../../hooks/useGameChannel';
 import { useSortable } from '../../hooks/useSortable';
-import { collections } from '../../shared';
+import { collections, gamePath } from '../../shared';
 import styles from './NPCs.module.scss';
 
 const uid = () =>
@@ -68,7 +68,7 @@ const FILTERS = [{ id: 'all', label: 'All' }, ...ROLES];
 const NPCs = () => {
   const { value, save, loading, error, reload } = useGameChannel({
     channel: collections.NPCS,
-    path: '/api/game/1/npcs/',
+    path: gamePath('npcs'),
     initial: [],
     fromServer: normalizeNpcs,
     toServer: (list) => ({ npcs: list }),

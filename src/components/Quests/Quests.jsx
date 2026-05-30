@@ -16,7 +16,7 @@ import {
   IconLock,
 } from '../common/icons';
 import { useGameChannel } from '../../hooks/useGameChannel';
-import { collections } from '../../shared';
+import { collections, gamePath } from '../../shared';
 import { prefGet, prefSet } from '../../utils/localStorageUtil';
 import QuestGraph from './QuestGraph';
 
@@ -93,7 +93,7 @@ const FILTERS = [
 const Quests = () => {
   const { value, save, loading, error, reload } = useGameChannel({
     channel: collections.QUESTS,
-    path: '/api/game/1/quests/',
+    path: gamePath('quests'),
     initial: [],
     fromServer: normalizeQuests,
     toServer: (list) => ({ quests: list }),
