@@ -4,7 +4,7 @@ import Button from '../common/Button/Button';
 import TextInput from '../common/TextInput/TextInput';
 import { IconCoins, IconCheck } from '../common/icons';
 import { useGameChannel } from '../../hooks/useGameChannel';
-import { collections } from '../../shared';
+import { collections, gamePath } from '../../shared';
 import { normalizeHeroes } from '../character';
 import { toast } from '../common/Toast/toastStore';
 import styles from './LootSplitter.module.scss';
@@ -34,7 +34,7 @@ const LootSplitter = ({ trigger: TriggerProp }) => {
 
   const { value: heroes } = useGameChannel({
     channel: collections.HEROES,
-    path: '/api/game/1/heroes/',
+    path: gamePath('heroes'),
     initial: [],
     fromServer: (raw) => normalizeHeroes(raw?.heroes ?? raw),
     toServer: (list) => ({ heroes: list }),
@@ -42,7 +42,7 @@ const LootSplitter = ({ trigger: TriggerProp }) => {
 
   const { value: gold, save: saveGold } = useGameChannel({
     channel: collections.GOLD,
-    path: '/api/game/1/gold/',
+    path: gamePath('gold'),
     initial: 0,
     fromServer: (raw) => raw?.gold ?? 0,
     toServer: (next) => ({ gold: next }),
@@ -50,7 +50,7 @@ const LootSplitter = ({ trigger: TriggerProp }) => {
 
   const { value: journal, save: saveJournal } = useGameChannel({
     channel: collections.JOURNAL,
-    path: '/api/game/1/journal/',
+    path: gamePath('journal'),
     initial: [],
     fromServer: (raw) => (Array.isArray(raw?.entries) ? raw.entries : []),
     toServer: (entries) => ({ entries }),
@@ -58,7 +58,7 @@ const LootSplitter = ({ trigger: TriggerProp }) => {
 
   const { value: calendar } = useGameChannel({
     channel: collections.CALENDAR,
-    path: '/api/game/1/calendar/',
+    path: gamePath('calendar'),
     initial: { day: 1, time: 'morning' },
     fromServer: (raw) => ({
       day: Number.isFinite(raw?.day) && raw.day > 0 ? Math.round(raw.day) : 1,

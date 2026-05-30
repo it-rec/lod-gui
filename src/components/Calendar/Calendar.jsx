@@ -12,7 +12,7 @@ import {
   IconMinus,
 } from '../common/icons';
 import { useGameChannel } from '../../hooks/useGameChannel';
-import { collections } from '../../shared';
+import { collections, gamePath } from '../../shared';
 import styles from './Calendar.module.scss';
 
 const PHASES = [
@@ -27,7 +27,7 @@ const INITIAL = { day: 1, time: 'morning', adventure: '' };
 const Calendar = () => {
   const { value, save, loading, error, reload } = useGameChannel({
     channel: collections.CALENDAR,
-    path: '/api/game/1/calendar/',
+    path: gamePath('calendar'),
     initial: INITIAL,
     fromServer: (raw) => ({
       day: Number.isFinite(raw?.day) && raw.day > 0 ? Math.round(raw.day) : 1,

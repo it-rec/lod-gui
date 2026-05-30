@@ -34,6 +34,7 @@ vi.mock('../../shared', () => ({
     JOURNAL: 'journal',
     CALENDAR: 'calendar',
   },
+  gamePath: (collection) => `/api/game/1/${collection}/`,
 }));
 
 beforeEach(() => {

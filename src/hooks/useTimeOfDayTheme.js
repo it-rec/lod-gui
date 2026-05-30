@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useGameChannel } from './useGameChannel';
-import { collections } from '../shared';
+import { collections, gamePath } from '../shared';
 
 const PHASES = new Set(['morning', 'afternoon', 'evening', 'night']);
 
@@ -10,7 +10,7 @@ const PHASES = new Set(['morning', 'afternoon', 'evening', 'night']);
 export const useTimeOfDayTheme = () => {
   const { value } = useGameChannel({
     channel: collections.CALENDAR,
-    path: '/api/game/1/calendar/',
+    path: gamePath('calendar'),
     initial: { time: 'morning' },
     fromServer: (raw) => ({
       time: PHASES.has(raw?.time) ? raw.time : 'morning',

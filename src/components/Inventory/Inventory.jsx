@@ -12,7 +12,7 @@ import {
   IconPencil,
 } from '../common/icons';
 import { useGameChannel } from '../../hooks/useGameChannel';
-import { collections } from '../../shared';
+import { collections, gamePath } from '../../shared';
 import styles from './Inventory.module.scss';
 
 const uid = () =>
@@ -51,7 +51,7 @@ const normalizeInventory = (raw) => {
 const Inventory = () => {
   const { value: items, save, loading, error, reload } = useGameChannel({
     channel: collections.INVENTORY,
-    path: '/api/game/1/inventory/',
+    path: gamePath('inventory'),
     initial: [],
     fromServer: normalizeInventory,
     toServer: (list) => ({ items: list }),

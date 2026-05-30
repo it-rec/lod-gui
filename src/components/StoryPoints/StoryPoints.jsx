@@ -5,7 +5,7 @@ import Skeleton from '../common/Skeleton/Skeleton';
 import TextInput from '../common/TextInput/TextInput';
 import { IconScroll, IconCheck, IconSearch } from '../common/icons';
 import { useGameChannel } from '../../hooks/useGameChannel';
-import { collections } from '../../shared';
+import { collections, gamePath } from '../../shared';
 import styles from './StoryPoints.module.scss';
 
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -51,7 +51,7 @@ const StoryPoints = () => {
     reload,
   } = useGameChannel({
     channel: collections.STORY_POINTS,
-    path: '/api/game/1/storyPoints/',
+    path: gamePath('storyPoints'),
     initial: EMPTY_CHRONICLE,
     fromServer: buildChronicle,
     toServer: (list) => list,

@@ -89,7 +89,18 @@ with `--watch`, which restarts on changes to `server/` and its imports.
 
 If MongoDB is not reachable the server logs a warning and falls back to an
 **in-memory store**, so the app is fully usable for local development and demos
-without a database. Set `MONGO_URL` to point at a database for real persistence.
+without a database. It keeps retrying in the background and switches to the
+database transparently once it becomes reachable. Set `MONGO_URL` to point at a
+database for real persistence.
+
+#### Configuration (environment variables)
+
+| Variable            | Default                         | Purpose                                                                                 |
+| ------------------- | ------------------------------- | --------------------------------------------------------------------------------------- |
+| `PORT`              | `3080`                          | Port the backend listens on.                                                            |
+| `MONGO_URL`         | `mongodb://localhost:27017/...` | MongoDB connection string. Falls back to an in-memory store when unreachable.           |
+| `MONGO_RECONNECT_MS`| `10000`                         | Delay between background attempts to reach MongoDB after a failed startup connection.   |
+| `ALLOWED_ORIGINS`   | _(none)_                        | Comma-separated CORS allowlist, or `*` for any origin. CORS is off by default — the client is served same-origin in production and proxied through Vite in development. |
 
 ### `bun run build`
 
@@ -115,8 +126,12 @@ Runs ESLint over the project.
   - `hooks/` — `useGameChannel` (per-channel data + realtime sync) and
     `useConnection`.
   - `socket/` — the shared Socket.IO connection.
+  - `shared.js` — the game id and `gamePath()` REST-path helper.
   - design tokens live in `src/index.scss`; component styles in `*.module.scss`.
+- `shared/collections.json` — collection/channel names, the single source of
+  truth imported by both the client (`src/shared.js`) and the server.
 - `public/` — static assets copied verbatim to the build root.
 - `index.html` — Vite HTML entry (at project root).
 - `server/` — Express + Socket.IO backend with a MongoDB / in-memory store.
+  Realtime updates are scoped to a per-game Socket.IO room (`server/rooms.js`).
 - `vite.config.mjs` — Vite configuration (dev server proxy, build output, tests).

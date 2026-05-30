@@ -12,7 +12,7 @@ import {
   IconChevron,
 } from '../common/icons';
 import { useGameChannel } from '../../hooks/useGameChannel';
-import { collections } from '../../shared';
+import { collections, gamePath } from '../../shared';
 import styles from './Initiative.module.scss';
 
 const uid = () =>
@@ -82,7 +82,7 @@ const SIDE_LABELS = { ally: 'Ally', foe: 'Foe', neutral: 'Neutral' };
 const Initiative = () => {
   const { value, save, loading, error, reload } = useGameChannel({
     channel: collections.INITIATIVE,
-    path: '/api/game/1/initiative/',
+    path: gamePath('initiative'),
     initial: { combatants: [], round: 1, currentId: null },
     fromServer: normalizeInitiative,
     toServer: (state) => state,
