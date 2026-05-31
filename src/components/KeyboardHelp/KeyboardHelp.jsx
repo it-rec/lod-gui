@@ -25,6 +25,7 @@ const SECTIONS = [
     rows: [
       { keys: ['Ctrl', 'K'], also: ['⌘', 'K'], description: 'Open the campaign finder' },
       { keys: ['/'], description: 'Open the finder (when not typing)' },
+      { keys: ['Q'], description: 'Open the quest log (when not typing)' },
       { keys: ['?'], description: 'Show this shortcut list' },
       { keys: ['Esc'], description: 'Close any open dialog' },
     ],
