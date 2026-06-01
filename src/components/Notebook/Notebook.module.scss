@@ -1,0 +1,8 @@
+@use '../../common' as *;
+
+.notebook {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+  gap: $spacing-06;
+  align-items: start;
+}

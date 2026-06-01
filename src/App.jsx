@@ -5,10 +5,7 @@ import Heroes from './components/Heroes/Heroes';
 import Gold from './components/Gold/Gold';
 import Fame from './components/Fame/Fame';
 import Calendar from './components/Calendar/Calendar';
-import Keywords from './components/Keywords/Keywords';
-import Quests from './components/Quests/Quests';
-import NPCs from './components/NPCs/NPCs';
-import Locations from './components/Locations/Locations';
+import Notebook from './components/Notebook/Notebook';
 import Journal from './components/Journal/Journal';
 import Initiative from './components/Initiative/Initiative';
 import Inventory from './components/Inventory/Inventory';
@@ -61,12 +58,7 @@ const App = () => {
             <Calendar />
           </aside>
         </div>
-        <div className="app__notebook">
-          <Quests />
-          <NPCs />
-          <Locations />
-          <Keywords />
-        </div>
+        <Notebook />
         <Initiative />
         <Inventory />
         <Journal />
