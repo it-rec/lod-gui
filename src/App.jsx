@@ -11,6 +11,7 @@ import GlobalSearch from './components/GlobalSearch/GlobalSearch';
 import QuestLog from './components/QuestLog/QuestLog';
 import KeyboardHelp from './components/KeyboardHelp/KeyboardHelp';
 import Reactions from './components/Reactions/Reactions';
+import SectionNav from './components/SectionNav/SectionNav';
 import Onboarding from './components/Onboarding/Onboarding';
 import Toaster from './components/common/Toast/Toaster';
 import { useConnection } from './hooks/useConnection';
@@ -66,6 +67,7 @@ const App = () => {
       <QuestLog />
       <KeyboardHelp />
       <Reactions />
+      <SectionNav />
       <Onboarding />
       <Toaster />
     </div>
