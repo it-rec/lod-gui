@@ -47,6 +47,44 @@
   background: currentColor;
 }
 
+.pending {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 1.1rem;
+  height: 1.1rem;
+  padding: 0 5px;
+  margin-left: -2px;
+
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0;
+
+  color: #f0d28a;
+  background: rgba(240, 169, 154, 0.16);
+  border: 1px solid rgba(240, 200, 120, 0.7);
+  border-radius: 999px;
+}
+
+.pendingGlyph {
+  display: inline-block;
+  font-size: 0.7rem;
+  line-height: 1;
+  animation: pending-spin 1.6s linear infinite;
+}
+
+@keyframes pending-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pendingGlyph {
+    animation: none;
+  }
+}
+
 .connected {
   color: #b9e2a0;
   border-color: rgba(185, 226, 160, 0.6);
