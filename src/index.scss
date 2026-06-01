@@ -204,3 +204,23 @@ code {
   background: var(--lod-crimson);
   background-clip: padding-box;
 }
+
+/* Respect a player's "reduce motion" setting. Animations and transitions are
+   decoration throughout the app — the time-of-day wash, panel reveal flash,
+   toast slides, floating reactions, skeleton shimmer — so we neutralise them
+   globally rather than guarding each component. Smooth scrolling is dropped
+   too: programmatic scrollIntoView jumps instantly instead. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  html {
+    scroll-behavior: auto !important;
+  }
+}
