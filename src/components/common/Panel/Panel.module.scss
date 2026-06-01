@@ -61,6 +61,41 @@
   color: var(--lod-gold-hi);
 }
 
+.dragHandle {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin: -2px 0;
+  padding: 2px;
+  font-size: 1.2rem;
+  color: rgba(233, 208, 138, 0.72);
+  cursor: grab;
+  border-radius: 2px;
+  touch-action: none;
+}
+
+.dragHandle:hover {
+  color: var(--lod-gold-hi);
+}
+
+.dragHandle:focus-visible {
+  outline: 2px solid var(--lod-gold-hi);
+  outline-offset: 1px;
+}
+
+.dragHandle:active {
+  cursor: grabbing;
+}
+
+.reorderDragging {
+  opacity: 0.55;
+}
+
+.reorderOver::after {
+  border-color: var(--lod-gold-bright);
+  box-shadow: 0 0 0 2px rgba(196, 160, 74, 0.6);
+}
+
 .collapseChevron {
   transition: transform 0.18s ease;
 }
