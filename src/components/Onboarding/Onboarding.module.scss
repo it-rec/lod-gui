@@ -69,52 +69,92 @@
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-.tips {
-  list-style: none;
-  margin: 0;
-  padding: $spacing-05 $spacing-06;
+.step {
   display: flex;
   flex-direction: column;
-  gap: $spacing-04;
+  align-items: center;
+  text-align: center;
+  gap: $spacing-03;
+  padding: $spacing-06 $spacing-06 $spacing-04;
+  min-height: 11rem;
+  justify-content: center;
 }
 
-.tip {
+.stepIcon {
   display: flex;
-  align-items: flex-start;
-  gap: $spacing-04;
-}
+  align-items: center;
+  justify-content: center;
+  width: 3.4rem;
+  height: 3.4rem;
+  margin-bottom: $spacing-02;
 
-.tipIcon {
-  display: flex;
-  flex-shrink: 0;
-  font-size: 1.5rem;
+  font-size: 1.9rem;
   color: var(--lod-crimson);
-  margin-top: 2px;
+  background: rgba(156, 122, 45, 0.14);
+  border: 1px solid var(--lod-edge);
+  border-radius: 50%;
 }
 
-.tipBody {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
-.tipTitle {
+.stepTitle {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 1.02rem;
+  font-size: 1.22rem;
   color: var(--lod-ink);
 }
 
-.tipText {
-  font-size: 0.92rem;
+.stepText {
+  max-width: 26rem;
+  font-size: 0.98rem;
   color: var(--lod-ink-soft);
-  line-height: 1.4;
+  line-height: 1.45;
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-03;
+  padding: 0 $spacing-06 $spacing-04;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--lod-gold);
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+
+.dot:hover {
+  background: rgba(156, 122, 45, 0.4);
+}
+
+.dot:focus-visible {
+  outline: 2px solid var(--lod-gold-hi);
+  outline-offset: 2px;
+}
+
+.dotActive {
+  background: var(--lod-crimson);
+  border-color: var(--lod-crimson);
+  transform: scale(1.25);
 }
 
 .footer {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-04;
   padding: 0 $spacing-06 $spacing-06;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: $spacing-03;
 }
 
 @keyframes onboarding-fade {
