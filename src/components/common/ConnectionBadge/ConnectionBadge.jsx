@@ -1,4 +1,5 @@
 import { useConnection, usePresence } from '../../../hooks/useConnection';
+import { usePendingCount } from '../../../hooks/usePendingSync';
 import styles from './ConnectionBadge.module.scss';
 
 const LABELS = {
@@ -18,6 +19,7 @@ const TITLES = {
 const ConnectionBadge = () => {
   const status = useConnection();
   const players = usePresence();
+  const pending = usePendingCount();
   const showPresence = status === 'connected' && players > 0;
   return (
     <div className={`${styles.badge} ${styles[status]}`} title={TITLES[status]}>
@@ -29,6 +31,18 @@ const ConnectionBadge = () => {
           aria-label={`${players} ${players === 1 ? 'player' : 'players'} online`}
         >
           {players}
+        </span>
+      )}
+      {pending > 0 && (
+        <span
+          className={styles.pending}
+          title={`${pending} ${pending === 1 ? 'change is' : 'changes are'} waiting to sync`}
+          aria-label={`${pending} unsynced ${pending === 1 ? 'change' : 'changes'}`}
+        >
+          <span className={styles.pendingGlyph} aria-hidden="true">
+            ⟳
+          </span>
+          {pending}
         </span>
       )}
     </div>

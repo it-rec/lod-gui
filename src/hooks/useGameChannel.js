@@ -3,6 +3,7 @@ import { debounce } from 'lodash';
 import { get, post } from '../utils/networkUtils';
 import { getSocket, getClientId } from '../socket/socket';
 import { cacheGet, cacheSet } from '../utils/localStorageUtil';
+import { markDirty, markClean } from '../utils/pendingSync';
 import { toast } from '../components/common/Toast/toastStore';
 
 // One hook to own a single game "channel" (gold, fame, heroes, storyPoints):
@@ -81,14 +82,19 @@ export const useGameChannel = ({
 
   const debouncedPostRef = useRef();
   if (!debouncedPostRef.current) {
-    debouncedPostRef.current = debounce((targetPath, payload) => {
-      post(targetPath, payload).catch(() => {
-        toast.error(
-          'Could not save',
-          'Your change is shown here but did not reach the archive.',
-          'save-error'
-        );
-      });
+    debouncedPostRef.current = debounce((targetPath, payload, ch) => {
+      post(targetPath, payload)
+        .then(() => markClean(ch))
+        .catch(() => {
+          // Remember the unsynced edit so the pending indicator can show it and
+          // the next reconnect can replay it automatically.
+          markDirty(ch, targetPath, payload);
+          toast.error(
+            'Could not save',
+            'Your change is kept here and will sync when the link returns.',
+            'save-error'
+          );
+        });
     }, 400);
   }
 
@@ -105,7 +111,7 @@ export const useGameChannel = ({
       setValue(resolved);
       const payload = toServerRef.current(resolved);
       cacheSet(channel, payload);
-      debouncedPostRef.current(path, payload);
+      debouncedPostRef.current(path, payload, channel);
     },
     [channel, path]
   );

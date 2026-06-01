@@ -22,6 +22,7 @@ vi.mock('../../../socket/socket', () => ({
 }));
 
 import ConnectionBadge from './ConnectionBadge';
+import { markDirty, markClean, __resetPending } from '../../../utils/pendingSync';
 
 const setStatus = (next) => {
   status = next;
@@ -36,6 +37,7 @@ const setPresence = (next) => {
 beforeEach(() => {
   status = 'connected';
   presence = 0;
+  __resetPending();
 });
 
 describe('ConnectionBadge', () => {
@@ -63,5 +65,22 @@ describe('ConnectionBadge', () => {
     setStatus('disconnected');
     expect(screen.queryByLabelText(/player.* online/)).not.toBeInTheDocument();
     expect(screen.getByText('Offline')).toBeInTheDocument();
+  });
+
+  it('shows an unsynced-changes count while edits are pending', () => {
+    render(<ConnectionBadge />);
+    expect(screen.queryByLabelText(/unsynced/)).not.toBeInTheDocument();
+
+    act(() => markDirty('gold', '/api/gold', { gold: 5 }));
+    expect(screen.getByLabelText('1 unsynced change')).toHaveTextContent('1');
+
+    act(() => markDirty('fame', '/api/fame', { fame: 2 }));
+    expect(screen.getByLabelText('2 unsynced changes')).toHaveTextContent('2');
+
+    act(() => {
+      markClean('gold');
+      markClean('fame');
+    });
+    expect(screen.queryByLabelText(/unsynced/)).not.toBeInTheDocument();
   });
 });
