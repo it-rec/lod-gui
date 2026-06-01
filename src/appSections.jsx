@@ -2,6 +2,10 @@ import Quests from './components/Quests/Quests';
 import NPCs from './components/NPCs/NPCs';
 import Locations from './components/Locations/Locations';
 import Keywords from './components/Keywords/Keywords';
+import Initiative from './components/Initiative/Initiative';
+import Inventory from './components/Inventory/Inventory';
+import Journal from './components/Journal/Journal';
+import StoryPoints from './components/StoryPoints/StoryPoints';
 import {
   IconParty,
   IconQuest,
@@ -22,6 +26,16 @@ export const NOTEBOOK_PANELS = [
   { key: 'people', label: 'People', Component: NPCs },
   { key: 'locations', label: 'Locations', Component: Locations },
   { key: 'keywords', label: 'Keywords', Component: Keywords },
+];
+
+// The full-width "field" panels below the notebook — combat, spoils and the
+// written record — also rearrangeable, in their own persisted order. Keys
+// match each panel's `collapsibleKey` (StoryPoints renders as the Chronicle).
+export const FIELD_PANELS = [
+  { key: 'initiative', label: 'Initiative', Component: Initiative },
+  { key: 'inventory', label: 'Treasure', Component: Inventory },
+  { key: 'journal', label: 'Journal', Component: Journal },
+  { key: 'chronicle', label: 'The Chronicle', Component: StoryPoints },
 ];
 
 // Every panel the section nav can jump to, in page order. Keys match the

@@ -1,0 +1,7 @@
+@use '../../common' as *;
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-07;
+}

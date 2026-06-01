@@ -6,10 +6,7 @@ import Gold from './components/Gold/Gold';
 import Fame from './components/Fame/Fame';
 import Calendar from './components/Calendar/Calendar';
 import Notebook from './components/Notebook/Notebook';
-import Journal from './components/Journal/Journal';
-import Initiative from './components/Initiative/Initiative';
-import Inventory from './components/Inventory/Inventory';
-import StoryPoints from './components/StoryPoints/StoryPoints';
+import Field from './components/Field/Field';
 import GlobalSearch from './components/GlobalSearch/GlobalSearch';
 import QuestLog from './components/QuestLog/QuestLog';
 import KeyboardHelp from './components/KeyboardHelp/KeyboardHelp';
@@ -60,10 +57,7 @@ const App = () => {
           </aside>
         </div>
         <Notebook />
-        <Initiative />
-        <Inventory />
-        <Journal />
-        <StoryPoints />
+        <Field />
       </main>
       <footer className="app__footer">
         Track the party, the purse, and the tale — your tabletop campaign companion.
