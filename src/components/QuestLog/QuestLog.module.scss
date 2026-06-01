@@ -25,6 +25,16 @@
     0 20px 50px rgba(20, 10, 4, 0.55),
     0 0 0 1px var(--lod-gold) inset;
   overflow: hidden;
+  // The writ unrolls wider for the overview so the whole campaign can be
+  // taken in at a glance; the eased width keeps the toggle from feeling jumpy.
+  transition: max-width 0.28s ease;
+}
+
+// The standing overview wants breadth, not depth — a wider sheet lays the
+// completed quests out as a tapestry (three-plus columns) instead of a
+// narrow, scroll-heavy single file.
+.modalWide {
+  max-width: 56rem;
 }
 
 .header {
@@ -321,7 +331,7 @@
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
   gap: $spacing-03;
 }
 

@@ -1,14 +1,22 @@
 import { setTimeout as wait } from 'node:timers/promises';
 
-// The standing summary: a chain of pledges where later quests were unlocked by
-// earlier ones, so the overview can attest to prerequisites already cleared.
+// The standing summary after a long campaign: many fulfilled pledges, several
+// chained off earlier ones, so the overview can attest to a whole tapestry of
+// prerequisites already cleared — and a couple still outstanding.
 const QUESTS = {
   quests: [
-    { id: 'q-find',   title: 'Find the missing heir',    notes: 'Last seen in **Greycross**.', isDone: true,  dependsOn: [] },
-    { id: 'q-seal',   title: 'Recover the ducal seal',   notes: '',                            isDone: true,  dependsOn: ['q-find'] },
-    { id: 'q-throne', title: 'Restore the rightful heir', notes: '',                           isDone: true,  dependsOn: ['q-seal'] },
-    { id: 'q-rumor',  title: 'Hear the orchard rumor',   notes: '',                            isDone: true,  dependsOn: [] },
-    { id: 'q-guard',  title: 'Guard the mountain road',  notes: 'A long winter watch.',        isDone: false, dependsOn: [] },
+    { id: 'q-find',   title: 'Find the missing heir',     notes: '', isDone: true,  dependsOn: [] },
+    { id: 'q-seal',   title: 'Recover the ducal seal',    notes: '', isDone: true,  dependsOn: ['q-find'] },
+    { id: 'q-throne', title: 'Restore the rightful heir', notes: '', isDone: true,  dependsOn: ['q-seal'] },
+    { id: 'q-rumor',  title: 'Hear the orchard rumor',    notes: '', isDone: true,  dependsOn: [] },
+    { id: 'q-rite',   title: 'Calm the orchard spirits',  notes: '', isDone: true,  dependsOn: ['q-rumor'] },
+    { id: 'q-relic',  title: 'Find the sunken relic',     notes: '', isDone: true,  dependsOn: [] },
+    { id: 'q-wyrm',   title: 'Slay the marsh wyrm',       notes: '', isDone: true,  dependsOn: ['q-relic'] },
+    { id: 'q-pact',   title: 'Broker the border pact',    notes: '', isDone: true,  dependsOn: ['q-throne'] },
+    { id: 'q-bridge', title: 'Rebuild the Greycross span', notes: '', isDone: true, dependsOn: [] },
+    { id: 'q-watch',  title: 'Light the warning beacons', notes: '', isDone: true,  dependsOn: ['q-pact'] },
+    { id: 'q-guard',  title: 'Guard the mountain road',   notes: '', isDone: false, dependsOn: [] },
+    { id: 'q-crown',  title: 'Forge the iron crown',      notes: '', isDone: false, dependsOn: ['q-throne'] },
   ],
 };
 

@@ -163,7 +163,11 @@ const QuestLog = () => {
         if (event.target === event.currentTarget) close();
       }}
     >
-      <div className={styles.modal}>
+      <div
+        className={cx(styles.modal, {
+          [styles.modalWide]: view === 'overview',
+        })}
+      >
         <header className={styles.header}>
           <div className={styles.headingWrap}>
             <IconScroll className={styles.headerIcon} aria-hidden="true" />

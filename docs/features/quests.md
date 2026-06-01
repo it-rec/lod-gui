@@ -82,6 +82,11 @@ stood on their own simply read *No prerequisites*. The view is a pure summary:
 **click any tile** and the log jumps back to that quest, briefly highlighting
 its entry.
 
+To take a long campaign in at a glance, the writ **unrolls wider** for the
+overview — the tiles lay out as a multi-column tapestry rather than a narrow,
+scroll-heavy single file — and rolls back to the compact width when you return
+to the log.
+
 ![The quest log overview: a standing card showing completion percent, and tiles for each completed quest listing the prerequisites it cleared](../screenshots/quest-overview.png)
 
 ## Filters
