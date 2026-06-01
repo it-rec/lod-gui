@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import cx from 'classnames';
 import Button from '../common/Button/Button';
 import FormattedText from '../common/FormattedText/FormattedText';
@@ -49,6 +49,12 @@ export const QuestLogButton = () => (
 // edits from peers (and your own) flow straight through.
 const QuestLog = () => {
   const [open, setOpen] = useState(false);
+  // 'log' is the active/completed writ; 'overview' is the standing summary.
+  const [view, setView] = useState('log');
+  // When the reader jumps from an overview tile back into the log, we briefly
+  // flag the entry so the eye lands on the right line.
+  const [highlightId, setHighlightId] = useState(null);
+  const entryRefs = useRef(new Map());
   const { value, loading } = useGameChannel({
     channel: collections.QUESTS,
     path: gamePath('quests'),
@@ -75,7 +81,10 @@ const QuestLog = () => {
         setOpen(false);
       }
     };
-    const onOpen = () => setOpen(true);
+    const onOpen = () => {
+      setView('log');
+      setOpen(true);
+    };
     document.addEventListener('keydown', onKey);
     window.addEventListener(OPEN_EVENT, onOpen);
     return () => {
@@ -84,7 +93,10 @@ const QuestLog = () => {
     };
   }, [open]);
 
-  const close = useCallback(() => setOpen(false), []);
+  const close = useCallback(() => {
+    setOpen(false);
+    setHighlightId(null);
+  }, []);
 
   const { active, completed } = useMemo(
     () => ({
@@ -93,6 +105,34 @@ const QuestLog = () => {
     }),
     [value]
   );
+
+  // Each completed quest paired with the prerequisites it cleared — the
+  // evidence of the road already walked.
+  const overviewTiles = useMemo(
+    () =>
+      completed.map((quest) => ({
+        quest,
+        fulfilled: (quest.dependsOn || [])
+          .map((id) => value.find((q) => q.id === id))
+          .filter((parent) => parent && parent.isDone),
+      })),
+    [completed, value]
+  );
+
+  // Returning to the log from a tile: switch views and let the highlight
+  // effect scroll the matching entry into focus.
+  const focusInLog = useCallback((id) => {
+    setView('log');
+    setHighlightId(id);
+  }, []);
+
+  useEffect(() => {
+    if (!highlightId || view !== 'log') return undefined;
+    const node = entryRefs.current.get(highlightId);
+    if (node) node.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    const timer = setTimeout(() => setHighlightId(null), 2000);
+    return () => clearTimeout(timer);
+  }, [highlightId, view]);
 
   // Hand off to the in-place panel for any real editing.
   const revealPanel = useCallback(() => {
@@ -106,6 +146,7 @@ const QuestLog = () => {
 
   const total = value.length;
   const doneCount = completed.length;
+  const pct = total ? Math.round((doneCount / total) * 100) : 0;
   const subtitle = loading
     ? 'Unfurling the writ…'
     : total === 0
@@ -150,6 +191,35 @@ const QuestLog = () => {
           </div>
         )}
 
+        {!loading && total > 0 && (
+          <div
+            className={styles.viewToggle}
+            role="group"
+            aria-label="Quest log view"
+          >
+            <button
+              type="button"
+              className={cx(styles.viewOption, {
+                [styles.viewOptionActive]: view === 'log',
+              })}
+              onClick={() => setView('log')}
+              aria-pressed={view === 'log'}
+            >
+              Log
+            </button>
+            <button
+              type="button"
+              className={cx(styles.viewOption, {
+                [styles.viewOptionActive]: view === 'overview',
+              })}
+              onClick={() => setView('overview')}
+              aria-pressed={view === 'overview'}
+            >
+              Overview
+            </button>
+          </div>
+        )}
+
         <div className={styles.body}>
           {loading ? (
             <p className={styles.empty}>Reading the quest writ…</p>
@@ -158,6 +228,73 @@ const QuestLog = () => {
               No quests yet. Pledge one in the Quests panel when an errand finds
               the party.
             </p>
+          ) : view === 'overview' ? (
+            <section className={styles.overview} aria-label="Quest standing">
+              <div className={styles.standing}>
+                <span
+                  className={styles.standingPct}
+                  aria-hidden="true"
+                >{`${pct}%`}</span>
+                <div className={styles.standingMeta}>
+                  <p className={styles.standingHead}>Where the party stands</p>
+                  <p className={styles.standingSub}>
+                    {doneCount} of {total} quests completed
+                  </p>
+                </div>
+              </div>
+              {completed.length === 0 ? (
+                <p className={styles.empty}>
+                  No quests completed yet — your tale is still being written.
+                </p>
+              ) : (
+                <ul className={styles.tiles}>
+                  {overviewTiles.map(({ quest, fulfilled }) => (
+                    <li key={quest.id}>
+                      <button
+                        type="button"
+                        className={styles.tile}
+                        onClick={() => focusInLog(quest.id)}
+                        aria-label={`${quest.title}, completed — open in the quest log`}
+                      >
+                        <span className={styles.tileHead}>
+                          <span
+                            className={styles.tileCheck}
+                            aria-hidden="true"
+                          >
+                            <IconCheck />
+                          </span>
+                          <span className={styles.tileTitle}>
+                            {quest.title}
+                          </span>
+                        </span>
+                        {fulfilled.length > 0 ? (
+                          <span className={styles.tilePrereqs}>
+                            <span className={styles.tilePrereqLabel}>
+                              Prerequisites met
+                            </span>
+                            <span className={styles.tilePrereqList}>
+                              {fulfilled.map((parent) => (
+                                <span
+                                  key={parent.id}
+                                  className={styles.tilePrereq}
+                                >
+                                  <IconCheck aria-hidden="true" />
+                                  {parent.title}
+                                </span>
+                              ))}
+                            </span>
+                          </span>
+                        ) : (
+                          <span className={styles.tilePrereqsNone}>
+                            No prerequisites
+                          </span>
+                        )}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
           ) : (
             <>
               <section className={styles.group}>
@@ -217,7 +354,13 @@ const QuestLog = () => {
                     {completed.map((quest) => (
                       <li
                         key={quest.id}
-                        className={cx(styles.entry, styles.entryDone)}
+                        ref={(node) => {
+                          if (node) entryRefs.current.set(quest.id, node);
+                          else entryRefs.current.delete(quest.id);
+                        }}
+                        className={cx(styles.entry, styles.entryDone, {
+                          [styles.entryHighlight]: highlightId === quest.id,
+                        })}
                       >
                         <span className={styles.marker} aria-hidden="true">
                           <IconCheck />

@@ -69,6 +69,21 @@ sit below, and a slim bar tracks overall progress. The log is **read-only**;
 the **Open the Quests panel** link in the footer reveals the panel for any
 real editing.
 
+### Overview
+
+A **Log / Overview** toggle sits at the top of the log. Where the log lists
+everything still to do, the overview answers a different question — *where do
+we stand, and what got us here?* It opens with a standing card (the share of
+quests completed, as a percent) and then a tile for every **completed** quest.
+
+Each tile names the prerequisites that quest cleared — the completed pledges
+that unlocked it — so the road already walked is laid out in full. Quests that
+stood on their own simply read *No prerequisites*. The view is a pure summary:
+**click any tile** and the log jumps back to that quest, briefly highlighting
+its entry.
+
+![The quest log overview: a standing card showing completion percent, and tiles for each completed quest listing the prerequisites it cleared](../screenshots/quest-overview.png)
+
 ## Filters
 
 The three filter chips above the list scope what's shown:

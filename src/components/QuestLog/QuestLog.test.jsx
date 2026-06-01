@@ -22,6 +22,19 @@ const QUESTS = [
   { id: 'c', title: 'Deliver the letter', notes: '', isDone: true, dependsOn: [] },
 ];
 
+// A scenario where a completed quest cleared a completed prerequisite, so the
+// overview has something to attest to.
+const COMPLETED_CHAIN = [
+  { id: 'a', title: 'Gather the keys', notes: '', isDone: true, dependsOn: [] },
+  { id: 'b', title: 'Open the vault', notes: '', isDone: true, dependsOn: ['a'] },
+  { id: 'c', title: 'Guard the road', notes: '', isDone: false, dependsOn: [] },
+];
+
+beforeEach(() => {
+  // scrollIntoView is unimplemented in jsdom; the highlight effect calls it.
+  Element.prototype.scrollIntoView = vi.fn();
+});
+
 beforeEach(() => {
   channel.value = QUESTS;
   channel.loading = false;
@@ -100,5 +113,46 @@ describe('QuestLog', () => {
     await user.keyboard('q');
 
     expect(screen.getByRole('dialog')).toHaveTextContent('No quests yet');
+  });
+
+  it('switches to the overview, summarising standing and fulfilled prerequisites', async () => {
+    channel.value = COMPLETED_CHAIN;
+    const user = userEvent.setup();
+    render(<QuestLog />);
+    await user.keyboard('q');
+
+    await user.click(screen.getByRole('button', { name: 'Overview' }));
+
+    const dialog = screen.getByRole('dialog');
+    // 2 of 3 done → 67%.
+    expect(dialog).toHaveTextContent('67%');
+    expect(dialog).toHaveTextContent('2 of 3 quests completed');
+    // The completed quest that cleared a prerequisite names it.
+    expect(dialog).toHaveTextContent('Prerequisites met');
+    expect(dialog).toHaveTextContent('Gather the keys');
+    // The standalone completed quest reports having had no prerequisites.
+    expect(dialog).toHaveTextContent('No prerequisites');
+    // An active quest never appears among the completion tiles.
+    expect(dialog).not.toHaveTextContent('Guard the road');
+  });
+
+  it('returns to the log when an overview tile is clicked', async () => {
+    channel.value = COMPLETED_CHAIN;
+    const user = userEvent.setup();
+    render(<QuestLog />);
+    await user.keyboard('q');
+
+    await user.click(screen.getByRole('button', { name: 'Overview' }));
+    await user.click(
+      screen.getByRole('button', {
+        name: 'Open the vault, completed — open in the quest log',
+      })
+    );
+
+    // Back on the log view: the Active heading and counts are visible again.
+    const dialog = screen.getByRole('dialog');
+    expect(dialog).toHaveTextContent('Active');
+    expect(dialog).toHaveTextContent('Guard the road');
+    expect(Element.prototype.scrollIntoView).toHaveBeenCalled();
   });
 });
