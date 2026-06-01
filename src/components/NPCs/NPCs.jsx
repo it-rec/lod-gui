@@ -15,6 +15,7 @@ import {
 import { useGameChannel } from '../../hooks/useGameChannel';
 import { useSortable } from '../../hooks/useSortable';
 import { collections, gamePath } from '../../shared';
+import { removeWithUndo } from '../../utils/undoRemove';
 import styles from './NPCs.module.scss';
 
 const uid = () =>
@@ -117,8 +118,9 @@ const NPCs = () => {
     );
 
   const remove = (id) => {
+    const target = value.find((npc) => npc.id === id);
     if (editingId === id) setEditingId(null);
-    save(value.filter((npc) => npc.id !== id));
+    removeWithUndo({ list: value, id, save, label: target?.name, noun: 'Person' });
   };
 
   const beginEdit = (npc) => {

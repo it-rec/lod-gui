@@ -18,6 +18,7 @@ import {
 import { useGameChannel } from '../../hooks/useGameChannel';
 import { collections, gamePath } from '../../shared';
 import { prefGet, prefSet } from '../../utils/localStorageUtil';
+import { removeWithUndo } from '../../utils/undoRemove';
 import QuestGraph from './QuestGraph';
 
 const VIEW_PREF_KEY = 'quests-view';
@@ -152,8 +153,9 @@ const Quests = () => {
   };
 
   const remove = (id) => {
+    const target = value.find((quest) => quest.id === id);
     if (editingId === id) setEditingId(null);
-    save(value.filter((quest) => quest.id !== id));
+    removeWithUndo({ list: value, id, save, label: target?.title, noun: 'Quest' });
   };
 
   const beginEdit = (quest) => {

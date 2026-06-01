@@ -27,6 +27,18 @@ const Toaster = () => {
               <div className={styles.message}>{toastItem.message}</div>
             )}
           </div>
+          {toastItem.action && (
+            <button
+              type="button"
+              className={styles.action}
+              onClick={() => {
+                toastItem.action.onClick();
+                dismissToast(toastItem.id);
+              }}
+            >
+              {toastItem.action.label}
+            </button>
+          )}
           <button
             type="button"
             className={styles.close}

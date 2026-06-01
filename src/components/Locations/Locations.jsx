@@ -16,6 +16,7 @@ import { useGameChannel } from '../../hooks/useGameChannel';
 import { useSortable } from '../../hooks/useSortable';
 import { collections, gamePath } from '../../shared';
 import { prefGet, prefSet } from '../../utils/localStorageUtil';
+import { removeWithUndo } from '../../utils/undoRemove';
 import LocationsMap from './LocationsMap';
 import styles from './Locations.module.scss';
 
@@ -149,8 +150,9 @@ const Locations = () => {
     );
 
   const remove = (id) => {
+    const target = value.find((location) => location.id === id);
     if (editingId === id) setEditingId(null);
-    save(value.filter((location) => location.id !== id));
+    removeWithUndo({ list: value, id, save, label: target?.name, noun: 'Place' });
   };
 
   const beginEdit = (location) => {

@@ -13,6 +13,7 @@ import {
 } from '../common/icons';
 import { useGameChannel } from '../../hooks/useGameChannel';
 import { collections, gamePath } from '../../shared';
+import { removeWithUndo } from '../../utils/undoRemove';
 import styles from './Inventory.module.scss';
 
 const uid = () =>
@@ -99,8 +100,9 @@ const Inventory = () => {
   };
 
   const remove = (id) => {
+    const target = items.find((item) => item.id === id);
     if (editingId === id) setEditingId(null);
-    save(items.filter((item) => item.id !== id));
+    removeWithUndo({ list: items, id, save, label: target?.name, noun: 'Item' });
   };
 
   const beginEdit = (item) => {
