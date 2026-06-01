@@ -9,6 +9,7 @@ import ThemeToggle from '../ThemeToggle/ThemeToggle';
 import SessionTimer from '../SessionTimer/SessionTimer';
 import PlayerBadge from '../PlayerBadge/PlayerBadge';
 import PresenceBar from '../PresenceBar/PresenceBar';
+import OverflowMenu from '../OverflowMenu/OverflowMenu';
 import { GlobalSearchButton } from '../GlobalSearch/GlobalSearch';
 import { QuestLogButton } from '../QuestLog/QuestLog';
 import { KeyboardHelpButton } from '../KeyboardHelp/KeyboardHelp';
@@ -29,14 +30,23 @@ const AppHeader = () => (
         <PresenceBar />
         <PlayerBadge />
         <SessionTimer />
-        <GlobalSearchButton />
-        <QuestLogButton />
+        {/* Reachable from the overflow menu on small screens, so hide the
+            standalone buttons there to keep the toolbar from spilling. */}
+        <span className={styles.collapsible}>
+          <GlobalSearchButton />
+        </span>
+        <span className={styles.collapsible}>
+          <QuestLogButton />
+        </span>
         <DiceRoller />
         <LoreGenerator />
         <Soundscape />
         <GmNotebook />
         <ThemeToggle />
-        <KeyboardHelpButton />
+        <span className={styles.collapsible}>
+          <KeyboardHelpButton />
+        </span>
+        <OverflowMenu />
         <CampaignMenu />
       </div>
     </div>
