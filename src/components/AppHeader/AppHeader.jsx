@@ -8,6 +8,7 @@ import Soundscape from '../Soundscape/Soundscape';
 import ThemeToggle from '../ThemeToggle/ThemeToggle';
 import SessionTimer from '../SessionTimer/SessionTimer';
 import PlayerBadge from '../PlayerBadge/PlayerBadge';
+import PresenceBar from '../PresenceBar/PresenceBar';
 import { GlobalSearchButton } from '../GlobalSearch/GlobalSearch';
 import { QuestLogButton } from '../QuestLog/QuestLog';
 import { KeyboardHelpButton } from '../KeyboardHelp/KeyboardHelp';
@@ -25,6 +26,7 @@ const AppHeader = () => (
       </div>
       <div className={styles.tools}>
         <ConnectionBadge />
+        <PresenceBar />
         <PlayerBadge />
         <SessionTimer />
         <GlobalSearchButton />
