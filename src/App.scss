@@ -33,13 +33,6 @@
   gap: $spacing-06;
 }
 
-.app__notebook {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
-  gap: $spacing-06;
-  align-items: start;
-}
-
 .app__footer {
   text-align: center;
   padding: $spacing-05 $spacing-06 $spacing-07;

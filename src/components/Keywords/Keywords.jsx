@@ -6,6 +6,7 @@ import TextInput from '../common/TextInput/TextInput';
 import { IconKey, IconPlus, IconTrash, IconSearch } from '../common/icons';
 import { useGameChannel } from '../../hooks/useGameChannel';
 import { collections, gamePath } from '../../shared';
+import { removeWithUndo } from '../../utils/undoRemove';
 import styles from './Keywords.module.scss';
 
 const uid = () =>
@@ -67,6 +68,15 @@ const Keywords = () => {
     if (text) save([...value, { id: uid(), text }]);
     setDraft('');
   };
+
+  const remove = (keyword) =>
+    removeWithUndo({
+      list: value,
+      id: keyword.id,
+      save,
+      label: keyword.text,
+      noun: 'Keyword',
+    });
 
   return (
     <Panel
@@ -138,9 +148,7 @@ const Keywords = () => {
                     size="sm"
                     iconOnly
                     aria-label={`Remove ${keyword.text}`}
-                    onClick={() =>
-                      save(value.filter((entry) => entry.id !== keyword.id))
-                    }
+                    onClick={() => remove(keyword)}
                   >
                     <IconTrash />
                   </Button>

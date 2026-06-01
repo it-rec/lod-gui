@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import cx from 'classnames';
 import Button from '../Button/Button';
-import { IconChevron } from '../icons';
+import { IconChevron, IconGrip } from '../icons';
 import { prefGet, prefSet } from '../../../utils/localStorageUtil';
+import { PanelReorderContext } from './reorderContext';
 import styles from './Panel.module.scss';
 
 export const REVEAL_EVENT = 'lod:reveal';
@@ -32,6 +33,11 @@ const Panel = ({
 
   const [highlight, setHighlight] = useState(false);
   const sectionRef = useRef(null);
+
+  // When this panel sits in a rearrangeable group (the Notebook), pick up the
+  // drag-and-drop props the group published for our key.
+  const reorder = useContext(PanelReorderContext);
+  const slot = collapsibleKey ? reorder?.[collapsibleKey] : null;
 
   // Listen for global "reveal me" events from the search overlay. When our
   // key is the target, uncollapse, scroll into view, and flash the section.
@@ -63,12 +69,24 @@ const Panel = ({
     <section
       ref={sectionRef}
       data-panel-key={collapsibleKey}
+      {...(slot?.itemProps || {})}
       className={cx(styles.panel, {
         [styles.collapsed]: collapsed,
         [styles.highlight]: highlight,
+        [styles.reorderDragging]: slot?.isDragging,
+        [styles.reorderOver]: slot?.isOver,
       })}
     >
       <header className={styles.header}>
+        {slot && (
+          <span
+            {...slot.handleProps}
+            className={styles.dragHandle}
+            title={`Drag to reorder ${title}`}
+          >
+            <IconGrip />
+          </span>
+        )}
         {icon && <span className={styles.icon}>{icon}</span>}
         <div className={styles.heading}>
           <h2 className={styles.title}>{title}</h2>

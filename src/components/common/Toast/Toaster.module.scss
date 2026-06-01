@@ -78,6 +78,27 @@
   color: var(--lod-ink-soft);
 }
 
+.action {
+  flex-shrink: 0;
+  align-self: center;
+  border: 1px solid var(--lod-gold);
+  background: transparent;
+  color: var(--lod-crimson);
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  padding: 4px 10px;
+  border-radius: var(--lod-radius);
+  line-height: 1;
+}
+
+.action:hover {
+  background: var(--lod-gold);
+  color: var(--lod-crimson-ink);
+}
+
 .close {
   flex-shrink: 0;
   border: none;

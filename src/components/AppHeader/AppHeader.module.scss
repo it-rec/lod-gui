@@ -37,8 +37,14 @@
 .tools {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
   gap: $spacing-03;
   flex-shrink: 0;
+}
+
+.collapsible {
+  display: inline-flex;
 }
 
 .crest {
@@ -69,6 +75,13 @@
   letter-spacing: 0.26em;
   text-transform: uppercase;
   color: rgba(233, 208, 138, 0.72);
+}
+
+@media (max-width: 720px) {
+  // On small screens these live in the overflow menu instead.
+  .collapsible {
+    display: none;
+  }
 }
 
 @media (max-width: 640px) {

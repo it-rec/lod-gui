@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import Button from '../common/Button/Button';
 import { IconHelp } from '../common/icons';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 import styles from './KeyboardHelp.module.scss';
 
 const OPEN_EVENT = 'lod:help:open';
@@ -101,11 +102,14 @@ const KeyboardHelp = () => {
   }, [open]);
 
   const close = useCallback(() => setOpen(false), []);
+  const trapRef = useFocusTrap(open);
 
   if (!open) return null;
 
   return (
     <div
+      ref={trapRef}
+      tabIndex={-1}
       className={styles.backdrop}
       role="dialog"
       aria-modal="true"

@@ -4,6 +4,7 @@ import Button from '../common/Button/Button';
 import FormattedText from '../common/FormattedText/FormattedText';
 import { IconScroll, IconCheck, IconLock } from '../common/icons';
 import { REVEAL_EVENT } from '../common/Panel/Panel';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { useGameChannel } from '../../hooks/useGameChannel';
 import { collections, gamePath } from '../../shared';
 import { normalizeQuests, questIsUnlocked } from '../Quests/Quests';
@@ -97,6 +98,7 @@ const QuestLog = () => {
     setOpen(false);
     setHighlightId(null);
   }, []);
+  const trapRef = useFocusTrap(open);
 
   const { active, completed } = useMemo(
     () => ({
@@ -155,6 +157,8 @@ const QuestLog = () => {
 
   return (
     <div
+      ref={trapRef}
+      tabIndex={-1}
       className={styles.backdrop}
       role="dialog"
       aria-modal="true"

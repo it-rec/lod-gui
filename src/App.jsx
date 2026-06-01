@@ -5,10 +5,7 @@ import Heroes from './components/Heroes/Heroes';
 import Gold from './components/Gold/Gold';
 import Fame from './components/Fame/Fame';
 import Calendar from './components/Calendar/Calendar';
-import Keywords from './components/Keywords/Keywords';
-import Quests from './components/Quests/Quests';
-import NPCs from './components/NPCs/NPCs';
-import Locations from './components/Locations/Locations';
+import Notebook from './components/Notebook/Notebook';
 import Journal from './components/Journal/Journal';
 import Initiative from './components/Initiative/Initiative';
 import Inventory from './components/Inventory/Inventory';
@@ -17,6 +14,8 @@ import GlobalSearch from './components/GlobalSearch/GlobalSearch';
 import QuestLog from './components/QuestLog/QuestLog';
 import KeyboardHelp from './components/KeyboardHelp/KeyboardHelp';
 import Reactions from './components/Reactions/Reactions';
+import SectionNav from './components/SectionNav/SectionNav';
+import Onboarding from './components/Onboarding/Onboarding';
 import Toaster from './components/common/Toast/Toaster';
 import { useConnection } from './hooks/useConnection';
 import { useTimeOfDayTheme } from './hooks/useTimeOfDayTheme';
@@ -61,12 +60,7 @@ const App = () => {
             <Calendar />
           </aside>
         </div>
-        <div className="app__notebook">
-          <Quests />
-          <NPCs />
-          <Locations />
-          <Keywords />
-        </div>
+        <Notebook />
         <Initiative />
         <Inventory />
         <Journal />
@@ -79,6 +73,8 @@ const App = () => {
       <QuestLog />
       <KeyboardHelp />
       <Reactions />
+      <SectionNav />
+      <Onboarding />
       <Toaster />
     </div>
   );

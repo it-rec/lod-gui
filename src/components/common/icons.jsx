@@ -321,3 +321,12 @@ export const IconChest = (props) => (
     <rect x="10.5" y="13.5" width="3" height="3.5" rx="0.5" {...stroke} fill="currentColor" />
   </Svg>
 );
+
+// Vertical ellipsis — an overflow / "more actions" affordance.
+export const IconMore = (props) => (
+  <Svg {...props}>
+    <circle cx="12" cy="5" r="1.6" fill="currentColor" />
+    <circle cx="12" cy="12" r="1.6" fill="currentColor" />
+    <circle cx="12" cy="19" r="1.6" fill="currentColor" />
+  </Svg>
+);
