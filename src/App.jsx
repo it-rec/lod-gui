@@ -14,6 +14,7 @@ import Initiative from './components/Initiative/Initiative';
 import Inventory from './components/Inventory/Inventory';
 import StoryPoints from './components/StoryPoints/StoryPoints';
 import GlobalSearch from './components/GlobalSearch/GlobalSearch';
+import QuestLog from './components/QuestLog/QuestLog';
 import KeyboardHelp from './components/KeyboardHelp/KeyboardHelp';
 import Reactions from './components/Reactions/Reactions';
 import Toaster from './components/common/Toast/Toaster';
@@ -75,6 +76,7 @@ const App = () => {
         Track the party, the purse, and the tale — your tabletop campaign companion.
       </footer>
       <GlobalSearch />
+      <QuestLog />
       <KeyboardHelp />
       <Reactions />
       <Toaster />

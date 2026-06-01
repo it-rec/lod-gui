@@ -38,7 +38,7 @@ const uid = () =>
 // quest record is upgraded into the current { id, title, notes, isDone,
 // dependsOn } form. `dependsOn` is the set of parent quest ids that must be
 // completed before this one can be ticked off.
-const normalizeQuests = (raw) => {
+export const normalizeQuests = (raw) => {
   const list = Array.isArray(raw?.quests)
     ? raw.quests
     : Array.isArray(raw)

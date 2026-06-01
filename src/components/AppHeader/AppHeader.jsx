@@ -9,6 +9,7 @@ import ThemeToggle from '../ThemeToggle/ThemeToggle';
 import SessionTimer from '../SessionTimer/SessionTimer';
 import PlayerBadge from '../PlayerBadge/PlayerBadge';
 import { GlobalSearchButton } from '../GlobalSearch/GlobalSearch';
+import { QuestLogButton } from '../QuestLog/QuestLog';
 import { KeyboardHelpButton } from '../KeyboardHelp/KeyboardHelp';
 import styles from './AppHeader.module.scss';
 
@@ -27,6 +28,7 @@ const AppHeader = () => (
         <PlayerBadge />
         <SessionTimer />
         <GlobalSearchButton />
+        <QuestLogButton />
         <DiceRoller />
         <LoreGenerator />
         <Soundscape />
