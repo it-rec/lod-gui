@@ -45,6 +45,25 @@ const broadcastPresence = () => {
   io.emit('presence', { players: io.engine.clientsCount });
 };
 
+// The named roster of a game's room: who is actually sitting at this table.
+// Only sockets that have announced a non-empty name appear.
+const rosterFor = (gameID) => {
+  const room = io.sockets.adapter.rooms.get(roomFor(gameID));
+  if (!room) return [];
+  const players = [];
+  for (const id of room) {
+    const member = io.sockets.sockets.get(id);
+    const name = member?.data?.name;
+    if (name) players.push({ id, name });
+  }
+  return players;
+};
+
+const broadcastRoster = (gameID) => {
+  if (!gameID) return;
+  io.to(roomFor(gameID)).emit('presence:roster', { players: rosterFor(gameID) });
+};
+
 // Validate a game id arriving over a socket the same way the REST layer does.
 const parseGameID = (raw) => {
   const id = Number(raw);
@@ -64,11 +83,24 @@ io.on('connection', (socket) => {
     if (gameID === null) return;
     socket.data.gameID = gameID;
     socket.join(roomFor(gameID));
+    broadcastRoster(gameID);
+  });
+
+  // A player announces (or updates) their display name for the roster.
+  socket.on('presence:identify', (payload) => {
+    const name =
+      typeof payload?.name === 'string' ? payload.name.trim().slice(0, 40) : '';
+    socket.data.name = name;
+    const gameID = socket.data.gameID || parseGameID(payload?.gameID);
+    if (gameID) broadcastRoster(gameID);
   });
 
   socket.on('disconnect', () => {
     logger.debug(`Socket disconnected: ${socket.id}`);
     broadcastPresence();
+    // By now this socket has left its rooms, so the roster recomputes without
+    // it. Announce the departure to whoever remains.
+    broadcastRoster(socket.data.gameID);
   });
 
   // Relay an ephemeral table-side event to everyone in the sender's game

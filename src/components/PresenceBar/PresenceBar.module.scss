@@ -1,0 +1,56 @@
+@use '../../common' as *;
+
+.bar {
+  display: inline-flex;
+  align-items: center;
+}
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  margin-left: -0.45rem;
+
+  font-family: var(--font-display);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #1c130a;
+
+  background: hsl(var(--avatar-hue, 40) 58% 66%);
+  border: 1.5px solid var(--lod-gold-hi);
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+}
+
+.avatar:first-child {
+  margin-left: 0;
+}
+
+.more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.7rem;
+  height: 1.7rem;
+  margin-left: -0.45rem;
+  padding: 0 0.3rem;
+
+  font-size: 0.64rem;
+  font-weight: 700;
+  color: var(--lod-gold-hi);
+
+  background: rgba(20, 10, 4, 0.7);
+  border: 1.5px solid var(--lod-gold);
+  border-radius: 999px;
+}
+
+@media (max-width: 640px) {
+  .avatar,
+  .more {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
