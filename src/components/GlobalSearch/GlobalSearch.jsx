@@ -4,6 +4,7 @@ import TextInput from '../common/TextInput/TextInput';
 import Button from '../common/Button/Button';
 import { IconSearch } from '../common/icons';
 import { REVEAL_EVENT } from '../common/Panel/Panel';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { buildSearchIndex, searchRecords } from './searchIndex';
 import styles from './GlobalSearch.module.scss';
 
@@ -112,6 +113,9 @@ const GlobalSearch = () => {
   }, [results.length]);
 
   const close = useCallback(() => setOpen(false), []);
+  // The overlay focuses its own search box, so leave that to the effect above
+  // and let the trap only handle Tab-cycling and focus restoration on close.
+  const trapRef = useFocusTrap(open, { autoFocus: false });
 
   const pick = useCallback((record) => {
     if (!record) return;
@@ -150,6 +154,7 @@ const GlobalSearch = () => {
 
   return (
     <div
+      ref={trapRef}
       className={styles.backdrop}
       role="dialog"
       aria-modal="true"
