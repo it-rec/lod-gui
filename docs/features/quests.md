@@ -50,6 +50,25 @@ already shows every quest, dependencies and all.
 
 The active view is remembered per device under `lod:pref:quests-view`.
 
+## Quest log
+
+The Quests panel lives in the notebook column, but you don't have to scroll
+to it for a quick glance. The **quest log** is an optional, unobtrusive
+overlay summoned without disturbing the layout:
+
+- the small scroll button in the header tool row, or
+- the **Q** shortcut (ignored while you're typing in a field), or
+- dismissed again with **Esc** or a click outside.
+
+![The quest log overlay: a progress bar, active quests with a blocked one, and completed pledges below](../screenshots/quest-log.png)
+
+It reads the same data as the panel, so it always reflects the latest
+state — including edits pushed by other players. Active quests group first
+(blocked ones flagged with their unfinished prerequisite), completed pledges
+sit below, and a slim bar tracks overall progress. The log is **read-only**;
+the **Open the Quests panel** link in the footer reveals the panel for any
+real editing.
+
 ## Filters
 
 The three filter chips above the list scope what's shown:
