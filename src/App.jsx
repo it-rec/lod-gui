@@ -17,6 +17,7 @@ import GlobalSearch from './components/GlobalSearch/GlobalSearch';
 import QuestLog from './components/QuestLog/QuestLog';
 import KeyboardHelp from './components/KeyboardHelp/KeyboardHelp';
 import Reactions from './components/Reactions/Reactions';
+import Onboarding from './components/Onboarding/Onboarding';
 import Toaster from './components/common/Toast/Toaster';
 import { useConnection } from './hooks/useConnection';
 import { useTimeOfDayTheme } from './hooks/useTimeOfDayTheme';
@@ -79,6 +80,7 @@ const App = () => {
       <QuestLog />
       <KeyboardHelp />
       <Reactions />
+      <Onboarding />
       <Toaster />
     </div>
   );
