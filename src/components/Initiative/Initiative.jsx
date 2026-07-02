@@ -13,12 +13,11 @@ import {
 } from '../common/icons';
 import { useGameChannel } from '../../hooks/useGameChannel';
 import { collections, gamePath } from '../../shared';
+import { toast } from '../common/Toast/toastStore';
 import styles from './Initiative.module.scss';
+import { makeUid } from '../../utils/uid';
 
-const uid = () =>
-  typeof crypto !== 'undefined' && crypto.randomUUID
-    ? crypto.randomUUID()
-    : `cmb-${Math.random().toString(36).slice(2, 10)}`;
+const uid = () => makeUid('cmb');
 
 const SIDES = [
   { id: 'ally', label: 'Ally' },
@@ -123,6 +122,8 @@ const Initiative = () => {
   };
 
   const remove = (id) => {
+    const target = value.combatants.find((c) => c.id === id);
+    const previous = value;
     const remaining = value.combatants.filter((c) => c.id !== id);
     const nextCurrentId =
       value.currentId === id
@@ -131,6 +132,11 @@ const Initiative = () => {
           : null
         : value.currentId;
     save({ ...value, combatants: remaining, currentId: nextCurrentId });
+    toast.action(
+      'Combatant removed',
+      target ? `“${target.name}” is out — tap to bring them back.` : undefined,
+      { label: 'Undo', onClick: () => save(previous) }
+    );
   };
 
   const setHp = (id, delta) => {
@@ -180,9 +186,17 @@ const Initiative = () => {
     }
   };
 
+  // Ending an encounter wipes every combatant's HP and conditions for the
+  // whole table, so keep the previous state one tap away.
   const endEncounter = () => {
+    const previous = value;
     save({ combatants: [], round: 1, currentId: null });
     setConditionDrafts({});
+    toast.action(
+      'Encounter ended',
+      `Round ${previous.round} cleared — tap to restore the field as it stood.`,
+      { label: 'Undo', onClick: () => save(previous) }
+    );
   };
 
   const subtitle = loading

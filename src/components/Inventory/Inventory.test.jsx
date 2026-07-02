@@ -1,7 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Inventory from './Inventory';
+import { getToasts } from '../common/Toast/toastStore';
 
 vi.mock('../../hooks/useGameChannel', async () => {
   const { useState } = await import('react');
@@ -58,6 +59,13 @@ describe('Inventory', () => {
 
     await user.click(screen.getByLabelText('Take 1 from Torch'));
     expect(screen.queryByText('Torch')).not.toBeInTheDocument();
+
+    // Taking the last one goes through the undo path so a stray "−" tap can
+    // be reverted, item notes and all.
+    const toastItem = getToasts().at(-1);
+    expect(toastItem.title).toBe('Item removed');
+    act(() => toastItem.action.onClick());
+    expect(screen.getByText('Torch')).toBeInTheDocument();
   });
 
   it('edits an item with a carrier and notes', async () => {

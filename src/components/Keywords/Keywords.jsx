@@ -3,16 +3,20 @@ import Panel from '../common/Panel/Panel';
 import Skeleton from '../common/Skeleton/Skeleton';
 import Button from '../common/Button/Button';
 import TextInput from '../common/TextInput/TextInput';
-import { IconKey, IconPlus, IconTrash, IconSearch } from '../common/icons';
+import {
+  IconKey,
+  IconPlus,
+  IconTrash,
+  IconSearch,
+  IconPencil,
+} from '../common/icons';
 import { useGameChannel } from '../../hooks/useGameChannel';
 import { collections, gamePath } from '../../shared';
 import { removeWithUndo } from '../../utils/undoRemove';
 import styles from './Keywords.module.scss';
+import { makeUid } from '../../utils/uid';
 
-const uid = () =>
-  typeof crypto !== 'undefined' && crypto.randomUUID
-    ? crypto.randomUUID()
-    : `kw-${Math.random().toString(36).slice(2, 10)}`;
+const uid = () => makeUid('kw');
 
 // Accepts both the current { id, text } objects and any legacy plain strings.
 const normalizeKeywords = (raw) => {
@@ -51,6 +55,8 @@ const Keywords = () => {
   });
   const [draft, setDraft] = useState('');
   const [query, setQuery] = useState('');
+  const [editingId, setEditingId] = useState(null);
+  const [editingText, setEditingText] = useState('');
 
   const trimmedQuery = query.trim().toLowerCase();
   const visible = useMemo(
@@ -69,7 +75,8 @@ const Keywords = () => {
     setDraft('');
   };
 
-  const remove = (keyword) =>
+  const remove = (keyword) => {
+    if (editingId === keyword.id) cancelEdit();
     removeWithUndo({
       list: value,
       id: keyword.id,
@@ -77,6 +84,31 @@ const Keywords = () => {
       label: keyword.text,
       noun: 'Keyword',
     });
+  };
+
+  const beginEdit = (keyword) => {
+    setEditingId(keyword.id);
+    setEditingText(keyword.text);
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+    setEditingText('');
+  };
+
+  const commitEdit = () => {
+    const text = editingText.trim();
+    if (!text) {
+      cancelEdit();
+      return;
+    }
+    save(
+      value.map((keyword) =>
+        keyword.id === editingId ? { ...keyword, text } : keyword
+      )
+    );
+    cancelEdit();
+  };
 
   return (
     <Panel
@@ -142,7 +174,38 @@ const Keywords = () => {
                   <span className={styles.bullet} aria-hidden="true">
                     ❧
                   </span>
-                  <span className={styles.text}>{keyword.text}</span>
+                  {editingId === keyword.id ? (
+                    <TextInput
+                      variant="sm"
+                      className={styles.editInput}
+                      value={editingText}
+                      aria-label="Edit keyword"
+                      autoFocus
+                      onChange={(event) => setEditingText(event.target.value)}
+                      onKeyDown={(event) => {
+                        if (event.key === 'Enter') {
+                          event.preventDefault();
+                          commitEdit();
+                        }
+                        if (event.key === 'Escape') {
+                          event.preventDefault();
+                          cancelEdit();
+                        }
+                      }}
+                      onBlur={commitEdit}
+                    />
+                  ) : (
+                    <span className={styles.text}>{keyword.text}</span>
+                  )}
+                  <Button
+                    kind="ghost"
+                    size="sm"
+                    iconOnly
+                    aria-label={`Edit ${keyword.text}`}
+                    onClick={() => beginEdit(keyword)}
+                  >
+                    <IconPencil />
+                  </Button>
                   <Button
                     kind="danger"
                     size="sm"

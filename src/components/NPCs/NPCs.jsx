@@ -17,11 +17,9 @@ import { useSortable } from '../../hooks/useSortable';
 import { collections, gamePath } from '../../shared';
 import { removeWithUndo } from '../../utils/undoRemove';
 import styles from './NPCs.module.scss';
+import { makeUid } from '../../utils/uid';
 
-const uid = () =>
-  typeof crypto !== 'undefined' && crypto.randomUUID
-    ? crypto.randomUUID()
-    : `npc-${Math.random().toString(36).slice(2, 10)}`;
+const uid = () => makeUid('npc');
 
 const ROLES = [
   { id: 'ally', label: 'Ally' },

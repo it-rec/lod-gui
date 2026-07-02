@@ -1,7 +1,8 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Journal from './Journal';
+import { getToasts } from '../common/Toast/toastStore';
 
 // The journal hook also subscribes to the calendar; both go through the same
 // mock so we can drive a fixed "today" into the component.
@@ -56,6 +57,21 @@ describe('Journal', () => {
 
     await user.click(screen.getByLabelText('Remove journal entry'));
     expect(screen.queryByText('corrected take')).not.toBeInTheDocument();
+  });
+
+  it('raises an undo toast on remove that restores the entry', async () => {
+    const user = userEvent.setup();
+    render(<Journal />);
+    await user.type(screen.getByLabelText('New journal entry'), 'lost words');
+    await user.click(screen.getByRole('button', { name: /Record/ }));
+
+    await user.click(screen.getByLabelText('Remove journal entry'));
+    expect(screen.queryByText('lost words')).not.toBeInTheDocument();
+
+    const toastItem = getToasts().at(-1);
+    expect(toastItem.title).toBe('Journal entry removed');
+    act(() => toastItem.action.onClick());
+    expect(screen.getByText('lost words')).toBeInTheDocument();
   });
 
   it('renders Markdown in saved entries', async () => {

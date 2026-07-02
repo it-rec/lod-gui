@@ -6,6 +6,7 @@ import { IconParty, IconPlus, IconRest } from '../common/icons';
 import { useGameChannel } from '../../hooks/useGameChannel';
 import { collections, gamePath } from '../../shared';
 import { toast } from '../common/Toast/toastStore';
+import { removeWithUndo } from '../../utils/undoRemove';
 import {
   createHero,
   normalizeHeroes,
@@ -58,7 +59,18 @@ const Heroes = () => {
   const updateHero = (id, updated) =>
     save(heroes.map((hero) => (hero.id === id ? updated : hero)));
 
-  const removeHero = (id) => save(heroes.filter((hero) => hero.id !== id));
+  // Removing a hero destroys a whole character sheet and broadcasts it to the
+  // table, so it goes through the undo toast like every other ledger delete.
+  const removeHero = (id) => {
+    const target = heroes.find((hero) => hero.id === id);
+    removeWithUndo({
+      list: heroes,
+      id,
+      save,
+      label: target?.name.trim() || 'Unnamed hero',
+      noun: 'Hero',
+    });
+  };
 
   const addHero = () => save([...heroes, createHero()]);
 

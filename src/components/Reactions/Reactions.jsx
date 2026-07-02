@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { getSocket, getClientId } from '../../socket/socket';
 import styles from './Reactions.module.scss';
+import { makeUid } from '../../utils/uid';
 
 // Quick table-side reactions the whole party sees. Six buttons, one
 // fly-up animation, no persistence — the server just relays the event.
@@ -16,10 +17,7 @@ export const REACTIONS = [
 const FLY_MS = 2400;
 const MAX_ACTIVE = 24;
 
-const newId = () =>
-  typeof crypto !== 'undefined' && crypto.randomUUID
-    ? crypto.randomUUID()
-    : `react-${Math.random().toString(36).slice(2, 10)}`;
+const newId = () => makeUid('react');
 
 const Reactions = () => {
   const [active, setActive] = useState([]);

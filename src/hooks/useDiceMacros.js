@@ -1,14 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 import { prefGet, prefSet } from '../utils/localStorageUtil';
+import { makeUid } from '../utils/uid';
 
 const PREF_KEY = 'dice-macros';
 const MAX_MACROS = 12;
 const MAX_NAME_LEN = 24;
 
-const newId = () =>
-  typeof crypto !== 'undefined' && crypto.randomUUID
-    ? crypto.randomUUID()
-    : `macro-${Math.random().toString(36).slice(2, 10)}`;
+const newId = () => makeUid('macro');
 
 const sanitize = (raw) => {
   if (!raw || typeof raw !== 'object') return null;

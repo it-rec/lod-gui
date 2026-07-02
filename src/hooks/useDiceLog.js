@@ -3,6 +3,7 @@ import { getSocket, getClientId } from '../socket/socket';
 import { prefGet, prefSet } from '../utils/localStorageUtil';
 import { rollExpression } from '../utils/dice';
 import { usePlayerName } from './usePlayerName';
+import { makeUid } from '../utils/uid';
 
 const LOG_PREF_KEY = 'dice-log';
 const MAX_ENTRIES = 20;
@@ -33,10 +34,7 @@ const loadLog = () => {
   return stored.map(sanitizeEntry).filter(Boolean).slice(0, MAX_ENTRIES);
 };
 
-const newId = () =>
-  typeof crypto !== 'undefined' && crypto.randomUUID
-    ? crypto.randomUUID()
-    : `roll-${Math.random().toString(36).slice(2, 10)}`;
+const newId = () => makeUid('roll');
 
 // Owns the shared roll history. Each entry is created locally on `roll(...)`,
 // broadcast via Socket.IO, and any rolls received from peers are appended too.

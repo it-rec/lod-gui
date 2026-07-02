@@ -15,11 +15,9 @@ import { useGameChannel } from '../../hooks/useGameChannel';
 import { collections, gamePath } from '../../shared';
 import { removeWithUndo } from '../../utils/undoRemove';
 import styles from './Inventory.module.scss';
+import { makeUid } from '../../utils/uid';
 
-const uid = () =>
-  typeof crypto !== 'undefined' && crypto.randomUUID
-    ? crypto.randomUUID()
-    : `it-${Math.random().toString(36).slice(2, 10)}`;
+const uid = () => makeUid('it');
 
 const clampQty = (n) => {
   const num = Number.parseInt(n, 10);
@@ -88,14 +86,19 @@ const Inventory = () => {
   };
 
   const setQuantity = (id, delta) => {
+    const target = items.find((item) => item.id === id);
+    if (!target) return;
+    const next = Math.max(0, Math.min(9999, target.quantity + delta));
+    // Taking the last one removes the item — but through the undo path, so a
+    // stray "−" tap can't silently destroy the notes and holder with it.
+    if (next === 0) {
+      remove(id);
+      return;
+    }
     save(
-      items
-        .map((item) => {
-          if (item.id !== id) return item;
-          const next = item.quantity + delta;
-          return { ...item, quantity: Math.max(0, Math.min(9999, next)) };
-        })
-        .filter((item) => item.quantity > 0)
+      items.map((item) =>
+        item.id === id ? { ...item, quantity: next } : item
+      )
     );
   };
 

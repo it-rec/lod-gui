@@ -105,12 +105,32 @@ const fromJournal = (raw) =>
     })
     .filter(Boolean);
 
+const fromInventory = (raw) =>
+  safeArray(raw, 'items')
+    .map((entry, index) => {
+      const name = typeof entry?.name === 'string' ? entry.name : null;
+      if (!name?.trim()) return null;
+      return {
+        id: entry?.id || `item-${index}`,
+        label: name.trim(),
+        category: 'Item',
+        detail: typeof entry?.notes === 'string' ? entry.notes : '',
+        meta:
+          typeof entry?.holder === 'string' && entry.holder.trim()
+            ? entry.holder.trim()
+            : '',
+        target: { panel: 'inventory' },
+      };
+    })
+    .filter(Boolean);
+
 const SOURCES = [
   { collection: collections.QUESTS, path: gamePath('quests'), reader: fromQuests },
   { collection: collections.NPCS, path: gamePath('npcs'), reader: fromNpcs },
   { collection: collections.LOCATIONS, path: gamePath('locations'), reader: fromLocations },
   { collection: collections.KEYWORDS, path: gamePath('keywords'), reader: fromKeywords },
   { collection: collections.JOURNAL, path: gamePath('journal'), reader: fromJournal },
+  { collection: collections.INVENTORY, path: gamePath('inventory'), reader: fromInventory },
 ];
 
 // Builds a single flat list of every searchable record across the campaign.

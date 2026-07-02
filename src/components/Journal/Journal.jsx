@@ -13,12 +13,11 @@ import {
 import { useGameChannel } from '../../hooks/useGameChannel';
 import { usePlayerName } from '../../hooks/usePlayerName';
 import { collections, gamePath } from '../../shared';
+import { removeWithUndo } from '../../utils/undoRemove';
 import styles from './Journal.module.scss';
+import { makeUid } from '../../utils/uid';
 
-const uid = () =>
-  typeof crypto !== 'undefined' && crypto.randomUUID
-    ? crypto.randomUUID()
-    : `jnl-${Math.random().toString(36).slice(2, 10)}`;
+const uid = () => makeUid('jnl');
 
 const PHASE_IDS = ['morning', 'afternoon', 'evening', 'night'];
 
@@ -152,7 +151,15 @@ const Journal = () => {
 
   const remove = (id) => {
     if (editingId === id) cancelEdit();
-    save(entries.filter((entry) => entry.id !== id));
+    const target = entries.find((entry) => entry.id === id);
+    const firstLine = target?.text.split('\n')[0] ?? '';
+    removeWithUndo({
+      list: entries,
+      id,
+      save,
+      label: firstLine.length > 60 ? `${firstLine.slice(0, 57)}…` : firstLine,
+      noun: 'Journal entry',
+    });
   };
 
   const total = entries.length;

@@ -1,6 +1,8 @@
 // The hero (character) model for Legacy of Dragonholt and helpers for
 // normalising stored party data — including migration from the older shape.
 
+import { makeUid } from '../utils/uid';
+
 export const MAX_PARTY = 6;
 export const DEFAULT_PARTY_SIZE = 4;
 export const DEFAULT_STAMINA = 10;
@@ -38,10 +40,7 @@ export const SKILLS = [
   'Stealth',
 ];
 
-const uid = () =>
-  typeof crypto !== 'undefined' && crypto.randomUUID
-    ? crypto.randomUUID()
-    : `hero-${Math.random().toString(36).slice(2, 10)}`;
+const uid = () => makeUid('hero');
 
 export const createHero = (overrides = {}) => ({
   id: uid(),

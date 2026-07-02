@@ -1,7 +1,8 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, within, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Initiative from './Initiative';
+import { getToasts } from '../common/Toast/toastStore';
 
 vi.mock('../../hooks/useGameChannel', async () => {
   const { useState } = await import('react');
@@ -123,5 +124,41 @@ describe('Initiative', () => {
     await user.click(screen.getByRole('button', { name: /End encounter/ }));
     expect(screen.queryByText('Wolf')).not.toBeInTheDocument();
     expect(screen.getByText(/No combatants/)).toBeInTheDocument();
+  });
+
+  it('offers an undo toast that restores an ended encounter', async () => {
+    const user = userEvent.setup();
+    render(<Initiative />);
+    await expandPanel(user);
+    await user.type(screen.getByLabelText('New combatant name'), 'Wolf');
+    await user.type(screen.getByLabelText('Initiative roll'), '11');
+    await user.click(screen.getByRole('button', { name: 'Add' }));
+
+    await user.click(screen.getByRole('button', { name: /End encounter/ }));
+    expect(screen.queryByText('Wolf')).not.toBeInTheDocument();
+
+    const toastItem = getToasts().at(-1);
+    expect(toastItem.title).toBe('Encounter ended');
+    act(() => toastItem.action.onClick());
+    expect(screen.getByText('Wolf')).toBeInTheDocument();
+  });
+
+  it('offers an undo toast when a combatant is removed', async () => {
+    const user = userEvent.setup();
+    render(<Initiative />);
+    await expandPanel(user);
+    await user.type(screen.getByLabelText('New combatant name'), 'Ogre');
+    await user.type(screen.getByLabelText('Initiative roll'), '7');
+    await user.click(screen.getByRole('button', { name: 'Add' }));
+
+    await user.click(
+      screen.getByRole('button', { name: 'Remove Ogre from the encounter' })
+    );
+    expect(screen.queryByText('Ogre')).not.toBeInTheDocument();
+
+    const toastItem = getToasts().at(-1);
+    expect(toastItem.title).toBe('Combatant removed');
+    act(() => toastItem.action.onClick());
+    expect(screen.getByText('Ogre')).toBeInTheDocument();
   });
 });
