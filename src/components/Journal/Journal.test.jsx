@@ -74,6 +74,35 @@ describe('Journal', () => {
     expect(screen.getByText('lost words')).toBeInTheDocument();
   });
 
+  it('reveals search once enough entries exist and filters by text', async () => {
+    const user = userEvent.setup();
+    render(<Journal />);
+
+    const compose = screen.getByLabelText('New journal entry');
+    expect(screen.queryByLabelText('Search journal entries')).not.toBeInTheDocument();
+    for (const text of [
+      'Met the baker',
+      'Fought wolves at the ford',
+      'Bought supplies',
+      'Slept at the inn',
+    ]) {
+      await user.type(compose, text);
+      await user.click(screen.getByRole('button', { name: /Record/ }));
+    }
+
+    const search = screen.getByLabelText('Search journal entries');
+    await user.type(search, 'wolves');
+    expect(screen.getByText('Fought wolves at the ford')).toBeInTheDocument();
+    expect(screen.queryByText('Met the baker')).not.toBeInTheDocument();
+
+    await user.clear(search);
+    await user.type(search, 'gryphon');
+    expect(screen.getByText(/No entries match/)).toBeInTheDocument();
+
+    await user.clear(search);
+    expect(screen.getByText('Met the baker')).toBeInTheDocument();
+  });
+
   it('renders Markdown in saved entries', async () => {
     const user = userEvent.setup();
     render(<Journal />);
