@@ -30,6 +30,24 @@ describe('parseInlineMarkdown', () => {
     ]);
   });
 
+  it('ignores underscores inside words', () => {
+    expect(first('take the cellar_door_key with you')).toEqual([
+      'take the cellar_door_key with you',
+    ]);
+  });
+
+  it('does not let underscore emphasis close mid-word', () => {
+    expect(first('_quiet_ish at best')).toEqual(['_quiet_ish at best']);
+  });
+
+  it('still emphasises an underscored word next to punctuation', () => {
+    expect(first('beware, _quiet_.')).toEqual([
+      'beware, ',
+      { type: 'em', children: ['quiet'] },
+      '.',
+    ]);
+  });
+
   it('handles bold containing italic', () => {
     expect(first('**very *deep* dread**')).toEqual([
       {

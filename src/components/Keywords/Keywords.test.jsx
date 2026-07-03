@@ -29,6 +29,36 @@ describe('Keywords', () => {
     expect(screen.getByText(/No keywords yet/)).toBeInTheDocument();
   });
 
+  it('edits a keyword inline', async () => {
+    const user = userEvent.setup();
+    render(<Keywords />);
+
+    await user.type(screen.getByLabelText('New keyword'), 'Silver key{Enter}');
+    await user.click(screen.getByRole('button', { name: 'Edit Silver key' }));
+
+    const editor = screen.getByLabelText('Edit keyword');
+    await user.clear(editor);
+    await user.type(editor, 'Golden key{Enter}');
+
+    expect(screen.getByText('Golden key')).toBeInTheDocument();
+    expect(screen.queryByText('Silver key')).not.toBeInTheDocument();
+  });
+
+  it('cancels an inline edit with Escape', async () => {
+    const user = userEvent.setup();
+    render(<Keywords />);
+
+    await user.type(screen.getByLabelText('New keyword'), 'Silver key{Enter}');
+    await user.click(screen.getByRole('button', { name: 'Edit Silver key' }));
+
+    const editor = screen.getByLabelText('Edit keyword');
+    await user.clear(editor);
+    await user.type(editor, 'scratch that{Escape}');
+
+    expect(screen.getByText('Silver key')).toBeInTheDocument();
+    expect(screen.queryByText('scratch that')).not.toBeInTheDocument();
+  });
+
   it('reveals search once enough keywords are recorded and filters by text', async () => {
     const user = userEvent.setup();
     render(<Keywords />);

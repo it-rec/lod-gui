@@ -1,5 +1,29 @@
-import { describe, it, expect } from 'vitest';
-import { scoreRecord, searchRecords } from './searchIndex';
+import { describe, it, expect, vi } from 'vitest';
+import { buildSearchIndex, scoreRecord, searchRecords } from './searchIndex';
+
+// buildSearchIndex fans out over the REST endpoints; feed it a fixed payload
+// per collection so the index can be asserted without a server.
+vi.mock('../../utils/networkUtils', () => ({
+  get: vi.fn(async (path) => {
+    if (path.includes('/inventory/')) {
+      return {
+        items: [
+          {
+            id: 'it-1',
+            name: 'Sword of Embers',
+            quantity: 1,
+            notes: 'Glows near dragons',
+            holder: 'Talia',
+          },
+        ],
+      };
+    }
+    return null;
+  }),
+}));
+vi.mock('../../utils/localStorageUtil', () => ({
+  cacheGet: () => undefined,
+}));
 
 const quest = {
   id: 'q1',
@@ -84,5 +108,19 @@ describe('searchRecords', () => {
       label: `Quest ${index} of Crown`,
     }));
     expect(searchRecords(many, 'crown', 5)).toHaveLength(5);
+  });
+});
+
+describe('buildSearchIndex', () => {
+  it('indexes treasure items with their holder and notes', async () => {
+    const records = await buildSearchIndex();
+    const item = records.find((record) => record.category === 'Item');
+    expect(item).toMatchObject({
+      id: 'it-1',
+      label: 'Sword of Embers',
+      detail: 'Glows near dragons',
+      meta: 'Talia',
+      target: { panel: 'inventory' },
+    });
   });
 });

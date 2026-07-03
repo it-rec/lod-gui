@@ -1,7 +1,8 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Heroes from './Heroes';
+import { getToasts } from '../common/Toast/toastStore';
 
 // Replace the data hook with a self-contained stateful fake so the panel can
 // be exercised without a server or socket.
@@ -38,6 +39,22 @@ describe('Heroes', () => {
     );
     await user.click(screen.getByRole('button', { name: 'Remove hero' }));
     expect(screen.getAllByLabelText('Hero name')).toHaveLength(3);
+  });
+
+  it('offers an undo toast that restores a removed hero', async () => {
+    const user = userEvent.setup();
+    render(<Heroes />);
+
+    await user.click(
+      screen.getAllByRole('button', { name: 'Open character sheet' })[0]
+    );
+    await user.click(screen.getByRole('button', { name: 'Remove hero' }));
+    expect(screen.getAllByLabelText('Hero name')).toHaveLength(3);
+
+    const toastItem = getToasts().at(-1);
+    expect(toastItem.title).toBe('Hero removed');
+    act(() => toastItem.action.onClick());
+    expect(screen.getAllByLabelText('Hero name')).toHaveLength(4);
   });
 
   it('disables the party rest while everyone is at full stamina', () => {

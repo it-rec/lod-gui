@@ -77,6 +77,11 @@
   overflow-wrap: anywhere;
 }
 
+.editInput {
+  flex: 1;
+  min-width: 0;
+}
+
 .empty {
   text-align: center;
   padding: $spacing-05 0;

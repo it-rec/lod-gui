@@ -29,11 +29,9 @@ const loadViewPref = () => {
   return VALID_VIEWS.has(stored) ? stored : 'list';
 };
 import styles from './Quests.module.scss';
+import { makeUid } from '../../utils/uid';
 
-const uid = () =>
-  typeof crypto !== 'undefined' && crypto.randomUUID
-    ? crypto.randomUUID()
-    : `quest-${Math.random().toString(36).slice(2, 10)}`;
+const uid = () => makeUid('quest');
 
 // Tolerates legacy strings, missing ids, and unexpected shapes — any saved
 // quest record is upgraded into the current { id, title, notes, isDone,

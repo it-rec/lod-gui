@@ -35,6 +35,7 @@ const CATEGORY_LABELS = {
   Location: 'Location',
   Keyword: 'Keyword',
   Journal: 'Journal',
+  Item: 'Item',
 };
 
 // Returns true while focus is inside an input/textarea/contenteditable so the
@@ -170,7 +171,7 @@ const GlobalSearch = () => {
             ref={inputRef}
             className={styles.input}
             value={query}
-            placeholder="Search quests, people, places, keywords, journal…"
+            placeholder="Search quests, people, places, keywords, journal, items…"
             aria-label="Search the campaign"
             autoComplete="off"
             onChange={(event) => setQuery(event.target.value)}

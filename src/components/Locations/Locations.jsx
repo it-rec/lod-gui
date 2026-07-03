@@ -19,6 +19,7 @@ import { prefGet, prefSet } from '../../utils/localStorageUtil';
 import { removeWithUndo } from '../../utils/undoRemove';
 import LocationsMap from './LocationsMap';
 import styles from './Locations.module.scss';
+import { makeUid } from '../../utils/uid';
 
 const VIEW_PREF_KEY = 'locations-view';
 const VALID_VIEWS = new Set(['list', 'map']);
@@ -28,10 +29,7 @@ const loadViewPref = () => {
   return VALID_VIEWS.has(stored) ? stored : 'list';
 };
 
-const uid = () =>
-  typeof crypto !== 'undefined' && crypto.randomUUID
-    ? crypto.randomUUID()
-    : `loc-${Math.random().toString(36).slice(2, 10)}`;
+const uid = () => makeUid('loc');
 
 // Order matters: clicking the inline badge cycles forward, so the sequence
 // reflects a place's natural arc — heard about, then visited, then maybe

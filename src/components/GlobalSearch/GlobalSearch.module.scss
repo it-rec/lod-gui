@@ -172,6 +172,12 @@
   border-color: rgba(154, 47, 28, 0.4);
 }
 
+.category-item {
+  color: var(--lod-gold-bright);
+  background: rgba(122, 91, 33, 0.16);
+  border-color: rgba(122, 91, 33, 0.45);
+}
+
 .body {
   display: flex;
   flex-direction: column;

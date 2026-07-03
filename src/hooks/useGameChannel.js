@@ -41,6 +41,12 @@ export const useGameChannel = ({
   const valueRef = useRef(value);
   valueRef.current = value;
 
+  // Counts local edits; a non-zero gap between "issued" and "settled" means an
+  // edit is still waiting in the debounce window or in a POST that has not
+  // resolved yet. See the realtime handler below for why that matters.
+  const editSeqRef = useRef(0);
+  const settledSeqRef = useRef(0);
+
   // Load the authoritative value from the server (re-runs on retry).
   useEffect(() => {
     let cancelled = false;
@@ -73,6 +79,14 @@ export const useGameChannel = ({
     const handler = (raw, origin) => {
       if (origin && origin === getClientId()) return; // skip our own echo
       if (raw == null) return;
+      // A local edit is still debouncing or in flight. Its POST will overwrite
+      // the server value the moment it lands, so applying this remote snapshot
+      // now would flash a value that is about to be clobbered — and leave this
+      // screen showing the peer's data while the server (and every other
+      // player) ends up with ours. Skipping it keeps last-write-wins
+      // consistent: our edit stays visible here and reaches everyone else
+      // through the server broadcast once the POST settles.
+      if (editSeqRef.current !== settledSeqRef.current) return;
       setValue(fromServerRef.current(raw));
       cacheSet(channel, raw);
     };
@@ -82,10 +96,20 @@ export const useGameChannel = ({
 
   const debouncedPostRef = useRef();
   if (!debouncedPostRef.current) {
-    debouncedPostRef.current = debounce((targetPath, payload, ch) => {
+    debouncedPostRef.current = debounce((targetPath, payload, ch, seq) => {
+      // Only the latest edit's outcome may mark the channel settled — an older
+      // POST resolving after a newer save() would otherwise reopen the door to
+      // remote snapshots while that newer edit is still in flight.
+      const settle = () => {
+        if (seq > settledSeqRef.current) settledSeqRef.current = seq;
+      };
       post(targetPath, payload)
-        .then(() => markClean(ch))
+        .then(() => {
+          settle();
+          markClean(ch);
+        })
         .catch(() => {
+          settle();
           // Remember the unsynced edit so the pending indicator can show it and
           // the next reconnect can replay it automatically.
           markDirty(ch, targetPath, payload);
@@ -111,7 +135,8 @@ export const useGameChannel = ({
       setValue(resolved);
       const payload = toServerRef.current(resolved);
       cacheSet(channel, payload);
-      debouncedPostRef.current(path, payload, channel);
+      editSeqRef.current += 1;
+      debouncedPostRef.current(path, payload, channel, editSeqRef.current);
     },
     [channel, path]
   );

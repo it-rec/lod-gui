@@ -3,22 +3,23 @@ import cx from 'classnames';
 import Panel from '../common/Panel/Panel';
 import Skeleton from '../common/Skeleton/Skeleton';
 import Button from '../common/Button/Button';
+import TextInput from '../common/TextInput/TextInput';
 import FormattedText from '../common/FormattedText/FormattedText';
 import {
   IconScroll,
   IconPlus,
   IconTrash,
   IconPencil,
+  IconSearch,
 } from '../common/icons';
 import { useGameChannel } from '../../hooks/useGameChannel';
 import { usePlayerName } from '../../hooks/usePlayerName';
 import { collections, gamePath } from '../../shared';
+import { removeWithUndo } from '../../utils/undoRemove';
 import styles from './Journal.module.scss';
+import { makeUid } from '../../utils/uid';
 
-const uid = () =>
-  typeof crypto !== 'undefined' && crypto.randomUUID
-    ? crypto.randomUUID()
-    : `jnl-${Math.random().toString(36).slice(2, 10)}`;
+const uid = () => makeUid('jnl');
 
 const PHASE_IDS = ['morning', 'afternoon', 'evening', 'night'];
 
@@ -83,14 +84,30 @@ const Journal = () => {
 
   const { name: playerName } = usePlayerName();
   const [draft, setDraft] = useState('');
+  const [query, setQuery] = useState('');
   const [editingId, setEditingId] = useState(null);
   const [editingText, setEditingText] = useState('');
+
+  // The journal only grows over a campaign, so it gets the same quick text
+  // filter the keywords list has — matching entry text and author.
+  const trimmedQuery = query.trim().toLowerCase();
+  const visibleEntries = useMemo(
+    () =>
+      trimmedQuery
+        ? entries.filter(
+          (entry) =>
+            entry.text.toLowerCase().includes(trimmedQuery) ||
+            entry.author.toLowerCase().includes(trimmedQuery)
+        )
+        : entries,
+    [entries, trimmedQuery]
+  );
 
   const grouped = useMemo(() => {
     // Group by day descending. Within a day, sort by phase order, then by
     // creation time — the most recent entries surface to the top.
     const byDay = new Map();
-    entries.forEach((entry) => {
+    visibleEntries.forEach((entry) => {
       if (!byDay.has(entry.day)) byDay.set(entry.day, []);
       byDay.get(entry.day).push(entry);
     });
@@ -107,7 +124,7 @@ const Journal = () => {
       });
     });
     return days;
-  }, [entries]);
+  }, [visibleEntries]);
 
   const add = () => {
     const text = draft.trim();
@@ -152,15 +169,29 @@ const Journal = () => {
 
   const remove = (id) => {
     if (editingId === id) cancelEdit();
-    save(entries.filter((entry) => entry.id !== id));
+    const target = entries.find((entry) => entry.id === id);
+    const firstLine = target?.text.split('\n')[0] ?? '';
+    removeWithUndo({
+      list: entries,
+      id,
+      save,
+      label: firstLine.length > 60 ? `${firstLine.slice(0, 57)}…` : firstLine,
+      noun: 'Journal entry',
+    });
   };
 
   const total = entries.length;
+  // Count days from the full list, not the filtered grouping, so the subtitle
+  // stays stable while a search narrows the view.
+  const dayCount = useMemo(
+    () => new Set(entries.map((entry) => entry.day)).size,
+    [entries]
+  );
   const subtitle = loading
     ? 'Unrolling the chronicle…'
     : total === 0
       ? 'No entries recorded'
-      : `${total} ${total === 1 ? 'entry' : 'entries'} across ${grouped.length} ${grouped.length === 1 ? 'day' : 'days'}`;
+      : `${total} ${total === 1 ? 'entry' : 'entries'} across ${dayCount} ${dayCount === 1 ? 'day' : 'days'}`;
 
   return (
     <Panel
@@ -209,9 +240,26 @@ const Journal = () => {
             </div>
           </div>
 
-          {grouped.length === 0 ? (
+          {total > 3 && (
+            <label className={styles.search}>
+              <IconSearch className={styles.searchIcon} aria-hidden="true" />
+              <TextInput
+                variant="sm"
+                value={query}
+                placeholder="Search entries or authors…"
+                aria-label="Search journal entries"
+                onChange={(event) => setQuery(event.target.value)}
+              />
+            </label>
+          )}
+
+          {total === 0 ? (
             <p className={styles.empty}>
               No entries yet. When the day ends, write down what passed.
+            </p>
+          ) : grouped.length === 0 ? (
+            <p className={styles.empty}>
+              No entries match &ldquo;{query.trim()}&rdquo;.
             </p>
           ) : (
             <ol className={styles.days}>

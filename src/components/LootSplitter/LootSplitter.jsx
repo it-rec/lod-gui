@@ -8,13 +8,11 @@ import { collections, gamePath } from '../../shared';
 import { normalizeHeroes } from '../character';
 import { toast } from '../common/Toast/toastStore';
 import styles from './LootSplitter.module.scss';
+import { makeUid } from '../../utils/uid';
 
 const PHASE_IDS = ['morning', 'afternoon', 'evening', 'night'];
 
-const uid = () =>
-  typeof crypto !== 'undefined' && crypto.randomUUID
-    ? crypto.randomUUID()
-    : `loot-${Math.random().toString(36).slice(2, 10)}`;
+const uid = () => makeUid('loot');
 
 // Pure "how do N coins split N ways" so the maths is testable without a
 // React tree. Returns { each, remainder } — the remainder stays in the

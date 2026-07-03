@@ -22,7 +22,9 @@ const PATTERNS = [
   { type: 'strong', open: '**', close: '**' },
   { type: 'del', open: '~~', close: '~~' },
   { type: 'em', open: '*', close: '*' },
-  { type: 'em', open: '_', close: '_' },
+  // Underscore emphasis is word-boundary only, like real Markdown — otherwise
+  // identifiers such as `cellar_door_key` sprout spurious italics.
+  { type: 'em', open: '_', close: '_', wordBoundary: true },
   { type: 'code', open: '`', close: '`', raw: true },
 ];
 
@@ -82,6 +84,9 @@ const matchInlineSpan = (text, start) => {
   const ch = text[start];
   for (const pattern of PATTERNS) {
     if (!text.startsWith(pattern.open, start)) continue;
+    if (pattern.wordBoundary && start > 0 && /\w/.test(text[start - 1])) {
+      continue;
+    }
     const innerStart = start + pattern.open.length;
     // Bold/italic need a non-space char after the opener and before the
     // closer; otherwise "a * b * c" turns into garbled emphasis.
@@ -103,6 +108,13 @@ const matchInlineSpan = (text, start) => {
       if (!pattern.raw) {
         const before = text[closeAt - 1];
         if (before === ' ' || before === '\n') {
+          searchFrom = closeAt + pattern.close.length;
+          continue;
+        }
+      }
+      if (pattern.wordBoundary) {
+        const following = text[closeAt + pattern.close.length];
+        if (following && /\w/.test(following)) {
           searchFrom = closeAt + pattern.close.length;
           continue;
         }
