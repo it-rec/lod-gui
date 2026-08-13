@@ -1,12 +1,25 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for all configuration options:
-# https://help.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+# Dependabot version updates.
+# Full option reference:
+# https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference
 
 version: 2
+
+# The "bun" ecosystem is documented as generally available, but in practice
+# Dependabot can bail out with "update_not_possible" on Bun repos unless beta
+# ecosystems are switched on. Only "bun" is configured below, so this flag
+# widens nothing else.
+enable-beta-ecosystems: true
+
 updates:
-  - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  # This project is Bun-only: the toolchain was migrated in #243 and the sole
+  # lockfile is bun.lock (there is no package-lock.json). The "npm" ecosystem
+  # therefore edited package.json and left bun.lock untouched, so every
+  # Dependabot PR failed all three CI jobs at the very first step with
+  # "error: lockfile had changes, but lockfile is frozen" — CI installs with
+  # `bun install --frozen-lockfile`. The "bun" ecosystem keeps bun.lock in
+  # step with package.json, which is what those jobs need.
+  - package-ecosystem: "bun"
+    directory: "/"
 
     schedule:
       interval: "daily"
